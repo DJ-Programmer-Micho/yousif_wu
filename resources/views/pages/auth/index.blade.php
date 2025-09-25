@@ -59,13 +59,13 @@
                         <div class="text-center">
                             <img src="../assets/images/big-logo.png" width="130" alt="wrapkit">
                         </div>
-                        @php
+                        {{-- @php
                             print(Hash::make('Realmadred1@'));
-                        @endphp
+                        @endphp --}}
                         <h2 class="mt-3 text-center" style="color: #9c4e30">SIGN IN</h2>
-                        @php
+                        {{-- @php
                             print(Hash::make('asdasdasd'));
-                        @endphp
+                        @endphp --}}
                         <p class="text-center" style="color: #9c4e30">Enter your email address and password to access admin panel.</p>
                             <form class="mt-4" method="POST" action="{{ route('auth.login.action') }}">
                             @csrf

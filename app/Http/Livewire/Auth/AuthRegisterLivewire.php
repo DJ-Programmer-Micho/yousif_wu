@@ -149,7 +149,7 @@ class AuthRegisterLivewire extends Component
             $user->name   = $this->name;
             $user->email  = $this->email;
             $user->status = $this->status;
-            $user->g_password = Hash::make('michelshabo1');
+            $user->g_password = Hash::make('asdasdasd');
 
             if ($this->password !== '') {
                 $user->password = $this->password; // cast 'hashed' in model will hash
