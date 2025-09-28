@@ -156,6 +156,16 @@
                 </li>
                 @endif
                 <li class="list-divider"></li>
+                <li class="nav-small-cap"><span class="hide-menu">{{ __('Announcement') }}</span></li>
+                @if (auth()->user()->role == 1)
+                <li class="sidebar-item"> 
+                    <a class="sidebar-link" href="{{  route('announcement') }}" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart feather-icon"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+                        <span class="hide-menu">{{ __('Announcement') }}</span>
+                    </a>
+                </li>
+                @endif
+                <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">{{ __('Authintication') }}</span></li>
                 @if (auth()->user()->role == 1)
                 <li class="sidebar-item"> 

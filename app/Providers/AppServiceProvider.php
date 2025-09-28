@@ -19,8 +19,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->app->singleton('app_link', function () {
+            return 'http://127.0.0.1:8000/';
+            // return 'https://iraqremit.com/';
+        });
         $this->app->singleton('cloudfront', function () {
-            return 'https://d1h4q8vrlfl3k9.cloudfront.net/';
+            return 'https://d1a4xucvuho2c9.cloudfront.net/';
+        });
+        
+        $this->app->singleton('master_email', function () {
+            return 'michelshabo1@gmail.com';
         });
 
         $this->app->singleton('cloudfrontflags', function () {

@@ -77,4 +77,10 @@ class User extends Authenticatable
         $out = (int)$this->receiverBalances()->where('status','Outgoing')->sum('amount');
         return $in - $out;
     }
+
+    public function createdAnnouncements()
+    {
+        return $this->hasMany(Announcement::class, 'created_by');
+    }
+
 }

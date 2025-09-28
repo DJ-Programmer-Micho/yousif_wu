@@ -122,7 +122,8 @@
                 </div>
                   @if ($this->isAdmin)
                     @livewire('action.receiver-action-livewire', ['receiverId' => $r->id], key('r-'.$r->id))
-                  @endif                
+                  @endif    
+                  @livewire('action.receiver-preview-livewire', ['receiverId' => $r->id], key('rp-'.$r->id))            
               </td>
             </tr>
           @empty

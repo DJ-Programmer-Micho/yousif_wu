@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Auth;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\UserProfile;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
@@ -187,25 +188,70 @@ class AuthRegisterLivewire extends Component
      * Crop to 1:1 and save to public disk under /avatars.
      * Deletes old avatar if present.
      */
+    // protected function processAvatar($uploaded, ?string $oldPath): string
+    // {
+    //     // Read, auto-rotate from EXIF, crop to 1:1 (400x400)
+    //     $img = Image::read($uploaded->getRealPath())
+    //         ->cover(400, 400);  // center-crop to square
+
+    //     $filename = 'avatars/'.uniqid('av_').'.jpg';
+
+    //     // Encode to JPEG and store on public disk
+    //     Storage::disk('public')->put($filename, $img->toJpeg(85)->toString());
+
+    //     // remove old file if any
+    //     if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+    //         Storage::disk('public')->delete($oldPath);
+    //     }
+
+    //     return $filename;
+    // }
     protected function processAvatar($uploaded, ?string $oldPath): string
     {
-        // Read, auto-rotate from EXIF, crop to 1:1 (400x400)
+        // Split name -> first/last
+        [$first, $last] = $this->splitFirstLast($this->name);
+        $first = Str::slug($first ?: 'register');
+        $last  = Str::slug($last ?: 'user');
+
+        // microseconds (no dot)
+        $usec = str_replace('.', '', sprintf('%.6f', microtime(true)));
+
+        // avatar/<first>_<last>_<usec>.jpg
+        $key = "avatar/{$first}_{$last}_{$usec}.jpg";
+
+        // Crop -> encode jpeg
         $img = Image::read($uploaded->getRealPath())
-            ->cover(400, 400);  // center-crop to square
+            ->cover(400, 400)
+            ->toJpeg(85)
+            ->toString();
 
-        $filename = 'avatars/'.uniqid('av_').'.jpg';
+        // Put to S3; set content-type; make public at object level
+        Storage::disk('s3')->put($key, $img, [
+            'ContentType' => 'image/jpeg',
+        ]);
 
-        // Encode to JPEG and store on public disk
-        Storage::disk('public')->put($filename, $img->toJpeg(85)->toString());
-
-        // remove old file if any
-        if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-            Storage::disk('public')->delete($oldPath);
+        // Best-effort delete of old file; ignore network errors
+        if ($oldPath) {
+            try {
+                if (Storage::disk('s3')->exists($oldPath)) {
+                    Storage::disk('s3')->delete($oldPath);
+                }
+            } catch (\Throwable $e) {
+                // Nothing
+            }
         }
 
-        return $filename;
+        return $key;
     }
 
+
+    protected function splitFirstLast(string $full): array
+    {
+        $parts = array_values(array_filter(preg_split('/\s+/u', trim($full) ?: ''), fn($p) => $p !== ''));
+        if (count($parts) === 0) return ['', ''];
+        if (count($parts) === 1) return [$parts[0], $parts[0]];
+        return [$parts[0], $parts[count($parts) - 1]];
+    }
 
     public function toggleStatus(int $id): void
     {
@@ -228,11 +274,14 @@ class AuthRegisterLivewire extends Component
     public function deleteUser(int $id): void
     {
         $u = User::where('role', 2)->with('profile')->findOrFail($id);
-        if ($u->profile && $u->profile->avatar && Storage::disk('public')->exists($u->profile->avatar)) {
-            Storage::disk('public')->delete($u->profile->avatar);
+
+        if ($u->profile && $u->profile->avatar && Storage::disk('s3')->exists($u->profile->avatar)) {
+            Storage::disk('s3')->delete($u->profile->avatar);
         }
+
         optional($u->profile)->delete();
         $u->delete();
+
         try {
             $this->dispatchBrowserEvent('alert', [
                 'type' => 'success',
@@ -244,9 +293,10 @@ class AuthRegisterLivewire extends Component
                 'message' => __('Something Went Wrong'),
             ]);
         }
-        
+
         $this->resetPage();
     }
+
 
     protected function resetForm(): void
     {

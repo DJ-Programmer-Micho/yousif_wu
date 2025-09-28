@@ -61,7 +61,7 @@
               <td style="width:52px">
                 @php $av = optional($u->profile)->avatar; @endphp
                 @if($av)
-                  <img src="{{ asset('storage/'.$av) }}" class="rounded-circle" alt="avatar" style="width:40px;height:40px;object-fit:cover;">
+                  <img src="{{ $av ? app('cloudfront').$av : 'avatar/user.png' }}" class="rounded-circle" alt="avatar" style="width:40px;height:40px;object-fit:cover;">
                 @else
                   <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
                     <span class="text-muted">{{ strtoupper(mb_substr($u->name,0,1)) }}</span>

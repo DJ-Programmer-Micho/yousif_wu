@@ -116,7 +116,8 @@
 
               <td class="text-nowrap text-center">
                 <div class="badge badge-modern bg-opacity-10 text-danger" style="font-size: 12px">
-                  <b>{{ $this->formatMtcn($r->mtcn) }}</b>
+                  <b>XXX-XXX-XXXX</b>
+                  {{-- <b>{{ $this->formatMtcn($r->mtcn) }}</b> --}}
                 </div>
               </td>
 
@@ -134,6 +135,13 @@
 
               <td class="text-center">
                 <div class="badge badge-modern bg-light text-dark">
+                      @php
+                        $countryData = collect($this->availableCountries)->firstWhere('en_name', $r->country);
+                        $flagUrl = $countryData ? app('cloudfrontflagsx2').'/'.$countryData['flag_path'] : null;
+                      @endphp
+                      @if($flagUrl)
+                        <img src="{{ $flagUrl }}" alt="{{ $r->country }}" style="height: 12px;">
+                      @endif
                   {{ $this->countryMap[$r->country] ?? $r->country }}
                 </div>
               </td>

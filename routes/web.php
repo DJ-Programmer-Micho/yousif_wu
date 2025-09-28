@@ -38,6 +38,7 @@ Route::middleware('auth','userstatus')->group(function () {
         Route::get('/', [AppController::class, 'dashboard'])->name('dashboard');
         Route::get('/profile', [AppController::class, 'profile'])->name('profile');
         Route::get('/setting', [AppController::class, 'setting'])->name('setting');
+        Route::get('/announcement', [AppController::class, 'announcement'])->name('announcement');
 
         Route::get('/auth-register', [AppController::class, 'register'])->middleware('twofactor')->name('register');
         Route::get('/sender', [AppController::class, 'sender'])->name('sender');

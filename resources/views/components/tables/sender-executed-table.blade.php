@@ -134,6 +134,13 @@
 
               <td class="text-center">
                 <div class="badge badge-modern bg-light text-dark text-center">
+                      @php
+                        $countryData = collect($this->availableCountries)->firstWhere('en_name', $r->country);
+                        $flagUrl = $countryData ? app('cloudfrontflagsx2').'/'.$countryData['flag_path'] : null;
+                      @endphp
+                      @if($flagUrl)
+                        <img src="{{ $flagUrl }}" alt="{{ $r->country }}" style="height: 12px;">
+                      @endif
                   {{ $this->countryMap[$r->country] ?? $r->country }}
                 </div>
               </td>

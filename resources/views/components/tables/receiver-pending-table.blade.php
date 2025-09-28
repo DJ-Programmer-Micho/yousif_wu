@@ -81,7 +81,7 @@
               $amtClass = (int)$r->amount_iqd > 1_000_000 ? 'amount-display-g'
                         : ((int)$r->amount_iqd >= 200_000 ? 'amount-display-b' : 'amount-display-r');
             @endphp
-            <tr>
+            <tr wire:key="receiver-row-{{ $r->id }}">
               <td class="text-nowrap text-center">
                 <div class="badge badge-modern bg-light text-dark">
                   {{ $r->created_at?->tz('Asia/Baghdad')->format('Y-m-d') }}
@@ -120,9 +120,10 @@
                     <i class="far fa-file-pdf"></i>
                   </a>
                 </div>
-                  @if ($this->isAdmin)
-                    @livewire('action.receiver-action-livewire', ['receiverId' => $r->id], key('r-'.$r->id))
-                  @endif
+                @if ($this->isAdmin)
+                @livewire('action.receiver-action-livewire', ['receiverId' => $r->id], key('r-'.$r->id))
+                @endif
+                @livewire('action.receiver-preview-livewire', ['receiverId' => $r->id], key('rp-'.$r->id))
               </td>
             </tr>
           @empty

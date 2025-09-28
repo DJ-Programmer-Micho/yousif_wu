@@ -2,6 +2,14 @@
 @push('css')
 <style>
   .profile-page .card { border-radius: .75rem; }
+
+.avatar-wrap { width:76px;height:76px }
+.avatar-overlay{
+    position:absolute; inset:auto 0 0 0; margin:auto;
+    transform:translateY(50%); opacity:0; transition:all .2s ease;
+    padding:.15rem .5rem; font-size:.75rem;
+  }
+.avatar-wrap:hover .avatar-overlay{ opacity:1; transform:translateY(0) }
 </style>
 @endpush
 @push('scripts')

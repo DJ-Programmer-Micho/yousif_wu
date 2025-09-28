@@ -27,7 +27,7 @@
         <div class="filter-section">
           <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div class="d-flex align-items-center gap-2">
-              <div class="kpi-icon primary" style="width: 40px; height: 40px; font-size: 16px;">
+              <div class="kpi-icon primary mx-1" style="width: 40px; height: 40px; font-size: 16px;">
                 <i class="fas fa-sliders-h"></i>
               </div>
               <div>
@@ -69,6 +69,7 @@
         </div>
       </div>
     </div>
+@livewire('general.announcement-show-livewire', ['limit' => 6, 'role' => 'Register'])
 
 <div class="card-group-modern-2 mb-4">
   <div class="modern-header modern-header-bg1 p-3">

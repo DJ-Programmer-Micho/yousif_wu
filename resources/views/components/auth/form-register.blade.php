@@ -67,14 +67,17 @@
                 @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
 
+              @php use Illuminate\Support\Facades\Storage; @endphp
+
               <div class="col-md-12 mb-1">
                 <label class="form-label d-block">{{ __('Avatar (1:1)') }}</label>
+
                 @if($avatarUpload)
-                  {{-- Live preview of the uploaded file --}}
                   <img src="{{ $avatarUpload->temporaryUrl() }}" class="rounded mb-2" style="width:100px;height:100px;object-fit:cover;">
                 @elseif($currentAvatar)
-                  <img src="{{ asset('storage/'.$currentAvatar) }}" class="rounded mb-2" style="width:100px;height:100px;object-fit:cover;">
+                  <img src="{{ Storage::disk('s3')->url($currentAvatar) }}" class="rounded mb-2" style="width:100px;height:100px;object-fit:cover;">
                 @endif
+
                 <input type="file" class="form-control @error('avatarUpload') is-invalid @enderror" wire:model="avatarUpload" accept="image/*">
                 @error('avatarUpload') <div class="invalid-feedback">{{ $message }}</div> @enderror
 

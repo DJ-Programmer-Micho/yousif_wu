@@ -325,7 +325,11 @@
                   <td class="text-center align-middle">
                     <div class="d-inline-flex flex-column align-items-center">
                       <div class="badge badge-modern bg-opacity-10 text-primary" style="font-size:12px;">
-                        <b>{{ $this->formatMtcn($r->mtcn) }}</b>
+                        @if ($r->status != "Executed")
+                            <b>XXX-XXX-XXXX</b>
+                        @else
+                          <b>{{ $this->formatMtcn($r->mtcn) }}</b>
+                        @endif
                       </div>
                       <span class="badge {{ $statusClass }} mt-1" style="border-radius:10px; font-size:11px;">
                         {{ __($r->status) }}

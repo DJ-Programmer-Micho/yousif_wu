@@ -273,7 +273,7 @@ class SenderCreateLivewire extends Component
         $this->validate();
 
         // Use ISO2 code (not en_name) for the 'country' 2-char column
-        $iso2 = strtoupper((string) Country::whereKey($this->country_id)->value('en_name'));
+        $iso2 = (string) Country::whereKey($this->country_id)->value('en_name');
 
         // Ensure commission/total are up-to-date
         $this->computeCommission();
@@ -393,7 +393,8 @@ class SenderCreateLivewire extends Component
             }
 
             try {
-                $adminEmail = config('mail.admin_address') ?? env('ADMIN_EMAIL');
+                $adminEmail = config('mail.admin_address', env('ADMIN_EMAIL'));
+                // $adminEmail = app('master_email');
                 if ($adminEmail) {
                     Notification::route('mail', $adminEmail)
                         ->notify(new AdminSenderCreated($sender, auth()->user()->name));

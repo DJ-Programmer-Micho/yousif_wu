@@ -103,4 +103,7 @@ class AppController extends Controller
     public function receiverBalance(){
         return view('pages.balance.receiver.index');
     }
+    public function announcement(){
+        return view('pages.announcement.index');
+    }
 }

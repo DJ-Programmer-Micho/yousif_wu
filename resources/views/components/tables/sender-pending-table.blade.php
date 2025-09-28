@@ -1,40 +1,38 @@
 <div class="modern-card">
-
-            <div class="modern-header text-white">
-                <div class="header-content">
-                    <div class="row align-items-center">
-                        <div class="col-lg-8">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="avatar-modern  bg-opacity-20 mx-2">
-                                    <i class="fas fa-exchange-alt"></i>
-                                </div>
-                                <div>
-                                    <h3 class="mb-1 fw-bold">{{ __('Pending Transfers') }}</h3>
-                                    <p class="mb-0 opacity-75">{{ __('Manage and track all pending money transfers') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="stats-card">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <div class="small opacity-75 mb-1">{{ __('Total Pending') }}</div>
-                                        <div class="h4 mb-0 fw-bold">{{ $allsenders }}</div>
-                                        <div class="small opacity-75">
-                                            <span class="status-indicator bg-warning"></span>
-                                            {{ __('Active transfers') }}
-                                        </div>
-                                    </div>
-                                    <div class="avatar-modern bg-opacity-20">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+  <div class="modern-header text-white">
+      <div class="header-content">
+          <div class="row align-items-center">
+              <div class="col-lg-8">
+                  <div class="d-flex align-items-center mb-3">
+                      <div class="avatar-modern  bg-opacity-20 mx-2">
+                          <i class="fas fa-exchange-alt"></i>
+                      </div>
+                      <div>
+                          <h3 class="mb-1 fw-bold">{{ __('Pending Transfers') }}</h3>
+                          <p class="mb-0 opacity-75">{{ __('Manage and track all pending money transfers') }}</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="stats-card">
+                      <div class="d-flex align-items-center justify-content-between">
+                          <div>
+                              <div class="small opacity-75 mb-1">{{ __('Total Pending') }}</div>
+                              <div class="h4 mb-0 fw-bold">{{ $allsenders }}</div>
+                              <div class="small opacity-75">
+                                  <span class="status-indicator bg-warning"></span>
+                                  {{ __('Active transfers') }}
+                              </div>
+                          </div>
+                          <div class="avatar-modern bg-opacity-20">
+                              <i class="fas fa-clock"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
   <div class="card border-0 shadow-sm">
     <div class="card-header bg-white">
       <div class="row g-3 align-items-end">
@@ -116,7 +114,8 @@
 
               <td class="text-nowrap text-center">
                 <div class="badge badge-modern bg-opacity-10 text-primary" style="font-size: 12px">
-                  <b>{{ $this->formatMtcn($r->mtcn) }}</b>
+                  <b>XXX-XXX-XXXX</b>
+                  {{-- <b>{{ $this->formatMtcn($r->mtcn) }}</b> --}}
                 </div>
               </td>
 
@@ -134,6 +133,13 @@
 
               <td class="text-center">
                 <div class="badge badge-modern bg-light text-dark">
+                      @php
+                        $countryData = collect($this->availableCountries)->firstWhere('en_name', $r->country);
+                        $flagUrl = $countryData ? app('cloudfrontflagsx2').'/'.$countryData['flag_path'] : null;
+                      @endphp
+                      @if($flagUrl)
+                        <img src="{{ $flagUrl }}" alt="{{ $r->country }}" style="height: 12px;">
+                      @endif
                   {{ $this->countryMap[$r->country] ?? $r->country }}
                 </div>
               </td>

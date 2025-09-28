@@ -138,9 +138,45 @@
 
         {{-- Identification (disabled for now) --}}
         <div class="col-md-6">
-          <label class="form-label">{{ __('Identification') }}</label>
-          <input type="text" class="form-control" placeholder="{{ __('(Optional)') }}" disabled>
-          <small class="text-muted">{{ __('We will add ID details later.') }}</small>
+        <label for="rx_identification" class="form-label">
+            {{ __('Identification (Image or PDF)') }}
+            <small class="text-muted"> {{ __('Optional') }}</small>
+        </label>
+
+        {{-- Live preview --}}
+        @php use Illuminate\Support\Str; @endphp
+        @if($identificationUpload)
+            @php
+            $isImage = Str::startsWith($identificationUpload->getMimeType(), 'image/');
+            @endphp
+            <div class="mb-2">
+            @if($isImage)
+                <img src="{{ $identificationUpload->temporaryUrl() }}"
+                    alt="ID preview"
+                    class="rounded border"
+                    style="max-width: 120px; height: auto;">
+            @else
+                <div class="d-inline-flex align-items-center px-3 py-2 border rounded bg-light">
+                <i class="fas fa-file-pdf text-danger mr-2"></i>
+                <span class="small">{{ __('PDF selected') }}</span>
+                </div>
+            @endif
+            </div>
+        @endif
+
+        <input id="rx_identification"
+                type="file"
+                accept="image/*,.pdf"
+                class="form-control @error('identificationUpload') is-invalid @enderror"
+                wire:model="identificationUpload">
+        @error('identificationUpload') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+
+        <div wire:loading wire:target="identificationUpload" class="small text-muted mt-2">
+            <span class="spinner-border spinner-border-sm mr-1"></span>{{ __('Uploading...') }}
+        </div>
+        <small class="text-muted d-block mt-2">
+            {{ __('Accepted: images or PDF. Max 8 MB.') }}
+        </small>
         </div>
       </div>
 

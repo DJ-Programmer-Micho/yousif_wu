@@ -181,13 +181,23 @@ class ReceiverActionLivewire extends Component
                 'template' => [
                     'name' => $template,
                     'language' => ['code' => $lang],
-                    'components' => [[
+                    'components' => [
+                        [
                         'type' => 'body',
                         'parameters' => [
                             ['type' => 'text', 'parameter_name' => 'text', 'text' => $customerName],
                             ['type' => 'text', 'parameter_name' => 'mtcn', 'text' => 'mtcn-'.$mtcn],
                         ],
-                    ]],
+                        ],
+                        [
+                        'type' => 'button',
+                        'sub_type' => 'url',
+                        'index' => '0', // 0 if it’s the first button in the template
+                        'parameters' => [
+                            ['type' => 'text', 'text' => (string) 'receipts/'. $receiver->id .'/customer'], // e.g. "27"
+                        ],
+                        ],
+                    ],
                 ],
             ];
 
