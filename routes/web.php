@@ -3,6 +3,7 @@
 use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\LawController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\ReceiptDompdfController;
@@ -94,3 +95,6 @@ Route::middleware('auth','userstatus')->group(function () {
       ->middleware(['auth','userstatus'])
       ->name('receipts.receiver.dompdf.receiverShow');
 // });
+
+Route::get('law/terms-conditions', [LawController::class, 'termsCondition'])->name('law.terms');
+Route::get('law/privacy-policy', [LawController::class, 'privacyPolicy'])->name('law.privacy');

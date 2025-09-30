@@ -162,21 +162,36 @@ class ReceiverActionLivewire extends Component
         try {
             $phoneId  = config('services.whatsapp.phone_id');
             $token    = config('services.whatsapp.token');
-            $toNumber = config('services.whatsapp.test_to');
+            // $toNumber = config('services.whatsapp.test_to');
             $template = config('services.whatsapp.template_receiver');
             $lang     = config('services.whatsapp.lang', 'en');
-
-            if (!$phoneId || !$token || !$toNumber || !$template) {
-                Log::warning('WA Receiver: missing config', compact('phoneId','toNumber','template','lang'));
+            
+            if (!$phoneId || !$token || !$template) {
+                Log::warning('WA Receiver: missing config', compact('phoneId','template','lang'));
                 return;
             }
+            $toNumberAgency   = optional(optional($receiver->user)->profile)->phone;
+            $toNumberCustomer = $receiver->phone;
+
+            $toNumberAgency   = $toNumberAgency   ? ltrim(trim($toNumberAgency), '+')   : null;
+            $toNumberCustomer = $toNumberCustomer ? ltrim(trim($toNumberCustomer), '+') : null;
+
+            $urlForAgency   = 'receipts-receiver-executed/'.$receiver->id.'/agent';
+            $urlForCustomer = 'receipts-receiver-executed/'.$receiver->id.'/customer';
 
             $customerName = trim(($receiver->first_name ?? '').' '.($receiver->last_name ?? '')) ?: 'Customer';
             $mtcn         = (string) $receiver->mtcn;
 
+            $anySuccess = false;
+            $lastError  = null;
+
+            $sendOne = function (?string $to, string $url) use (
+                $token, $phoneId, $template, $lang, $customerName, $mtcn, $receiver, &$anySuccess, &$lastError
+            ) {
+                if (!$to) return;
             $payload = [
                 'messaging_product' => 'whatsapp',
-                'to' => $toNumber,
+                'to' => $to,
                 'type' => 'template',
                 'template' => [
                     'name' => $template,
@@ -194,7 +209,7 @@ class ReceiverActionLivewire extends Component
                         'sub_type' => 'url',
                         'index' => '0', // 0 if it’s the first button in the template
                         'parameters' => [
-                            ['type' => 'text', 'text' => (string) 'receipts/'. $receiver->id .'/customer'], // e.g. "27"
+                            ['type' => 'text', 'text' => (string) $url], // e.g. "27"
                         ],
                         ],
                     ],
@@ -213,6 +228,20 @@ class ReceiverActionLivewire extends Component
             } else {
                 $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => __('WhatsApp push sent')]);
             }
+        };
+
+        $sendOne($toNumberAgency,   $urlForAgency);
+        $sendOne($toNumberCustomer, $urlForCustomer);
+
+        if ($anySuccess) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => __('WhatsApp push sent')]);
+        } elseif ($lastError) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => __('WhatsApp push failed (:code)', ['code' => $lastError['status']]),
+            ]);
+        }
+
         } catch (\Throwable $e) {
             Log::error('WhatsApp push exception (receiver)', ['error' => $e->getMessage()]);
             $this->dispatchBrowserEvent('alert', ['type' => 'warning', 'message' => __('WhatsApp push failed')]);

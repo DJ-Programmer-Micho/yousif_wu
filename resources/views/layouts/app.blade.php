@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/logo-icon.png">
     <link rel="shortcut icon" href="../assets/images/logo-icon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/logo-icon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/logo-icon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/logo-icon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../assets/images/logo-icon.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/images/logo-icon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/big-logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/big-logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/big-logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../assets/images/big-logo.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/images/big-logo.png">
         <!-- Custom CSS -->
     <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
