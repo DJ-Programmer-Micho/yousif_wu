@@ -29,12 +29,14 @@ class Sender extends Model
         'r_phone',
         'mtcn',
         'status',
+        'payouts',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'tax'    => 'decimal:2',
         'total'  => 'decimal:2',
+        'payouts' => 'array',
     ];
 
     public function user(): BelongsTo {

@@ -81,6 +81,7 @@ class ReceiptDompdfController extends Controller
             'fee'    => (float)$sender->tax,
             'total'  => (float)$sender->total,
             'mtcn' => $mtcnFormatted,
+            'payout' => $sender->payouts[0],
         ];
 
         // --- EITHER: Blade view (recommended) ---

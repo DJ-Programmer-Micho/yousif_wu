@@ -1825,10 +1825,12 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c107"><span class="c35">TOTAL:</span></p>
+                <p class="c107"><span class="c35">Total:</span></p>
+                <p class="c107" style="margin-top: 15px"><span class="c35">Payout:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
                 <p class="c18"><span class="c9">{{ number_format($total, 2) }}</span><span class="c9" style="position: absolute; right: 10px;">US Dollar</span></p>
+                <p class="c18" style="margin-top: 15px"><span class="c9">{{ number_format($payout['amount'], 2) }}</span><span class="c9" style="position: absolute; right: 10px;">{{ $payout['currency'] }}</span></p>
             </td>
         </tr>
         <tr class="c49">

@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Action;
 
-use Livewire\Component;
 use App\Models\Sender;
+use Livewire\Component;
+use App\Models\SenderBalance;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Telegram\TeleNotifySenderAction;
 
@@ -26,6 +27,9 @@ class SenderActionLivewire extends Component
     public string $oldLastName = '';
     public string $newLastName = '';
 
+    public ?string $payoutAmount = null;    // decimal text, e.g. "6,500.50"
+    public ?string $payoutCurrency = 'USD'; // ISO 4217 (3 letters)
+
     public ?float $execTotal = null;
 
     public bool $isAdmin = false;
@@ -34,9 +38,11 @@ class SenderActionLivewire extends Component
     {
         return [
             'newMtcn'       => ['required','digits:10'],
-        // tighten names if you want caps only: 'regex:/^[A-Z\s\-\'\.]+$/u'
             'newFirstName'  => ['required','string','max:100'],
             'newLastName'   => ['required','string','max:100'],
+
+            'payoutAmount'   => ['required','regex:/^\s*\d{1,18}([,]?\d{3})*(\.\d{1,2})?\s*$/'],
+            'payoutCurrency' => ['required','string','min:1','max:4','alpha'],            
         ];
     }
 
@@ -46,6 +52,15 @@ class SenderActionLivewire extends Component
         $this->isAdmin = ((int) auth()->user()->role) === 1;
     }
 
+
+    private function normalizeMoney(?string $raw): ?string
+    {
+        if ($raw === null || $raw === '') return null;
+        // remove commas/spaces; keep digits and dot
+        $v = preg_replace('/[^\d\.]/', '', str_replace(',', '', $raw));
+        if ($v === '' || !is_numeric($v)) return null;
+        return number_format((float)$v, 2, '.', '');
+    }
     // ----- UI helpers -----
 
     public function getSenderProperty(): ?Sender
@@ -91,6 +106,9 @@ public function askExecute(): void
 
     $this->execTotal = (float) $s->total;
 
+    $this->payoutAmount   = number_format((float)$s->total, 2); // prefill with total
+    $this->payoutCurrency = $this->payoutCurrency ?: 'USD';     // or IQD per your logic
+
     $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
 }
 
@@ -123,6 +141,24 @@ public function markExecutedConfirmed(): void
             'last_name'  => $this->newLastName,
         ]);
 
+        $amount   = $this->normalizeMoney($this->payoutAmount);
+        $currency = strtoupper(trim((string)$this->payoutCurrency));
+
+        // Safety check (rules already required them)
+        if (!$amount || !$currency) {
+            throw new \RuntimeException('Invalid payout fields.');
+        }
+
+        $payouts = $sender->payouts ?? [];
+        $payouts[] = [
+            'amount'       => $amount,      
+            'currency'     => $currency,    
+            'by'           => auth()->id(),
+            'at'           => now()->toIso8601String(),
+            'mtcn_before'  => (string) $this->oldMtcn,
+            'mtcn_after'   => (string) $this->newMtcn,
+        ];
+        $sender->forceFill(['payouts' => $payouts])->save();
         // Flip to Executed (does notifications too)
         $this->internalChangeStatus($sender, 'Executed');
 
@@ -205,6 +241,37 @@ protected function internalChangeStatus(Sender $sender, string $to): void
         return;
     }
 
+    if ($to === 'Rejected') {
+        // only for registers
+        $role = (int) optional($sender->user)->role;
+        if ($role === 2) {
+            DB::transaction(function () use ($sender) {
+                // lock user rows to avoid race conditions with concurrent flips
+                DB::table('sender_balances')
+                    ->where('user_id', $sender->user_id)
+                    ->lockForUpdate()
+                    ->get();
+
+                // prevent duplicate refund if someone toggles repeatedly
+                $alreadyRefunded = SenderBalance::query()
+                    ->where('sender_id', $sender->id)
+                    ->where('status', 'Incoming')
+                    ->where('note', 'like', 'Sender Rejected%')
+                    ->exists();
+
+                if (!$alreadyRefunded) {
+                    SenderBalance::create([
+                        'user_id'   => $sender->user_id,
+                        'amount'    => (float) $sender->total,
+                        'status'    => 'Incoming',
+                        'sender_id' => $sender->id,
+                        'note'      => 'Sender Rejected (' . trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? '')) . ')',
+                    ]);
+                }
+            });
+        }
+    }
+
     $this->dispatchBrowserEvent('alert', [
         'type'=>'success',
         'message'=>__('Marked :status', ['status'=>$to])
@@ -235,21 +302,46 @@ protected function internalChangeStatus(Sender $sender, string $to): void
         try {
             $phoneId  = config('services.whatsapp.phone_id');
             $token    = config('services.whatsapp.token');
-            $toNumber = config('services.whatsapp.test_to');
+            // $toNumber = config('services.whatsapp.test_to');
             $template = config('services.whatsapp.template_sender');
             $lang     = config('services.whatsapp.lang', 'en');
 
-            if (!$phoneId || !$token || !$toNumber || !$template) {
-                Log::warning('WA Sender: missing config', compact('phoneId','toNumber','template','lang'));
+            if (!$phoneId || !$token || !$template) {
+                Log::warning('WA Sender: missing config', compact('phoneId','template','lang'));
                 return;
             }
+
+            // Two recipients: agency (owner) + customer (sender phone)
+            $toNumberAgency   = optional(optional($sender->user)->profile)->phone;
+            $toNumberCustomer = $sender->phone ?? null; // adjust if your field name differs
+
+            // Remove leading '+' if present
+            $toNumberAgency   = $toNumberAgency   ? ltrim(trim($toNumberAgency), '+')   : null;
+            $toNumberCustomer = $toNumberCustomer ? ltrim(trim($toNumberCustomer), '+') : null;
+
+            if (!$toNumberAgency && !$toNumberCustomer) {
+                Log::warning('WA Sender: no target numbers', ['sender_id' => $sender->id]);
+                return;
+            }
+
+            // Per-recipient URLs (suffix only; set your template base accordingly)
+            $urlForAgency   = 'receipts-executed/'.$sender->id.'/agent';
+            $urlForCustomer = 'receipts-executed/'.$sender->id.'/customer';
 
             $customerName = trim(($sender->first_name ?? '').' '.($sender->last_name ?? '')) ?: 'Customer';
             $mtcn         = (string) $sender->mtcn;
 
+            $anySuccess = false;
+            $lastError  = null;
+
+            $sendOne = function (?string $to, string $url) use (
+            $token, $phoneId, $template, $lang, $customerName, $mtcn, $sender, &$anySuccess, &$lastError
+            ) {
+                if (!$to) return;
+
             $payload = [
                 'messaging_product' => 'whatsapp',
-                'to' => $toNumber,
+                'to' => $to,
                 'type' => 'template',
                 'template' => [
                     'name' => $template,
@@ -267,7 +359,7 @@ protected function internalChangeStatus(Sender $sender, string $to): void
                             'sub_type' => 'url',
                             'index' => '0', // 0 if it’s the first button in the template
                             'parameters' => [
-                                ['type' => 'text', 'text' => (string) 'receipts/'. $sender->id .'/customer'], // e.g. "27"
+                                ['type' => 'text', 'text' => (string) $url], // e.g. "27"
                             ],
                         ],
                     ],
@@ -277,14 +369,29 @@ protected function internalChangeStatus(Sender $sender, string $to): void
             $resp = Http::withToken($token)->acceptJson()->asJson()
                 ->post("https://graph.facebook.com/v22.0/{$phoneId}/messages", $payload);
 
-            if (!$resp->successful()) {
-                Log::error('WhatsApp API error (sender)', ['status'=>$resp->status(), 'body'=>$resp->body()]);
+                if ($resp->successful()) {
+                    $anySuccess = true;
+                    Log::info('WhatsApp sent (sender executed)', [
+                        'to' => $to, 'url' => $url, 'sender_id' => $sender->id
+                    ]);
+                } else {
+                    $lastError = ['status' => $resp->status(), 'body' => $resp->body(), 'to' => $to, 'url' => $url];
+                    Log::error('WhatsApp API error (sender executed)', $lastError);
+                }
+            };
+
+            // Send to both recipients
+            $sendOne($toNumberAgency,   $urlForAgency);
+            $sendOne($toNumberCustomer, $urlForCustomer);
+
+            // Single toast after both attempts
+            if ($anySuccess) {
+                $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => __('WhatsApp push sent')]);
+            } elseif ($lastError) {
                 $this->dispatchBrowserEvent('alert', [
                     'type' => 'warning',
-                    'message' => __('WhatsApp push failed (:code)', ['code' => $resp->status()]),
+                    'message' => __('WhatsApp push failed (:code)', ['code' => $lastError['status']]),
                 ]);
-            } else {
-                $this->dispatchBrowserEvent('alert', ['type' => 'success', 'message' => __('WhatsApp push sent')]);
             }
         } catch (\Throwable $e) {
             Log::error('WhatsApp push exception (sender)', ['error' => $e->getMessage()]);

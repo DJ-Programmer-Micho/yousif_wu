@@ -85,53 +85,89 @@ class ReceiverActionLivewire extends Component
 
     // ----- Core receiver change -----
 
-    protected function internalChangeStatusReceiver(Receiver $receiver, string $to): void
-    {
-        if (!in_array($to, ['Pending','Executed','Rejected'], true)) {
-            $this->dispatchBrowserEvent('alert', ['type'=>'error','message'=>__('Invalid status')]);
-            return;
-        }
+protected function internalChangeStatusReceiver(Receiver $receiver, string $to): void
+{
+    if (!in_array($to, ['Pending','Executed','Rejected'], true)) {
+        $this->dispatchBrowserEvent('alert', ['type'=>'error','message'=>__('Invalid status')]);
+        return;
+    }
 
-        DB::beginTransaction();
-        try {
+    try {
+        DB::transaction(function () use ($receiver, $to) {
+            // Lock fresh copy
             $receiver = Receiver::query()->whereKey($receiver->id)->lockForUpdate()->first();
             if (!$receiver) {
-                DB::rollBack();
-                $this->dispatchBrowserEvent('alert', ['type'=>'warning','message'=>__('Not allowed or already processed')]);
-                return;
+                throw new \RuntimeException('Receiver not found / already processed.');
             }
 
             $from = (string) $receiver->status;
+            if ($from === $to) {
+                // no-op
+                $this->dispatchBrowserEvent('alert', ['type'=>'info','message'=>__('No change')]);
+                // early exit out of transaction block
+                throw new \LogicException('__NO_CHANGE__');
+            }
 
-            $receiver->update(['status' => $to]);
+            // Flip status
+            if (!$receiver->update(['status' => $to])) {
+                throw new \RuntimeException('Status update failed');
+            }
 
-            // Ledger effects
+            // ===== Ledger effects =====
+            // (A) Pending/Rejected -> Executed: credit receiver balance (Incoming)
             if ($from !== 'Executed' && $to === 'Executed') {
-                ReceiverBalance::create([
-                    'user_id'     => $receiver->user_id,
-                    'receiver_id' => $receiver->id,
-                    'amount'      => (int) $receiver->amount_iqd,
-                    'status'      => 'Incoming',
-                    'note'        => 'Receiver executed',
-                ]);
-                } elseif ($from === 'Executed' && $to !== 'Executed') {
+
+                // prevent duplicates (safety)
+                $exists = ReceiverBalance::query()
+                    ->where('receiver_id', $receiver->id)
+                    ->where('status', 'Incoming')
+                    ->where('note', 'Receiver executed')
+                    ->exists();
+
+                if (!$exists) {
                     ReceiverBalance::create([
                         'user_id'     => $receiver->user_id,
                         'receiver_id' => $receiver->id,
-                        'amount'      => (int) $receiver->amount_iqd, // positive!
-                        'status'      => 'Outgoing',                  // only Incoming/Outgoing
-                        'note'        => "Receiver moved from Executed to {$to} (revert)",
+                        'amount'      => (int) $receiver->amount_iqd,
+                        'status'      => 'Incoming',
+                        'note'        => 'Receiver executed',
+                    ]);
+                }
+            }
+
+            // (B) Executed -> Pending/Rejected: debit receiver balance (Outgoing)
+            if ($from === 'Executed' && $to !== 'Executed') {
+                $fullName = trim(($receiver->first_name ?? '') . ' ' . ($receiver->last_name ?? ''));
+                $note = ($to === 'Rejected')
+                    ? 'Receiver Rejected (' . $fullName . ')'
+                    : 'Receiver moved from Executed to ' . $to . ' (revert)';
+
+                // prevent duplicates (safety)
+                $exists = ReceiverBalance::query()
+                    ->where('receiver_id', $receiver->id)
+                    ->where('status', 'Outgoing')
+                    ->where('note', $note)
+                    ->exists();
+
+                if (!$exists) {
+                    ReceiverBalance::create([
+                        'user_id'     => $receiver->user_id,
+                        'receiver_id' => $receiver->id,
+                        'amount'      => (int) $receiver->amount_iqd, // positive
+                        'status'      => 'Outgoing',
+                        'note'        => $note,
                         'admin_id'    => auth()->id(),
                     ]);
                 }
-            DB::commit();
+            }
 
+            // ===== UI toast =====
             $this->dispatchBrowserEvent('alert', [
-                'type'=>'success',
-                'message'=>__('Marked :status', ['status'=>$to]),
+                'type'    => 'success',
+                'message' => __('Marked :status', ['status' => $to]),
             ]);
 
-            // Telegram for all
+            // ===== Telegram =====
             try {
                 Notification::route('toTelegram', null)->notify(new TeleNotifyReceiverAction(
                     $receiver->id,
@@ -146,16 +182,25 @@ class ReceiverActionLivewire extends Component
                 Log::warning('TeleNotifyReceiverAction failed', ['e'=>$e->getMessage()]);
             }
 
-            // WhatsApp only for Pending → Executed
+            // ===== WhatsApp only for Pending/Rejected -> Executed =====
             if (in_array($from, ['Pending','Rejected'], true) && $to === 'Executed') {
                 $this->sendWhatsAppReceiverExecuted($receiver);
             }
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            Log::error('Receiver status change failed', ['error'=>$e->getMessage()]);
-            $this->dispatchBrowserEvent('alert', ['type'=>'error','message'=>__('Something went wrong!')]);
-        }
+        });
+    } catch (\LogicException $e) {
+        if ($e->getMessage() === '__NO_CHANGE__') return; // already handled toast
+        Log::warning('Receiver no-change short-circuit', ['receiver_id' => $receiver->id]);
+        return;
+    } catch (\Throwable $e) {
+        Log::error('Receiver status change failed', [
+            'error' => $e->getMessage(),
+            'receiver_id' => $receiver->id,
+            'to' => $to,
+        ]);
+        $this->dispatchBrowserEvent('alert', ['type'=>'error','message'=>__('Something went wrong!')]);
     }
+}
+
 
     protected function sendWhatsAppReceiverExecuted(Receiver $receiver): void
     {
@@ -184,10 +229,10 @@ class ReceiverActionLivewire extends Component
 
             $anySuccess = false;
             $lastError  = null;
-
             $sendOne = function (?string $to, string $url) use (
                 $token, $phoneId, $template, $lang, $customerName, $mtcn, $receiver, &$anySuccess, &$lastError
-            ) {
+                ) {
+                $link = $url;
                 if (!$to) return;
             $payload = [
                 'messaging_product' => 'whatsapp',
@@ -209,7 +254,7 @@ class ReceiverActionLivewire extends Component
                         'sub_type' => 'url',
                         'index' => '0', // 0 if it’s the first button in the template
                         'parameters' => [
-                            ['type' => 'text', 'text' => (string) $url], // e.g. "27"
+                            ['type' => 'text', 'text' => $link], // e.g. "27"
                         ],
                         ],
                     ],

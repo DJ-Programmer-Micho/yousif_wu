@@ -141,6 +141,35 @@
                   @error('newLastName') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
               </div>
+
+              <hr class="my-3">
+
+              <div class="row mx-auto">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">{{ __('Payout Amount') }}</label>
+                    <input type="text"
+                          class="form-control @error('payoutAmount') is-invalid @enderror"
+                          placeholder="6,500.50"
+                          wire:model.defer="payoutAmount">
+                    @error('payoutAmount') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <small class="text-muted">{{ __('Use dot for decimals (e.g. 1234.56)') }}</small>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="small">{{ __('Currency (ISO 4217)') }}</label>
+                    <input type="text"
+                          class="form-control @error('payoutCurrency') is-invalid @enderror"
+                          placeholder="USD / IQD / IDR"
+                          maxlength="3"
+                          wire:model.defer="payoutCurrency">
+                    @error('payoutCurrency') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <small class="text-muted">{{ __('Exactly 3 letters (e.g. USD, IQD)') }}</small>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

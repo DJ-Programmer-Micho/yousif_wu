@@ -30,7 +30,7 @@ return new class extends Migration {
       $t->string('r_last_name')->nullable();
       $t->string('r_phone', 32)->nullable();
 
-
+      $t->json('payouts');
 
       $t->timestamps();
       $t->softDeletes();
