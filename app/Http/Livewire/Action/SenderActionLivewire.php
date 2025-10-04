@@ -42,7 +42,7 @@ class SenderActionLivewire extends Component
             'newLastName'   => ['required','string','max:100'],
 
             'payoutAmount'   => ['required','regex:/^\s*\d{1,18}([,]?\d{3})*(\.\d{1,2})?\s*$/'],
-            'payoutCurrency' => ['required','string','min:1','max:4','alpha'],            
+            'payoutCurrency' => ['required','string','min:1','max:4'],            
         ];
     }
 
