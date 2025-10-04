@@ -77,22 +77,22 @@ Route::middleware('auth','userstatus')->group(function () {
 
     Route::get('/receipts/{sender}/{type}', [ReceiptDompdfController::class, 'show'])
       ->whereIn('type', ['customer','agent','both'])
-      ->middleware(['auth','userstatus'])
+      // ->middleware(['auth','userstatus'])
       ->name('receipts.dompdf.show');
 
     Route::get('/receipts-executed/{sender}/{type}', [ReceiptDompdfController::class, 'senderShow'])
       ->whereIn('type', ['customer','agent','both'])
-      ->middleware(['auth','userstatus'])
+      // ->middleware(['auth','userstatus'])
       ->name('receipts.dompdf.senderShow');
 
     Route::get('/receipts-receiver/{receiver}/{type}', [ReceiptDompdfController::class, 'receiverShow'])
       ->whereIn('type', ['customer','agent','both'])
-      ->middleware(['auth','userstatus'])
+      // ->middleware(['auth','userstatus'])
       ->name('receipts.receiver.dompdf.show');
 
     Route::get('/receipts-receiver-executed/{receiver}/{type}', [ReceiptDompdfController::class, 'executedReceiverShow'])
       ->whereIn('type', ['customer','agent','both'])
-      ->middleware(['auth','userstatus'])
+      // ->middleware(['auth','userstatus'])
       ->name('receipts.receiver.dompdf.receiverShow');
 // });
 
