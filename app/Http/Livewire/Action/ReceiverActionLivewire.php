@@ -224,7 +224,8 @@ protected function internalChangeStatusReceiver(Receiver $receiver, string $to):
             $urlForAgency   = 'receipts-receiver-executed/'.$receiver->id.'/agent';
             $urlForCustomer = 'receipts-receiver-executed/'.$receiver->id.'/customer';
 
-            $customerName = trim(($receiver->first_name ?? '').' '.($receiver->last_name ?? '')) ?: 'Customer';
+            // $customerName = trim(($receiver->first_name ?? '').' '.($receiver->last_name ?? '')) ?: 'Customer';
+            $customerName = 'Customer';
             $mtcn         = (string) $receiver->mtcn;
 
             $anySuccess = false;

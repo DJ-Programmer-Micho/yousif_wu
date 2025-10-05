@@ -328,7 +328,8 @@ protected function internalChangeStatus(Sender $sender, string $to): void
             $urlForAgency   = 'receipts-executed/'.$sender->id.'/agent';
             $urlForCustomer = 'receipts-executed/'.$sender->id.'/customer';
 
-            $customerName = trim(($sender->first_name ?? '').' '.($sender->last_name ?? '')) ?: 'Customer';
+            // $customerName = trim(($sender->first_name ?? '').' '.($sender->last_name ?? '')) ?: 'Customer';
+            $customerName = 'Customer';
             $mtcn         = (string) $sender->mtcn;
 
             $anySuccess = false;
