@@ -4,10 +4,8 @@
 @endpush
 @section('app')
 <div class="container py-4 mt-5">
-
   <form method="POST" action="{{ route('splash.save') }}">
     @csrf
-
     {{-- ===================== AGENCY ===================== --}}
     <div class="row">
       <div class="col-12 text-center mb-3">
@@ -45,6 +43,29 @@
           name="agency"
           value="zain_cash"
           disabled
+          {{ old('agency') === 'money_gram' ? 'checked' : '' }}
+        >
+        <label for="agency_zain" class="card-option w-100 is-disabled">
+          <div class="card text-center bg-dark h-100">
+            <div class="card-body py-4">
+              <h5 class="card-title text-white mb-3">MoneyGram</h5>
+              <img src="https://logos-world.net/wp-content/uploads/2023/02/MoneyGram-Logo.jpg"
+                   alt="MoneyGram" class="mx-auto d-block" style="max-height:48px">
+              <div class="small text-white-50 mt-2">Coming soon</div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      {{-- Zain Cash --}}
+      {{-- <div class="col-md-4 mt-3 d-flex">
+        <input
+          id="agency_zain"
+          type="radio"
+          class="card-input sr-only"
+          name="agency"
+          value="zain_cash"
+          disabled
           {{ old('agency') === 'zain_cash' ? 'checked' : '' }}
         >
         <label for="agency_zain" class="card-option w-100 is-disabled">
@@ -56,10 +77,10 @@
             </div>
           </div>
         </label>
-      </div>
+      </div> --}}
 
       {{-- FIB (disabled example) --}}
-      <div class="col-md-4 mt-3 d-flex">
+      {{-- <div class="col-md-4 mt-3 d-flex">
         <input
           id="agency_fib"
           type="radio"
@@ -78,7 +99,7 @@
             </div>
           </div>
         </label>
-      </div>
+      </div> --}}
     </div>
 
     {{-- validation message (optional) --}}

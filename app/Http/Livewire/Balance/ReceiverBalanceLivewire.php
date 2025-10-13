@@ -25,6 +25,13 @@ class ReceiverBalanceLivewire extends Component
     public $deductAmount = null; // int (IQD)
     public ?string $deductNote = null;
 
+    // Top-Up modal
+    public ?int $topUpUserId = null;
+    public ?string $topUpUserName = null;
+    public $topUpAmount = null; // int (IQD)
+    public ?string $topUpNote = null;
+
+
     protected $listeners = ['closeReceiverDetailsModal' => 'closeModal'];
 
     public function updatingQ() { $this->resetPage(); }
@@ -107,6 +114,42 @@ class ReceiverBalanceLivewire extends Component
         $this->dispatchBrowserEvent('close-receiver-deduct-modal');
         $this->reset(['deductUserId','deductUserName','deductAmount','deductNote']);
     }
+
+    // ----- Top-Up (Admin Only) -----
+    public function openTopUp(int $userId): void
+    {
+        if ((int)auth()->user()->role !== 1) abort(403);
+        $u = User::select('id','name')->findOrFail($userId);
+        $this->topUpUserId = $u->id;
+        $this->topUpUserName = $u->name;
+        $this->topUpAmount = null;
+        $this->topUpNote = null;
+        $this->dispatchBrowserEvent('open-receiver-topup-modal');
+    }
+
+    public function saveTopUp(): void
+    {
+        if ((int)auth()->user()->role !== 1) abort(403);
+
+        $this->validate([
+            'topUpUserId' => ['required','integer','exists:users,id'],
+            'topUpAmount' => ['required','integer','min:1','max:999999999999'],
+            'topUpNote'   => ['nullable','string','max:255'],
+        ]);
+
+        ReceiverBalance::create([
+            'user_id'  => $this->topUpUserId,
+            'amount'   => (int)$this->topUpAmount,
+            'status'   => 'Incoming',
+            'admin_id' => auth()->id(),
+            'note'     => $this->topUpNote,
+        ]);
+
+        $this->dispatchBrowserEvent('toast', ['message' => __('Top-up added successfully.')]);
+        $this->dispatchBrowserEvent('close-receiver-topup-modal');
+        $this->reset(['topUpUserId','topUpUserName','topUpAmount','topUpNote']);
+    }
+
 
     public function render()
     {

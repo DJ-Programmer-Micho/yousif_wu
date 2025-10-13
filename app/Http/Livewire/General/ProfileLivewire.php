@@ -81,7 +81,7 @@ class ProfileLivewire extends Component
         $this->validateOnly('phone');
         $this->validateOnly('address');
 
-        $u = $this->user->freshLockForUpdate();
+        $u = User::where('id', $this->user->id)->lockForUpdate()->first();
         $u->name = $this->name;
         $u->save();
 

@@ -46,6 +46,11 @@
                 {{ __('Details') }}
               </button>
               @if($isAdmin)
+              <button class="btn btn-sm btn-success mr-2"
+                      wire:click="openTopUp({{ $u->id }})">
+                {{ __('Top Up') }}
+              </button>
+              
               <button class="btn btn-sm btn-danger"
                       wire:click="openDeduct({{ $u->id }})">
                 {{ __('Deduct') }}
@@ -112,6 +117,47 @@
     </div></div>
   </div>
 
+
+    {{-- MODAL --}}
+    {{-- Top-Up Modal --}}
+    <div class="modal fade" id="receiverTopUpModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
+      <div class="modal-dialog"><div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ __('Top Up Receiver Balance') }}
+            @if($topUpUserName) — <span class="text-muted">{{ $topUpUserName }}</span>@endif
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#receiverTopUpModal').modal('hide')"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="modal-body">
+          @if($topUpUserId)
+            <div class="form-group">
+              <label>{{ __('Amount (IQD)') }}</label>
+              <input type="number" step="1" min="1" class="form-control" wire:model.lazy="topUpAmount">
+              @error('topUpAmount')<small class="text-danger">{{ $message }}</small>@enderror
+            </div>
+            <div class="form-group">
+              <label>{{ __('Note') }}</label>
+              <input type="text" class="form-control" wire:model.lazy="topUpNote" placeholder="{{ __('Optional') }}">
+              @error('topUpNote')<small class="text-danger">{{ $message }}</small>@enderror
+            </div>
+          @else
+            <div class="text-muted">{{ __('Select a register to top up.') }}</div>
+          @endif
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" onclick="$('#receiverTopUpModal').modal('hide')">{{ __('Cancel') }}</button>
+          <button type="button" class="btn btn-primary" wire:click="saveTopUp" @if(!$topUpUserId) disabled @endif>
+            {{ __('Save Top Up') }}
+          </button>
+        </div>
+      </div></div>
+    </div>
+
+
+
   @once
   @push('scripts')
   <script>
@@ -119,6 +165,8 @@
     window.addEventListener('close-receiver-details-modal', () => $('#receiverDetailsModal').modal('hide'));
     window.addEventListener('open-receiver-deduct-modal', () => $('#receiverDeductModal').modal('show'));
     window.addEventListener('close-receiver-deduct-modal', () => $('#receiverDeductModal').modal('hide'));
+    window.addEventListener('open-receiver-topup-modal', () => $('#receiverTopUpModal').modal('show'));
+    window.addEventListener('close-receiver-topup-modal', () => $('#receiverTopUpModal').modal('hide'));
     window.addEventListener('toast', e => { if (!e.detail?.message) return; alert(e.detail.message); });
   </script>
   @endpush
