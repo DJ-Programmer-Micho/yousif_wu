@@ -1872,12 +1872,12 @@
         </tr>
         <tr class="c114">
             <td class="c23" colspan="1" rowspan="1">
-                <p class="c123"><span class="c24">Optional Services:</span></p>
+                <p class="c123"><span class="c24">State:</span></p>
                 <p class="c67"><span class="c5"></span></p>
-                <p class="c82" style="padding-bottom: 4px"><span class="c24">Message:</span></p>
+                {{-- <p class="c82" style="padding-bottom: 4px"><span class="c24">Message:</span></p> --}}
             </td>
             <td class="c41" colspan="2" rowspan="1">
-                <p class="c98"><span class="c104">MONEY IN MINUTES</span></p>
+                <p class="c98"><span class="c104">{{ $state_id }}</span></p>
             </td>
             <td class="c15" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1891,11 +1891,10 @@
         </tr>
         <tr class="c79">
             <td class="c23" colspan="1" rowspan="1">
-                <p class="c69"><span class="c95">Receiver Mobile Number:</span></p>
-                <p class="c76"><span class="c25"><b>{{ $r_phone ?? '(If sending to a Mobile)' }}</b></span></p>
+                <p class="c69"><span class="c95">Optional Services:</span></p>
             </td>
             <td class="c41" colspan="2" rowspan="1">
-                <p class="c6"><span class="c3"></span></p>
+                <p class="c98"><span class="c104">MONEY IN MINUTES</span></p>
             </td>
             <td class="c15" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1911,10 +1910,12 @@
         </tr>
         <tr class="c43">
             <td class="c23" colspan="1" rowspan="1">
-                <p class="c6"><span class="c3"></span></p>
+                {{-- <p class="c6"><span class="c95"></span class>Receiver Mobile Number:</p> --}}
+                <p class="c69"><span class="c95">Receiver Mobile Number:</span></p>
+                <p class="c76"><span class="c25"><b>{{ $r_phone ?? '(If sending to a Mobile)' }}</b></span></p>
             </td>
             <td class="c41" colspan="2" rowspan="1">
-                <p class="c6"><span class="c3"></span></p>
+                {{-- <p class="c6"><span class="c3"></span><b>{{ $r_phone ?? '(If sending to a Mobile)' }}</p> --}}
             </td>
             <td class="c15" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>

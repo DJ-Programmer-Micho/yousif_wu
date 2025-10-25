@@ -21,6 +21,7 @@ class Sender extends Model
         'phone',
         'address',
         'country',
+        'state_id',
         'amount',
         'tax',
         'total',
@@ -41,5 +42,10 @@ class Sender extends Model
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
     }
 }

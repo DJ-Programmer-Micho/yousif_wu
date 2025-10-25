@@ -1726,12 +1726,12 @@
         </tr>
         <tr class="c121">
             <td class="c39" colspan="1" rowspan="1">
-                <p class="c60"><span class="c1">Optional Services:</span></p>
+                <p class="c60"><span class="c1">State:</span></p>
                 <p class="c56 c59"><span class="c6"></span></p>
-                <p class="c103"><span class="c1">Message:</span></p>
+                {{-- <p class="c103"><span class="c1">Message:</span></p> --}}
             </td>
             <td class="c33" colspan="2" rowspan="1">
-                <p class="c80"><span class="c17">MONEY IN MINUTES</span></p>
+                <p class="c80"><span class="c17">{{ $state_id }}</span></p>
             </td>
             <td class="c20" colspan="1" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>
@@ -1745,11 +1745,11 @@
         </tr>
         <tr class="c102">
             <td class="c39" colspan="1" rowspan="1">
-                <p class="c65"><span class="c35">Receiver Mobile Number:</span></p>
-                <p class="c126"><span class="c9">{{ $r_phone ?? '(If sending to a Mobile)' }}</span></p>
+                <p class="c60"><span class="c1">Optional Services:</span></p>
+                {{-- <p class="c126"><span class="c9">{{ $r_phone ?? '(If sending to a Mobile)' }}</span></p> --}}
             </td>
             <td class="c33" colspan="2" rowspan="1">
-                <p class="c25"><span class="c3"></span></p>
+                <p class="c80"><span class="c17">MONEY IN MINUTES</span></p>
             </td>
             <td class="c20" colspan="1" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>
@@ -1765,7 +1765,8 @@
         </tr>
         <tr class="c49">
             <td class="c39" colspan="1" rowspan="1">
-                <p class="c25"><span class="c3"></span></p>
+                <p class="c65"><span class="c35">Receiver Mobile Number:</span></p>
+                <p class="c126"><span class="c9">{{ $r_phone ?? '(If sending to a Mobile)' }}</span></p>
             </td>
             <td class="c33" colspan="2" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>

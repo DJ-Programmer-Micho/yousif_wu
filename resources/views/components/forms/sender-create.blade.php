@@ -1,3 +1,4 @@
+{{-- resources/views/components/forms/sender-create.blade.php --}}
 <div class="card border-0 shadow-sm">
   <div class="card-header border-0 bg-white py-3 d-flex justify-content-between align-items-center">
     <h5 class="mb-0 fw-semibold"><b>{{ __('Create New Sender') }}</b></h5>
@@ -57,7 +58,7 @@
         </div>
 
         {{-- Country (Select2, ID-based) --}}
-        <div class="col-md-6 mb-4">
+        <div class="col-md-3 mb-4">
           <label class="form-label">{{ __('Country') }} <span class="text-danger">*</span></label>
 
           <div class="form-control" wire:ignore>
@@ -78,6 +79,29 @@
 
           @error('country_id')<small class="text-danger">{{ $message }}</small>@enderror
         </div>
+
+      <div class="col-md-3 mb-4">
+        <label class="form-label">{{ __('State / Province') }}</label>
+
+        <div class="form-control">
+          <input type="hidden" id="sender_state_id_wire" wire:model="state_id">
+          <select id="senderStateSelect"
+                  class="form-control"
+                  data-placeholder="{{ __('Choose a state/province...') }}">
+            <option value=""></option>
+            @foreach($availableStates as $s)
+              <option value="{{ $s['id'] }}"
+                      data-code="{{ $s['code'] }}"
+                      data-ar="{{ $s['ar_name'] }}"
+                      data-ku="{{ $s['ku_name'] }}">
+                {{ $s['en_name'] }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+
+        @error('state_id')<small class="text-danger d-block mt-1">{{ $message }}</small>@enderror
+      </div>
 
         {{-- Amount / Commission / Total --}}
         <div class="col-md-2 mb-4">

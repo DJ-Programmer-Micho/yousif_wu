@@ -17,7 +17,8 @@ return new class extends Migration {
       $t->string('phone', 32);
       $t->string('address')->nullable();
       $t->char('country', 2); // ISO2 from countrySelect (e.g. IQ, US, LB)
-
+      $t->foreignId('state_id')->nullable()->constrained('states')->nullOnDelete();
+      
       // send amounts
       $t->decimal('amount', 12, 2);
       $t->decimal('tax', 12, 2)->default(0.00);

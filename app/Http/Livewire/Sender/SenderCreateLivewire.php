@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sender;
 
+use App\Models\State;
 use App\Models\Sender;
 use App\Models\Country;
 use Livewire\Component;
@@ -10,6 +11,7 @@ use App\Models\CountryRule;
 use App\Models\CountryLimit;
 use App\Models\SenderBalance;
 use App\Models\TaxBracketSet;
+use Illuminate\Validation\Rule;
 use App\Models\GeneralCountryTax;
 use Illuminate\Support\Facades\DB;
 use App\Models\GeneralCountryLimit;
@@ -20,6 +22,11 @@ use App\Notifications\Telegram\TeleNotifySenderNew;
 
 class SenderCreateLivewire extends Component
 {
+    public $state_id = null;                 // NEW
+    public array $availableStates = [];      // NEW
+
+    protected array $usCaIso = ['us','ca'];  // NEW
+
     // Sender
     public $sender_first_name, $sender_last_name, $sender_phone_number, $sender_address;
 
@@ -65,16 +72,13 @@ class SenderCreateLivewire extends Component
         $min = is_numeric($this->minLimit) ? $this->minLimit : 0.01;
         $max = is_numeric($this->maxLimit) ? $this->maxLimit : 999999;
 
-        // compute remaining balance only for registers; null means "no balance cap"
         $remaining = $this->currentUserRemainingBalance();
-
         $totalRules = ['nullable','numeric','min:0'];
         if ($remaining !== null) {
-            // if user is a register, enforce remaining balance on TOTAL
-            $totalRules[] = 'max:' . $remaining;  // numeric max
+            $totalRules[] = 'max:' . $remaining;
         }
 
-        return [
+        $rules = [
             'sender_first_name'      => ['required','string','min:2','max:60'],
             'sender_last_name'       => ['required','string','min:2','max:60'],
             'sender_phone_number'    => ['required','string','max:32','regex:/^\+?[0-9]{8,32}$/'],
@@ -90,8 +94,27 @@ class SenderCreateLivewire extends Component
             'receiver_first_name'    => ['nullable','string','min:2','max:60'],
             'receiver_last_name'     => ['nullable','string','min:2','max:60'],
         ];
+
+        // Conditionally require state for US/CA and ensure it belongs to the selected country
+        $iso = $this->selectedCountryIso();
+        $stateExistsForCountry = Rule::exists('states', 'id')->where(fn($q) =>
+            $q->where('country_id', (int) $this->country_id)
+        );
+
+        if ($iso && in_array(strtolower($iso), $this->usCaIso, true)) {
+            $rules['state_id'] = ['required','integer', $stateExistsForCountry];
+        } else {
+            $rules['state_id'] = ['nullable','integer', $stateExistsForCountry];
+        }
+
+        return $rules;
     }
 
+    protected function selectedCountryIso(): ?string
+    {
+        if (!$this->country_id) return null;
+        return Country::whereKey($this->country_id)->value('iso_code'); // 'us', 'ca', ...
+    }
 
     protected function currentUserRemainingBalance(): ?float
     {
@@ -111,39 +134,52 @@ class SenderCreateLivewire extends Component
         return $incoming - $outgoing;
     }
 
-    public function updatedCountryId($value): void
-    {
-        // (your limits logic exactly as you had)
-        if ($this->country_id) {
-            if ($cl = CountryLimit::where('country_id', $this->country_id)->first()) {
-                $this->minLimit = $cl->min_value !== null ? (float)$cl->min_value : null;
-                $this->maxLimit = $cl->max_value !== null ? (float)$cl->max_value : null;
-            } elseif ($g = GeneralCountryLimit::latest('id')->first()) {
-                $this->minLimit = $g->min_value !== null ? (float)$g->min_value : null;
-                $this->maxLimit = $g->max_value !== null ? (float)$g->max_value : null;
-            } else {
-                $this->minLimit = $this->maxLimit = null;
+        public function updatedCountryId($value): void
+        {
+            // Update limits (your existing code)
+            if ($this->country_id) {
+                if ($cl = CountryLimit::where('country_id', $this->country_id)->first()) {
+                    $this->minLimit = $cl->min_value !== null ? (float)$cl->min_value : null;
+                    $this->maxLimit = $cl->max_value !== null ? (float)$cl->max_value : null;
+                } elseif ($g = GeneralCountryLimit::latest('id')->first()) {
+                    $this->minLimit = $g->min_value !== null ? (float)$g->min_value : null;
+                    $this->maxLimit = $g->max_value !== null ? (float)$g->max_value : null;
+                } else {
+                    $this->minLimit = $this->maxLimit = null;
+                }
             }
-        } else {
-            if ($g = GeneralCountryLimit::latest('id')->first()) {
-                $this->minLimit = $g->min_value !== null ? (float)$g->min_value : null;
-                $this->maxLimit = $g->max_value !== null ? (float)$g->max_value : null;
-            } else {
-                $this->minLimit = $this->maxLimit = null;
+
+            // CRITICAL: Clear state FIRST before loading new states
+            $this->state_id = null;
+            $this->availableStates = [];
+
+            // Load states for US/CA only
+            $iso = $this->selectedCountryIso();
+            if ($iso && in_array(strtolower($iso), $this->usCaIso, true)) {
+                $this->availableStates = State::where('country_id', (int)$this->country_id)
+                    ->orderBy('en_name')
+                    ->get(['id','code','en_name','ar_name','ku_name'])
+                    ->toArray();
             }
+
+            // Validate and recompute (your existing code)
+            if ($this->amount !== null && $this->amount !== '') {
+                $this->validateOnly('amount');
+            }
+            $this->computeCommission();
+            $this->touched['total'] = true;
+            $this->validateOnly('total');
+
+            // Emit to sibling component
+            $this->emit('countryChanged', $this->country_id ? (int)$this->country_id : null);
         }
 
-        // Re-validate amount (if present), recompute commission, validate total
-        if ($this->amount !== null && $this->amount !== '') {
-            $this->validateOnly('amount');
+        // Add this new lifecycle method to handle state changes
+        public function updatedStateId($value): void
+        {
+            $this->touched['state_id'] = true;
+            $this->validateOnly('state_id');
         }
-        $this->computeCommission();
-        $this->touched['total'] = true;
-        $this->validateOnly('total');
-
-        // Let sibling component know the country changed
-        $this->emit('countryChanged', $this->country_id ? (int)$this->country_id : null);
-    }
 
 
 
@@ -274,6 +310,7 @@ class SenderCreateLivewire extends Component
 
         // Use ISO2 code (not en_name) for the 'country' 2-char column
         $iso2 = (string) Country::whereKey($this->country_id)->value('en_name');
+        $iso2_rel = (string) Country::whereKey($this->country_id)->value('iso_code');
 
         // Ensure commission/total are up-to-date
         $this->computeCommission();
@@ -333,6 +370,7 @@ class SenderCreateLivewire extends Component
                 'phone'        => $this->sender_phone_number,
                 'address'      => $this->sender_address,
                 'country'      => $iso2, // ISO2
+                'state_id'     => $this->state_id,
                 'amount'       => $amount,
                 'tax'          => $fee,
                 'total'        => $total,

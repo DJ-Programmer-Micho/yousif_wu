@@ -20,6 +20,7 @@ class ReceiptDompdfController extends Controller
             ? preg_replace('/(\d{3})(\d{3})(\d{4})/', '$1-$2-$3', (string)$sender->mtcn)
             : (string)$sender->mtcn;
 
+
         
         $data = [
             'sender_name' => trim($sender->first_name.' '.$sender->last_name),
@@ -28,6 +29,7 @@ class ReceiptDompdfController extends Controller
             'r_phone' => $sender->r_phone ?? null,
             'date_now' => now('Asia/Baghdad')->format('Y-m-d H:i'),
             'date' => $sender->created_at->clone()->setTimezone('Asia/Baghdad')->format('Y-m-d H:i \G\M\T\+\3'),
+            'state_id' => $sender->state->en_name ?? 'N/A',
             'address' => $sender->address,
             'country' => $sender->country,
             'amount' => (float)$sender->amount,
@@ -75,6 +77,7 @@ class ReceiptDompdfController extends Controller
             'r_phone' => $sender->r_phone ?? null,
             'date_now' => now('Asia/Baghdad')->format('Y-m-d H:i'),
             'date' => $sender->created_at->clone()->setTimezone('Asia/Baghdad')->format('Y-m-d H:i \G\M\T\+\3'),
+            'state_id' => $sender->state->en_name ?? 'N/A',
             'address' => $sender->address,
             'country' => $sender->country,
             'amount' => (float)$sender->amount,
