@@ -13,6 +13,7 @@ class ReceiverBalanceDetailsLivewire extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+    protected string $detailsPageName = 'receiverDetailsPage';
 
     public int $userId;
     public string $mode = 'all'; // 'all','incoming','outgoing'
@@ -39,12 +40,12 @@ class ReceiverBalanceDetailsLivewire extends Component
     public function setMode(string $m)
     {
         $this->mode = in_array($m, ['all','incoming','outgoing'], true) ? $m : 'all';
-        $this->resetPage();
+        $this->resetPage($this->detailsPageName);
     }
 
-    public function updatedDateFrom(){ $this->validateOnly('dateFrom'); $this->resetPage(); }
-    public function updatedDateTo(){ $this->validateOnly('dateTo'); $this->resetPage(); }
-    public function clearDateFilter(){ $this->reset(['dateFrom','dateTo']); $this->resetPage(); }
+    public function updatedDateFrom(){ $this->validateOnly('dateFrom'); $this->resetPage($this->detailsPageName); }
+    public function updatedDateTo(){ $this->validateOnly('dateTo'); $this->resetPage($this->detailsPageName); }
+    public function clearDateFilter(){ $this->reset(['dateFrom','dateTo']); $this->resetPage($this->detailsPageName); }
 
     protected function filteredBase()
     {
@@ -124,8 +125,8 @@ class ReceiverBalanceDetailsLivewire extends Component
 
         // If current page becomes empty, go back a page to avoid blank page
         $countOnPage = $this->filteredBase()->count();
-        if ($countOnPage === 0 && $this->page > 1) {
-            $this->previousPage();
+        if ($countOnPage === 0 && (int) data_get($this->paginators, $this->detailsPageName, 1) > 1) {
+            $this->previousPage($this->detailsPageName);
         }
 
         $this->dispatchBrowserEvent('toast', ['message' => __('Entry deleted')]);
@@ -142,7 +143,7 @@ class ReceiverBalanceDetailsLivewire extends Component
                 'admin:id,name',
             ])
             ->latest('id')
-            ->paginate($this->perPage);
+            ->paginate($this->perPage, ['*'], $this->detailsPageName);
 
         $totals = ReceiverBalance::where('user_id',$this->userId)
             ->when($this->dateFrom, fn($q) => $q->whereDate('created_at','>=',$this->dateFrom))

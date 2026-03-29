@@ -1,0 +1,323 @@
+9:30 AM
+A read-only operational view of the general fallback settings, per-country exceptions, and blocked destinations.
+Accepted: images or PDF. Max 8 MB.
+Access Management
+Account Suspended
+Action
+Active Receivers
+Active Rows
+Add Announcement
+Add an optional receiver snapshot for easier follow-up after the sender is created.
+Adjust the minimum and maximum values for this destination.
+Admin Settings
+After transfer
+Agency Operation
+All Rights Reserved by My Calendar. Designed and Developed by
+All countries not listed under an assigned tax set use the General Tax below.
+Allowed range:
+Amount + Commission = Total
+Announcement
+Announcement Section
+Announcements
+App
+Arabic
+Are you sure you want to delete the set
+Assignments
+Auto calculated from amount + commission.
+Auto-updated in real time as amount and destination change.
+Avatar
+Avatar Preview
+Basic customer identity, contact number, and address used for the transaction record.
+Blocked Countries
+Blocked Destinations
+Blocked destinations are informationally simple but operationally strict: once listed here, they should no longer appear in normal transfer entry forms.
+Brackets
+By
+By amount sent
+Cached
+Calculated from the current country fee brackets.
+Calculated from the selected destination brackets.
+Capture sender information, choose the destination country, and review the live fee calculation before saving the transfer.
+Capture the register location for reporting, routing, and administrative records.
+Capture the sender identity and address that will be attached to this transfer.
+Change
+Change profile photo
+Change the bracket set used for the selected country.
+Check the latest updates
+Choose a set...
+Choose a state/province...
+Choose an agency
+Choose interface language
+Choose the destination and amount. Commission and total update live from the same business rules as the current sender form.
+Clear All Filters
+Coming soon
+Commission
+Confirm Transfer
+Confirmation
+Confirmation & Review
+Confirming now runs the same save, balance, notification, and receipt logic as the original sender form.
+Contact Details
+Contact us immediately
+Contact your provider for further information.
+Copied
+Copy
+Countries using this set:
+Country Mix
+Country Overview
+Country Rules
+Create Transfer in 4 Steps
+Create a destination-specific limit that overrides the global fallback.
+Create a reusable bracket set that can be assigned to one or more countries.
+Currency
+Currency (ISO 4217)
+Current
+Current Avatar
+Curved Area
+Curved monthly activity for the last
+Curved yearly activity grouped by calendar year
+Delete Assignment
+Delete Register
+Delete Tax Bracket Set
+Delete only when the set is no longer linked to any country assignment.
+Delete this announcement? This action cannot be undone!
+Delete this assignment:
+Delete this register? This action cannot be undone. And all data will be lost!
+Deleting this rule will allow transfers for the country again.
+Destination & Quote
+Destination & Transfer Quote
+Destination Limit Exceptions
+Disable
+Disable Receivers for ALL registers
+Disabled
+Disabled:
+Dismiss
+Each country can point to one set. Countries without an assignment continue using the general tax.
+Edit Announcement
+Edit details
+Embedding is blocked by Western Union
+Enable
+Enable all (per-register)
+Enabled
+English
+Enter an amount to preview the final total.
+Enter verification code
+Enter your admin 2FA code to continue into the control panel securely.
+Enter your email address and password to access admin panel.
+Enter your password
+Exactly 3 letters (e.g. USD, IQD)
+Exception Sets
+Exchange Rates $100
+Exchange Rates Source
+Exchange rates are not available right now.
+Execute
+Expand / Collapse
+Fallback Tax Brackets
+Fallback Transfer Limits
+Fast transfer workspace
+Fees and total update automatically when the amount or destination changes.
+Fees are added to the sender total.
+Filters & Search
+Final Check
+Fraud Detection
+Full name
+General Limit
+General Limits
+General fee brackets are shown first, followed by each country-specific bracket set and its assigned destinations.
+General limit for all countries without an exception:
+Global Fallback
+Global: ALL disabled
+Grouped by calendar year in IQD
+Hidden
+Homepage
+Identification (Image or PDF)
+Identity & Access
+If you believe this happened by mistake
+If you own this system,
+Informational view of destinations currently excluded from transfer operations.
+Iraq Remit
+Keep access details, contact data, and location info organized in one place.
+Kurdish
+Language
+Let's Go
+Limit Exceptions
+Limits, Taxes, and Restrictions
+Link one destination to one tax bracket set. General tax applies when no assignment exists.
+Live
+Live Quote
+Live feed
+Live search enabled
+Location
+MTCN / Name / Phone / Address…
+Maintain the default fee ladder used when a country does not have its own assigned bracket set.
+Manage country-specific minimum and maximum transfer limits without changing the fallback logic.
+Manage register accounts, contact details, and access status from one clean workspace.
+Manage reusable tax bracket sets and assign them to specific countries while preserving the existing fallback behavior.
+Manage the countries that must remain unavailable for transfer selection.
+Mark a destination as blocked so it cannot be selected for new transfers.
+Maximum allowed:
+Minimum allowed:
+Mode
+MoneyGram
+Monthly
+Move through sender info, transfer setup, receiver details, and a final confirmation review without losing your data between steps.
+NEW
+Name / Phone / Address…
+Need a fresh code? Open your authenticator app and use the latest entry for this account.
+New Design, New Look and Better Control v3.1
+New Register
+Next
+No Executed transfers found.
+No announcements found
+No brackets configured. Using defaults if applicable.
+No countries are currently blocked.
+No country limit exceptions yet. Every destination is currently using the general fallback values.
+No country-specific assignments yet. All countries are currently falling back to the general tax.
+No country-specific tax assignments. All countries use the general tax above.
+No executed senders yet.Z
+No file uploaded
+No general limit configured.
+No matches
+No per-country exceptions. All countries use the general limit.
+No records found
+No sender matches found right now.
+No tax bracket sets created yet.
+Open Tracker (Popup)
+Open in New Tab
+Opening sender form...
+Optional Snapshot
+Optional receiver information for faster follow-up. You can still save the sender without completing this section.
+PDF selected
+Payout Amount
+Payout Details
+Please Check reCaptcha
+Please Contact The Developers
+Previous
+Processing...
+Quick Form
+Quick Send detected.
+Quickly narrow the register list by identity or status.
+Quote Mode
+Read Only
+Read-only view of the current block status for the selected country.
+Ready to save with the live calculation.
+Reasons for Suspension:
+Recaptcha
+Receiver Gate
+Receiver Gets
+Receiver Information
+Receiver Name
+Receiver Preview
+Receiver Snapshot
+Receiver actions
+Receivers Access Control
+Receivers are disabled for your account
+Recent Senders
+Recipient info
+Reference
+Refreshing
+Register Directory
+Registers:
+Remove photo
+Removing...
+Required
+Reusable fee ladders that can be linked to one or many destinations.
+Review all entered information from the previous steps before confirming the transfer.
+Review, edit, activate, or remove register accounts without leaving the page.
+Rows
+Save changes
+Search by customer name or phone and load the latest sender details directly into Step 1.
+Search country
+Search name or phone...
+Secure Access
+Security Concerns
+Sell / Buy
+Send Money
+Send Transfer
+Send Volume
+Sender Details
+Sender Information
+Sender Intake
+Sender Name
+Sender Phone
+Sender Wizard
+Sender actions
+Sender info
+Set
+Set the basic account identity and login state for this register.
+Setting
+Settings
+Short trusted session
+Show From (optional)
+Show Until (optional)
+Showing the live source inside the dashboard.
+Showing the live table from the source.
+Shown
+Shows the default fallback range and any country-specific overrides.
+Sign In
+Software Manipulation or Cheating
+Sortable columns
+Source
+Spam Detection
+Start the transfer here, then finish the full sender form.
+State / Province
+State or province is required for destinations such as the United States and Canada.
+State or province is required for selected destinations such as the United States and Canada.
+Step
+Store direct communication details for faster follow-up and access recovery.
+Submitting...
+Suspicious Betting Patterns
+Tax Set
+Tax Sets & Assignments
+Text
+The business logic, balance checks, and commission rules remain unchanged. This form only improves the structure, clarity, and live quote presentation.
+The commission and total update automatically from the selected country rules and transfer amount.
+The country will return to using the general tax until a new set is assigned.
+The dashboard preview uses the same fee rules as the sender form. Final customer details are completed on the next page.
+The selected country will be added to the blocked list and removed from normal transfer selection until the rule is deleted.
+The transfer country and amount were carried into Step 2. Complete Step 1, then continue.
+These values apply automatically to any country that does not have a dedicated exception row.
+This exception is used only for the selected country. All other countries keep using the configured general limit.
+This permanently removes the exception and sends the country back to the general fallback.
+This removes only the country-to-set link. The tax set itself stays available.
+This takes effect immediately after deletion.
+This transfer is above the available register balance.
+Toggle navigation
+Toggle visibility
+Top Up Receiver Balance
+Total (IQD)
+Total Payable
+Total Received
+Total Sent
+Transactions This Period
+Transactions Trend
+Transfer details
+Transfer principal before fees.
+Try adjusting your filters or search criteria
+Trying the live exchange feed...
+Type the announcement here...
+Type to search in text...
+Until
+Update Profile
+Update the bracket rows while preserving the set assignment relationships.
+Updated
+Upload a square profile image for the register account.
+Uploading...
+Use
+Use destination exceptions only when a country must behave differently from the global limit configuration.
+Use dot for decimals (e.g. 1234.56)
+Validation Errors:
+Violation of Policy
+Violation of Terms and Conditions
+Visibility
+Visible
+We'll crop to square and optimize it.
+Western Union
+When enabled, all receiver pages and actions are blocked for every register, regardless of the per-register settings below.
+Yearly
+You can correct MTCN or the sender/receiver names before marking as Executed.
+You will stay verified for 10 minutes on this device after a successful confirmation.
+Your browser may block popups; if so, we’ll open it in a new tab automatically.
+Your data stays in memory while you move forward and backward through the wizard.
+from the blocked list?
+share
+to avoid permanent termination of services.

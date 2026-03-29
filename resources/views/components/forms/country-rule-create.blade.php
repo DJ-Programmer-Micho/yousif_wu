@@ -1,80 +1,119 @@
-  {{-- Create (Select2 with flags) --}}
-  <div id="countryRuleCreateModal" class="modal @if($showCreate) show d-block @endif"
-       tabindex="-1" role="dialog" @if($showCreate) style="background:rgba(0,0,0,.5)" @endif>
-    <div class="modal-dialog"><div class="modal-content">
+@include('components.forms._country-general-ui')
+
+@php
+  $viewCountry = optional(\App\Models\Country::find($country_id));
+@endphp
+
+<div
+  id="countryRuleCreateModal"
+  class="modal country-admin-modal @if($showCreate) show d-block @endif"
+  tabindex="-1"
+  role="dialog"
+  @if($showCreate) style="background:rgba(15,23,42,.45)" @endif
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">{{ __('Add Country to Not-Allowed List') }}</h6>
+        <div>
+          <h6 class="modal-title">{{ __('Add Country to Not-Allowed List') }}</h6>
+          <p class="country-admin-subtitle mb-0">{{ __('Mark a destination as blocked so it cannot be selected for new transfers.') }}</p>
+        </div>
         <button class="close" wire:click="$set('showCreate',false)">&times;</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label>{{ __('Country') }}</label>
-          <div wire:ignore class="form-control">
+          <label class="country-admin-label">{{ __('Country') }}</label>
+          <div wire:ignore class="country-admin-select-shell @error('country_id') is-invalid @enderror">
             <input type="hidden" id="cr_country_id_wire" wire:model="country_id">
-            <select id="crCountrySelect" class="form-control" data-placeholder="Choose a country...">
+            <select id="crCountrySelect" class="form-control country-admin-input" data-placeholder="{{ __('Choose a country...') }}">
               <option value=""></option>
               @foreach($available as $c)
-                <option value="{{ $c->id }}"
-                        data-flag="{{ app('cloudfrontflagsx2').'/'.$c->flag_path }}"
-                        data-iso="{{ $c->iso_code }}"
-                        data-ar="{{ $c->ar_name }}"
-                        data-ku="{{ $c->ku_name }}">
+                <option
+                  value="{{ $c->id }}"
+                  data-flag="{{ app('cloudfrontflagsx2').'/'.$c->flag_path }}"
+                  data-iso="{{ $c->iso_code }}"
+                  data-ar="{{ $c->ar_name }}"
+                  data-ku="{{ $c->ku_name }}"
+                >
                   {{ $c->en_name }}
                 </option>
               @endforeach
             </select>
           </div>
-          @error('country_id')<small class="text-danger">{{ $message }}</small>@enderror
+          @error('country_id')<small class="text-danger d-block mt-2">{{ $message }}</small>@enderror
         </div>
-        <small class="text-muted">{{ __('Selected country will be marked as') }} <strong>{{ __('Not allowed to transfer') }}</strong>.</small>
+
+        <div class="country-admin-note is-muted">
+          {{ __('The selected country will be added to the blocked list and removed from normal transfer selection until the rule is deleted.') }}
+        </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" wire:click="$set('showCreate',false)">{{ __('Cancel') }}</button>
+        <button class="btn btn-light border" wire:click="$set('showCreate',false)">{{ __('Cancel') }}</button>
         <button class="btn btn-primary" wire:click="store">{{ __('Save') }}</button>
       </div>
-    </div></div>
+    </div>
   </div>
+</div>
 
-  {{-- Edit (read-only) --}}
-  <div class="modal @if($showEdit) show d-block @endif"
-       tabindex="-1" role="dialog" @if($showEdit) style="background:rgba(0,0,0,.5)" @endif>
-    <div class="modal-dialog"><div class="modal-content">
+<div
+  class="modal country-admin-modal @if($showEdit) show d-block @endif"
+  tabindex="-1"
+  role="dialog"
+  @if($showEdit) style="background:rgba(15,23,42,.45)" @endif
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">{{ __('View Rule') }}</h6>
+        <div>
+          <h6 class="modal-title">{{ __('View Rule') }}</h6>
+          <p class="country-admin-subtitle mb-0">{{ __('Read-only view of the current block status for the selected country.') }}</p>
+        </div>
         <button class="close" wire:click="$set('showEdit',false)">&times;</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label>{{ __('Country') }}</label>
-          <div class="d-flex align-items-center form-control" style="height:auto;">
-            <img src="{{ app('cloudfrontflagsx2').'/'.optional(\App\Models\Country::find($country_id))->flag_path }}" style="height:12px" class="mr-2">
-            <span>{{ optional(\App\Models\Country::find($country_id))->en_name }}</span>
+          <label class="country-admin-label">{{ __('Country') }}</label>
+          <div class="country-admin-static-field">
+            @if($viewCountry && $viewCountry->flag_path)
+              <img src="{{ app('cloudfrontflagsx2').'/'.$viewCountry->flag_path }}" class="country-admin-flag" alt="">
+            @endif
+            <span>{{ $viewCountry->en_name }}</span>
           </div>
         </div>
-        <div><span class="badge badge-danger">{{ __('Not allowed to transfer') }}</span></div>
+
+        <span class="country-admin-pill country-admin-pill-danger">{{ __('Not allowed to transfer') }}</span>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" wire:click="$set('showEdit',false)">{{ __('Close') }}</button>
+        <button class="btn btn-light border" wire:click="$set('showEdit',false)">{{ __('Close') }}</button>
       </div>
-    </div></div>
+    </div>
   </div>
-    {{-- =============== Delete (confirm) =============== --}}
-  <div id="countryRuleDeleteModal"
-      class="modal @if($showDelete) show d-block @endif"
-      tabindex="-1" role="dialog"
-      @if($showDelete) style="background:rgba(0,0,0,.5)" @endif>
-    <div class="modal-dialog"><div class="modal-content">
+</div>
+
+<div
+  id="countryRuleDeleteModal"
+  class="modal country-admin-modal @if($showDelete) show d-block @endif"
+  tabindex="-1"
+  role="dialog"
+  @if($showDelete) style="background:rgba(15,23,42,.45)" @endif
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">{{ __('Remove Country') }}</h6>
+        <div>
+          <h6 class="modal-title">{{ __('Remove Country') }}</h6>
+          <p class="country-admin-subtitle mb-0">{{ __('Deleting this rule will allow transfers for the country again.') }}</p>
+        </div>
         <button class="close" wire:click="$set('showDelete',false)">&times;</button>
       </div>
       <div class="modal-body">
-        <p>{{ __('Remove') }} <strong>{{ $deleteName }}</strong> {{ __('from the') }} <em>{{ __('Not-Allowed to transfer') }}</em> {{ __('list?') }}</p>
-        <small class="text-muted d-block">{{ __('This will allow transfers for this country again.') }}</small>
+        <p class="mb-2">{{ __('Remove') }} <strong>{{ $deleteName }}</strong> {{ __('from the blocked list?') }}</p>
+        <small class="text-muted d-block">{{ __('This takes effect immediately after deletion.') }}</small>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" wire:click="$set('showDelete',false)">{{ __('Cancel') }}</button>
+        <button class="btn btn-light border" wire:click="$set('showDelete',false)">{{ __('Cancel') }}</button>
         <button class="btn btn-danger" wire:click="delete">{{ __('Delete') }}</button>
       </div>
-    </div></div>
+    </div>
   </div>
+</div>

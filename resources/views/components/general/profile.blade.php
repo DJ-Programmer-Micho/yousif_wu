@@ -184,7 +184,7 @@
                     <td class="text-nowrap">{{ \Carbon\Carbon::parse($s['updated_at'])->format('Y-m-d H:i') }}</td>
                   </tr>
                 @empty
-                  <tr><td colspan="4" class="text-center text-muted py-3">{{ __('No executed senders yet.Z') }}</td></tr>
+                  <tr><td colspan="4" class="text-center text-muted py-3">{{ __('No executed senders yet.') }}</td></tr>
                 @endforelse
               </tbody>
             </table>

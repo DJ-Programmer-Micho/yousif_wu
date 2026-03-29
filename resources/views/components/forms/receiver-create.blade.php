@@ -89,7 +89,7 @@
       <div class="row g-4">
         {{-- Rest of your form fields remain the same --}}
         {{-- First name --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
           <label for="rx_first_name" class="form-label">{{ __('First Name') }} <span class="text-danger">*</span></label>
           <input id="rx_first_name" type="text" placeholder="{{ __('FIRST NAME') }}"
                  style="text-transform:uppercase"
@@ -99,7 +99,7 @@
         </div>
 
         {{-- Last name --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
           <label for="rx_last_name" class="form-label">{{ __('Last Name') }} <span class="text-danger">*</span></label>
           <input id="rx_last_name" type="text" placeholder="{{ __('LAST NAME') }}"
                  style="text-transform:uppercase"
@@ -109,7 +109,7 @@
         </div>
 
         {{-- Phone --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
           <label for="rx_phone" class="form-label">{{ __('Phone Number') }} <span class="text-danger">*</span></label>
           <input id="rx_phone" placeholder="+9647xxxxxxxx"
                  wire:model.debounce.500ms="phone"
@@ -119,16 +119,17 @@
         </div>
 
         {{-- Address --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
           <label for="rx_address" class="form-label">{{ __('Receiver Address') }}</label>
           <input id="rx_address" type="text" placeholder="{{ __('Street, City') }}"
                  wire:model.debounce.500ms="address"
+                 oninput="this.value = this.value.toUpperCase().replace(/[^A-Z\s]/g, '')"
                  class="{{ $this->getInputClass('address') }}">
           @error('address') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
         </div>
 
         {{-- Amount (IQD) --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
           <label for="rx_amount_iqd" class="form-label">{{ __('Amount (IQD)') }} <span class="text-danger">*</span></label>
           <input id="rx_amount_iqd" type="number" step="1" min="1"
                  wire:model.debounce.500ms="amount_iqd"
@@ -137,7 +138,7 @@
         </div>
 
         {{-- Identification (disabled for now) --}}
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
         <label for="rx_identification" class="form-label">
             {{ __('Identification (Image or PDF)') }}
             <small class="text-muted"> {{ __('Optional') }}</small>

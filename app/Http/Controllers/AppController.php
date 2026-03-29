@@ -52,6 +52,9 @@ class AppController extends Controller
     public function sender(){
         return view('pages.sender.create');
     }
+    public function sender2(){
+        return view('pages.sender.create.v2');
+    }
     public function reciever(){
         return view('pages.reciever.index');
     }

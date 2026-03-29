@@ -1670,22 +1670,19 @@
         </tr>
         <tr class="c72">
             <td class="c7" colspan="1" rowspan="10">
-                <p class="c117"><span class="c1">Receiver: <span style="margin-left:76px">{{ $receiver_name }}</span></span></p>
-                <p class="c86"><span class="c1">Address/Telephone:<span style="margin-left: 37px">{{ $phone }}</span></span></p>
+                <p class="c117"><span class="c1">Receiver: <span style="margin-left:76px">{{ \Illuminate\Support\Str::upper($receiver_name) }}</span></span></p>
+                <p class="c86"><span class="c1"><span style="margin-left: 37px"></span></span></p>
                 <p class="c66"><span class="c1">&nbsp;</span></p>
-                <p class="c66"><span class="c125">&nbsp;</span><span class="c125 c129">Mandatory/Optional</span></p>
+                <p class="c66"><span class="c125">&nbsp;</span><span class="c125 c129"><b>Address/Telephone:</b> <span style="font-size: 6px"> {{ $address }} | {{ $phone ?? '(If sending to a Mobile)' }}</span></span></p>
                 <p class="c99 c56"><span class="c9"></span></p>
-                <p class="c99"><span class="c9">{{ $address }}</span></p>
+                <p class="c99"><span class="c9"></span></p>
                 <p class="c2 c56"><span class="c9"></span></p>
                 <p class="c64"><span class="c1">Test Question:</span></p>
                 <p class="c2"><span class="c1">Answer:</span></p>
-                <p class="c64"><span class="c35">ID Type:<span class="c9" style="margin-left:80px">Passport</span></p></span></p>
-                <p class="c43"><span class="c9"></span></p>
-                <p class="c104"><span class="c1">Purpose of Transaction:</span><span class="c9" style="margin-left:20px">Family Support/Living Expenses</span></p>
-                <p class="c31"><span class="c9"></span></p>
-                <p class="c2"><span class="c1"></span><span class="c9" style="margin-left:48px"></span></p>
-                <p class="c2"><span class="c1">Occupation:</span><span class="c9" style="margin-left:66px">Domestic Helper</span></p>
-                <p class="c55"><span class="c1">Relationship to Receiver:</span><span class="c9" style="margin-left:15px">Family</span>
+                <p style="position:absolute;top:165px" class="c64"><span class="c35">ID Type:<span class="c9" style="margin-left:80px">Passport</span></p></span></p>
+                <p style="position:absolute;top:190px" class="c104"><span class="c1">Purpose of Transaction:</span><span class="c9" style="margin-left:20px">Family Support/Living Expenses</span></p>
+                <p style="position:absolute;top:210px" class="c2"><span class="c1">Occupation:</span><span class="c9" style="margin-left:66px">Domestic Helper</span></p>
+                <p style="position:absolute;top:230px" class="c55"><span class="c1">Relationship to Receiver:</span><span class="c9" style="margin-left:15px">Family</span>
                 </p>
             </td>
             <td class="c95" colspan="1" rowspan="1">
@@ -1753,12 +1750,12 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c109"><span class="c1">Amount Received:</span></p>
-                <p class="c0"><span class="c1">Transfer Fee:</span></p>
+                <p style="position:absolute;top:105px" class="c109"><span class="c1">Amount Received:</span></p>
+                <p style="position:absolute;top:125px" class="c0"><span class="c1">Transfer Fee:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
-                <p class="c52"><span class="c9">{{ number_format($total, 0) }}<span class="c9" style="position: absolute; right: 10px;">Iraqi Dinnar</span></span></p>
-                <p class="c106"><span class="c9">0<span class="c9" style="position: absolute; right: 10px;">Iraqi Dinnar</span></span></p>
+                <p style="position:absolute;top:105px" class="c52"><span class="c9">{{ number_format($total, 0) }}<span class="c9" style="position: relative; left: 35px;">Iraqi Dinnar</span></span></p>
+                <p style="position:absolute;top:125px" class="c106"><span class="c9">0<span class="c9" style="position: relative; left: 65px;">Iraqi Dinnar</span></span></p>
             </td>
         </tr>
         <tr class="c49">
@@ -1772,7 +1769,7 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c10"><span class="c1">Message Charge:</span></p>
+                <p class="c10" style="position:absolute;top:170px"><span class="c1">Message Charge:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>
@@ -1789,7 +1786,7 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c77"><span class="c1">Delivery Charge:</span></p>
+                <p class="c77" style="position:absolute;top:190px"><span class="c1">Delivery Charge:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>
@@ -1806,7 +1803,7 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c10"><span class="c1">Discount:</span></p>
+                <p class="c10" style="position:absolute;top:210px"><span class="c1">Discount:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
                 <p class="c25"><span class="c3"></span></p>
@@ -1823,10 +1820,11 @@
                 <p class="c25"><span class="c3"></span></p>
             </td>
             <td class="c13" colspan="2" rowspan="1">
-                <p class="c107"><span class="c35">TOTAL:</span></p>
+                <p class="c107" style="position:absolute;top:230px"><span class="c35">TOTAL:</span></p>
             </td>
             <td class="c84" colspan="1" rowspan="1">
-                <p class="c18"><span class="c9">{{ number_format($total, 0) }}<span class="c9" style="position: absolute; right: 10px;">Iraqi Dinnar</span></span></p>
+                <p class="c18"  style="position:absolute;top:230px"><span class="c9">{{ number_format($total, 0) }}<span class="c9" style="position: relative; left: 35px;">Iraqi Dinnar</span></span></p>
+                <p class="c18" style="margin-top: 35px"><span class="c25">&nbsp;</span></p>
             </td>
         </tr>
         <tr class="c49">

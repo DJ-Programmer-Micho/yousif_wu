@@ -7,9 +7,9 @@
         <div class="d-flex align-items-center">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb m-0 p-0">
-              <li class="breadcrumb-item text-muted active">App</li>
-              <li class="breadcrumb-item text-muted active">Settings</li>
-              <li class="breadcrumb-item text-muted active" aria-current="page">Receiver Gate</li>
+              <li class="breadcrumb-item text-muted active">{{ __('App') }}</li>
+              <li class="breadcrumb-item text-muted active">{{ __('Settings') }}</li>
+              <li class="breadcrumb-item text-muted active" aria-current="page">{{ __('Receiver Gate') }}</li>
             </ol>
           </nav>
         </div>

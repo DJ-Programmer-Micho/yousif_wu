@@ -21,54 +21,6 @@
       </div>
     </div>
 
-    <!-- Filters -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <div class="filter-section">
-          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-            <div class="d-flex align-items-center gap-2">
-              <div class="kpi-icon primary mx-1" style="width: 40px; height: 40px; font-size: 16px;">
-                <i class="fas fa-sliders-h"></i>
-              </div>
-              <div>
-                <h6 class="mb-0 font-weight-bold">{{ __('Filters & Controls') }}</h6>
-                <small class="text-muted">{{ __('Customize your dashboard view') }}</small>
-              </div>
-            </div>
-
-            <div class="d-flex flex-wrap gap-3">
-              <select class="modern-select" wire:model="dateFilter">
-                <option value="today">{{ __('Today') }}</option>
-                <option value="yesterday">{{ __('Yesterday') }}</option>
-                <option value="this_week">{{ __('This Week') }}</option>
-                <option value="last_week">{{ __('Last Week') }}</option>
-                <option value="this_month">{{ __('This Month') }}</option>
-                <option value="last_month">{{ __('Last Month') }}</option>
-                <option value="this_quarter">{{ __('This Quarter') }}</option>
-                <option value="last_quarter">{{ __('Last Quarter') }}</option>
-                <option value="this_year">{{ __('This Year') }}</option>
-                <option value="last_year">{{ __('Last Year') }}</option>
-              </select>
-
-              <select class="modern-select" wire:model="monthsBack">
-                @foreach([3,6,9,12,18,24] as $m)
-                  <option value="{{ $m }}">{{ $m }} {{ __('months') }}</option>
-                @endforeach
-              </select>
-
-              <button class="modern-btn primary" wire:click="refreshData" {{ $isLoading ? 'disabled' : '' }}>
-                @if($isLoading)
-                  <div class="loading-spinner"></div>
-                @else
-                  <i class="fas fa-sync-alt"></i>
-                @endif
-                {{ __('Refresh') }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 @livewire('general.announcement-show-livewire', ['limit' => 6, 'role' => 'Register'])
 
 <div class="card-group-modern-2 mb-4">
@@ -168,41 +120,89 @@
       </div>
     </div>
 
-    <!-- Charts -->
-    <div class="row">
-      <div class="col-lg-8">
-        <!-- Senders Amount -->
-        <div class="chart-container mb-4">
-          <div class="chart-header d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3">
-              <div class="kpi-icon primary" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-chart-line"></i></div>
+    <!-- Charts & Sidebar -->
+    <div class="row dashboard-shell">
+      <div class="col-xl-8 order-2 order-xl-1 dashboard-main">
+        <div class="chart-container trend-hero-card mb-4">
+          <div class="chart-header d-flex align-items-start justify-content-between flex-wrap">
+            <div class="d-flex align-items-center gap-3 mb-3 mb-lg-0">
+              <div class="kpi-icon primary" style="width: 44px; height: 44px; font-size: 18px;"><i class="fas fa-chart-line"></i></div>
               <div>
-                <h6 class="chart-title">{{ __('Senders Amount Trend') }}</h6>
-                <p class="chart-subtitle">{{ __('Last') }} {{ $monthsBack }} {{ __('months performance') }}</p>
+                <h6 class="chart-title">{{ __('Transactions Trend') }}</h6>
+                <p class="chart-subtitle">
+                  @if($trendGrouping === 'monthly')
+                    {{ __('Curved monthly activity for the last') }} {{ $monthsBack }} {{ __('months') }}
+                  @else
+                    {{ __('Curved yearly activity grouped by calendar year') }}
+                  @endif
+                </p>
               </div>
             </div>
-            <span class="badge badge-soft-primary"><i class="fas fa-circle mr-1"></i> {{ __('Amount ($)') }}</span>
+
+            <div class="trend-toolbar">
+              <span class="badge badge-soft-primary"><i class="fas fa-wave-square mr-1"></i>{{ __('Curved Area') }}</span>
+              <div class="trend-switch">
+                <button type="button" class="trend-switch-btn {{ $trendGrouping === 'monthly' ? 'active' : '' }}" wire:click="$set('trendGrouping', 'monthly')">
+                  {{ __('Monthly') }}
+                </button>
+                <button type="button" class="trend-switch-btn {{ $trendGrouping === 'yearly' ? 'active' : '' }}" wire:click="$set('trendGrouping', 'yearly')">
+                  {{ __('Yearly') }}
+                </button>
+              </div>
+            </div>
           </div>
+
           <div class="p-3">
             @if($loadingStates['charts'])
-              <div class="loading-skeleton" style="height: 280px; border-radius: 8px;"></div>
+              <div class="loading-skeleton" style="height: 320px; border-radius: 18px;"></div>
             @else
-              <div id="sendersAmountChart" class="ct-chart chart-animate" style="height: 280px;" wire:ignore></div>
+              <div id="sendersAmountChart" class="ct-chart chart-animate trend-chart" style="height: 320px;" wire:ignore></div>
             @endif
+          </div>
+
+          <div class="trend-insight-bar px-3 pb-3">
+            <div class="trend-insight-pill">
+              <span>{{ __('Transactions This Period') }}</span>
+              <strong>{{ number_format($kpis['senders_total']['current']) }}</strong>
+            </div>
+            <div class="trend-insight-pill">
+              <span>{{ __('Send Volume') }}</span>
+              <strong>${{ number_format($kpis['amount_senders']['current'], 2) }}</strong>
+            </div>
+            <div class="trend-insight-pill">
+              <span>{{ __('Active Receivers') }}</span>
+              <strong>{{ number_format($kpis['receivers_total']['current']) }}</strong>
+            </div>
           </div>
         </div>
 
-        <!-- Receivers Amount -->
-        <div class="chart-container mb-4">
-          <div class="chart-header d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3">
-              <div class="kpi-icon success" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-chart-line"></i></div>
+        <div class="chart-container analytics-card analytics-card-receiver mb-4">
+          <div class="chart-header d-flex align-items-center justify-content-between flex-wrap">
+            <div class="d-flex align-items-center gap-3 mb-3 mb-lg-0">
+              <div class="kpi-icon success" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-chart-area"></i></div>
               <div>
                 <h6 class="chart-title">{{ __('Receivers Amount Trend') }}</h6>
-                <p class="chart-subtitle">{{ __('Last') }} {{ $monthsBack }} {{ __('months in IQD') }}</p>
+                <p class="chart-subtitle">
+                  @if($receiversTrendGrouping === 'monthly')
+                    {{ __('Last') }} {{ $monthsBack }} {{ __('months in IQD') }}
+                  @else
+                    {{ __('Grouped by calendar year in IQD') }}
+                  @endif
+                </p>
               </div>
             </div>
-            <span class="badge badge-soft-success"><i class="fas fa-circle mr-1"></i> {{ __('Amount (IQD)') }}</span>
+            <div class="analytics-chip-group">
+              <span class="badge badge-soft-success"><i class="fas fa-circle mr-1"></i> {{ __('Amount (IQD)') }}</span>
+              <span class="analytics-value-pill">{{ number_format($kpis['amount_receivers']['current'], 0) }}</span>
+              <div class="trend-switch">
+                <button type="button" class="trend-switch-btn {{ $receiversTrendGrouping === 'monthly' ? 'active' : '' }}" wire:click="$set('receiversTrendGrouping', 'monthly')">
+                  {{ __('Monthly') }}
+                </button>
+                <button type="button" class="trend-switch-btn {{ $receiversTrendGrouping === 'yearly' ? 'active' : '' }}" wire:click="$set('receiversTrendGrouping', 'yearly')">
+                  {{ __('Yearly') }}
+                </button>
+              </div>
+            </div>
           </div>
           <div class="p-3">
             @if($loadingStates['charts'])
@@ -211,217 +211,163 @@
               <div id="receiversAmountChart" class="ct-chart chart-animate" style="height: 280px;" wire:ignore></div>
             @endif
           </div>
-        </div>
-<!-- TradingView Widget BEGIN -->
-{{-- <div class="chart-container mb-4"> --}}
-{{-- <div class="tradingview-widget-container" style="max-height:600px;width:100%;">
-  <div class="tradingview-widget-container__widget" style="max-height:600px;width:100%"></div>
-  
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "allow_symbol_change": true,
-  "calendar": false,
-  "details": false,
-  "hide_side_toolbar": true,
-  "hide_top_toolbar": false,
-  "hide_legend": false,
-  "hide_volume": false,
-  "hotlist": false,
-  "interval": "D",
-  "locale": "en",
-  "save_image": true,
-  "style": "1",
-  "symbol": "OANDA:XAUUSD",
-  "theme": "light",
-  "timezone": "Etc/UTC",
-  "backgroundColor": "#ffffff",
-  "gridColor": "rgba(46, 46, 46, 0.06)",
-  "watchlist": [],
-  "withdateranges": false,
-  "compareSymbols": [],
-  "studies": [],
-  "autosize": true
-}
-  </script>
-</div> --}}
-{{-- </div> --}}
-<!-- TradingView Widget END -->
-{{-- 
-    <div class="row mb-5">
-        <div class="col-md-4">
-            <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-            {
-            "symbol": "MARKETSCOM:OIL",
-            "colorTheme": "light",
-            "isTransparent": false,
-            "locale": "en",
-            "width": "100%"
-            }
-            </script>
+          <div class="analytics-footer px-3 pb-3">
+            <div class="analytics-footer-pill">
+              <span>{{ __('Current') }}</span>
+              <strong>{{ number_format($kpis['amount_receivers']['current'], 0) }} IQD</strong>
             </div>
-            <!-- TradingView Widget END -->
-        </div>
-        <div class="col-md-4">
-            <!-- TradingView Widget BEGIN -->
-
-            <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-            {
-            "symbol": "FX_IDC:EURIQD",
-            "colorTheme": "light",
-            "isTransparent": false,
-            "locale": "en",
-            "width": "100%"
-            }
-            </script>
-            </div>
-            <!-- TradingView Widget END -->
-        </div>
-        <div class="col-md-4">
-            <!-- TradingView Widget BEGIN -->
-            <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-            {
-            "symbol": "FX_IDC:IQDUSD",
-            "colorTheme": "light",
-            "isTransparent": false,
-            "locale": "en",
-            "width": "100%"
-            }
-            </script>
-            </div>
-            <!-- TradingView Widget END -->
-        </div>
-    </div> --}}
-
-
-      </div>
-
-      
-
-      <!-- Pies + bullet legends -->
-      <div class="col-lg-4">
-        <!-- Top Senders -->
-        <div class="chart-container mb-4">
-          <div class="chart-header d-flex align-items-center gap-3">
-            <div class="kpi-icon primary" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-user-tie"></i></div>
-            <div>
-              <h6 class="chart-title">{{ __('Top 5 Senders') }}</h6>
-              <p class="chart-subtitle">By amount sent</p>
+            <div class="analytics-footer-pill">
+              <span>{{ __('Previous') }}</span>
+              <strong>{{ number_format($kpis['amount_receivers']['previous'], 0) }} IQD</strong>
             </div>
           </div>
-          <div class="p-3 position-relative">
-            @if($loadingStates['pies'])
-              <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
-            @else
-              <div id="pieTopSenders" class="ct-chart chart-animate w-100 h-100" wire:ignore></div>
-              <div class="pie-center">
-                <p class="pie-center-title">{{ __('Total') }}</p>
-                <p class="pie-center-value" id="pieTopSendersTotal">{{ number_format($pieTopSenders['total'] ?? 0, 0) }}</p>
-              </div>
+        </div>
 
-              <div class="legend-list">
-                @foreach(($pieTopSenders['items'] ?? []) as $i => $it)
-                  @php $color = $pieTopSenders['colors'][$i] ?? '#64748b'; @endphp
-                  <div class="legend-item">
-                    <div class="legend-left">
-                      <span class="legend-dot" style="background: {{ $color }}"></span>
-                      <span class="legend-label">{{ $it['label'] }}</span>
+        <div class="row">
+          <div class="col-md-6 col-xl-4 mb-4">
+            <div class="chart-container analytics-pie-card analytics-pie-card-primary h-100">
+              <div class="chart-header d-flex align-items-center gap-3">
+                <div class="kpi-icon primary" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-user-tie"></i></div>
+                <div>
+                  <h6 class="chart-title">{{ __('Top 5 Senders') }}</h6>
+                  <p class="chart-subtitle">{{ __('By amount sent') }}</p>
+                </div>
+                <span class="analytics-value-pill ml-auto">{{ number_format($pieTopSenders['total'] ?? 0, 0) }}</span>
+              </div>
+              <div class="p-3 position-relative">
+                @if($loadingStates['pies'])
+                  <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
+                @else
+                  <div class="analytics-pie-stage analytics-pie-stage-primary">
+                    <div class="analytics-pie-stage-glow"></div>
+                    <div id="pieTopSenders" class="ct-chart chart-animate analytics-pie-chart w-100 h-100" wire:ignore></div>
+                    <div class="pie-center">
+                      <p class="pie-center-title">{{ __('Total Sent') }}</p>
+                      <p class="pie-center-value" id="pieTopSendersTotal">{{ number_format($pieTopSenders['total'] ?? 0, 0) }}</p>
                     </div>
-                    <div class="legend-right">{{ number_format($it['amount'], 0) }} <small class="text-muted">{{ $it['pct'] }}%</small></div>
                   </div>
-                  <div class="progress"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
-                @endforeach
-                @if(empty($pieTopSenders['items'])) <div class="text-muted small text-center py-2">{{ __('No data') }}</div> @endif
-              </div>
-            @endif
-          </div>
-        </div>
 
-        <!-- Top Receivers -->
-        <div class="chart-container mb-4">
-          <div class="chart-header d-flex align-items-center gap-3">
-            <div class="kpi-icon success" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-user-shield"></i></div>
-            <div>
-              <h6 class="chart-title">{{ __('Top 5 Receivers') }}</h6>
-              <p class="chart-subtitle">{{ __('By amount received') }}</p>
+                  <div class="legend-list">
+                    @foreach(($pieTopSenders['items'] ?? []) as $i => $it)
+                      @php $color = $pieTopSenders['colors'][$i] ?? '#64748b'; @endphp
+                      <div class="legend-item legend-item-card">
+                        <div class="legend-left">
+                          <span class="legend-rank">{{ $loop->iteration }}</span>
+                          <span class="legend-dot" style="background: {{ $color }}"></span>
+                          <div class="legend-copy">
+                            <span class="legend-label">{{ $it['label'] }}</span>
+                            <small class="legend-meta">{{ $it['pct'] }}% {{ __('share') }}</small>
+                          </div>
+                        </div>
+                        <div class="legend-right">{{ number_format($it['amount'], 0) }}</div>
+                      </div>
+                      <div class="progress progress-soft"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
+                    @endforeach
+                    @if(empty($pieTopSenders['items'])) <div class="text-muted small text-center py-2">{{ __('No data') }}</div> @endif
+                  </div>
+                @endif
+              </div>
             </div>
           </div>
-          <div class="p-3 position-relative">
-            @if($loadingStates['pies'])
-              <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
-            @else
-              <div id="pieTopReceivers" class="ct-chart chart-animate" style="height: 220px;" wire:ignore></div>
-              <div class="pie-center">
-                <p class="pie-center-title">{{ __('Total') }}</p>
-                <p class="pie-center-value" id="pieTopReceiversTotal">{{ number_format($pieTopReceivers['total'] ?? 0, 0) }}</p>
-              </div>
 
-              <div class="legend-list">
-                @foreach(($pieTopReceivers['items'] ?? []) as $i => $it)
-                  @php $color = $pieTopReceivers['colors'][$i] ?? '#64748b'; @endphp
-                  <div class="legend-item">
-                    <div class="legend-left">
-                      <span class="legend-dot" style="background: {{ $color }}"></span>
-                      <span class="legend-label">{{ $it['label'] }}</span>
+          <div class="col-md-6 col-xl-4 mb-4">
+            <div class="chart-container analytics-pie-card analytics-pie-card-success h-100">
+              <div class="chart-header d-flex align-items-center gap-3">
+                <div class="kpi-icon success" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-user-shield"></i></div>
+                <div>
+                  <h6 class="chart-title">{{ __('Top 5 Receivers') }}</h6>
+                  <p class="chart-subtitle">{{ __('By amount received') }}</p>
+                </div>
+                <span class="analytics-value-pill ml-auto">{{ number_format($pieTopReceivers['total'] ?? 0, 0) }}</span>
+              </div>
+              <div class="p-3 position-relative">
+                @if($loadingStates['pies'])
+                  <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
+                @else
+                  <div class="analytics-pie-stage analytics-pie-stage-success">
+                    <div class="analytics-pie-stage-glow"></div>
+                    <div id="pieTopReceivers" class="ct-chart chart-animate analytics-pie-chart" style="height: 220px;" wire:ignore></div>
+                    <div class="pie-center">
+                      <p class="pie-center-title">{{ __('Total Received') }}</p>
+                      <p class="pie-center-value" id="pieTopReceiversTotal">{{ number_format($pieTopReceivers['total'] ?? 0, 0) }}</p>
                     </div>
-                    <div class="legend-right">{{ number_format($it['amount'], 0) }} <small class="text-muted">{{ $it['pct'] }}%</small></div>
                   </div>
-                  <div class="progress"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
-                @endforeach
-                @if(empty($pieTopReceivers['items'])) <div class="text-muted small text-center py-2">No data</div> @endif
-              </div>
-            @endif
-          </div>
-        </div>
 
-        
-        <!-- Top Countries -->
-        <div class="chart-container">
-          <div class="chart-header d-flex align-items-center gap-3">
-            <div class="kpi-icon warning" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-globe"></i></div>
-            <div>
-              <h6 class="chart-title">{{ __('Top 5 Countries') }}</h6>
-              <p class="chart-subtitle">{{ __('By total sent amount') }}</p>
+                  <div class="legend-list">
+                    @foreach(($pieTopReceivers['items'] ?? []) as $i => $it)
+                      @php $color = $pieTopReceivers['colors'][$i] ?? '#64748b'; @endphp
+                      <div class="legend-item legend-item-card">
+                        <div class="legend-left">
+                          <span class="legend-rank">{{ $loop->iteration }}</span>
+                          <span class="legend-dot" style="background: {{ $color }}"></span>
+                          <div class="legend-copy">
+                            <span class="legend-label">{{ $it['label'] }}</span>
+                            <small class="legend-meta">{{ $it['pct'] }}% {{ __('share') }}</small>
+                          </div>
+                        </div>
+                        <div class="legend-right">{{ number_format($it['amount'], 0) }}</div>
+                      </div>
+                      <div class="progress progress-soft"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
+                    @endforeach
+                    @if(empty($pieTopReceivers['items'])) <div class="text-muted small text-center py-2">{{ __('No data') }}</div> @endif
+                  </div>
+                @endif
+              </div>
             </div>
           </div>
-          <div class="p-3 position-relative">
-            @if($loadingStates['pies'])
-              <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
-            @else
-              <div id="pieTopCountries" class="ct-chart chart-animate" style="height: 220px;" wire:ignore></div>
-              <div class="pie-center">
-                <p class="pie-center-title">{{ __('Total') }}</p>
-                <p class="pie-center-value" id="pieTopCountriesTotal">{{ number_format($pieTopCountries['total'] ?? 0, 0) }}</p>
-              </div>
 
-              <div class="legend-list">
-                @foreach(($pieTopCountries['items'] ?? []) as $i => $it)
-                  @php $color = $pieTopCountries['colors'][$i] ?? '#64748b'; @endphp
-                  <div class="legend-item">
-                    <div class="legend-left">
-                      <span class="legend-dot" style="background: {{ $color }}"></span>
-                      <span class="legend-label">{{ $it['label'] }}</span>
-                    </div>
-                    <div class="legend-right">{{ number_format($it['amount'], 0) }} <small class="text-muted">{{ $it['pct'] }}%</small></div>
-                  </div>
-                  <div class="progress"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
-                @endforeach
-                @if(empty($pieTopCountries['items'])) <div class="text-muted small text-center py-2">No data</div> @endif
+          <div class="col-md-6 col-xl-4 mb-4">
+            <div class="chart-container analytics-pie-card analytics-pie-card-warning h-100">
+              <div class="chart-header d-flex align-items-center gap-3">
+                <div class="kpi-icon warning" style="width: 40px; height: 40px; font-size: 16px;"><i class="fas fa-globe"></i></div>
+                <div>
+                  <h6 class="chart-title">{{ __('Top 5 Countries') }}</h6>
+                  <p class="chart-subtitle">{{ __('By total sent amount') }}</p>
+                </div>
+                <span class="analytics-value-pill ml-auto">{{ number_format($pieTopCountries['total'] ?? 0, 0) }}</span>
               </div>
-            @endif
+              <div class="p-3 position-relative">
+                @if($loadingStates['pies'])
+                  <div class="loading-skeleton" style="height: 220px; border-radius: 8px;"></div>
+                @else
+                  <div class="analytics-pie-stage analytics-pie-stage-warning">
+                    <div class="analytics-pie-stage-glow"></div>
+                    <div id="pieTopCountries" class="ct-chart chart-animate analytics-pie-chart" style="height: 220px;" wire:ignore></div>
+                    <div class="pie-center">
+                      <p class="pie-center-title">{{ __('Country Mix') }}</p>
+                      <p class="pie-center-value" id="pieTopCountriesTotal">{{ number_format($pieTopCountries['total'] ?? 0, 0) }}</p>
+                    </div>
+                  </div>
+
+                  <div class="legend-list">
+                    @foreach(($pieTopCountries['items'] ?? []) as $i => $it)
+                      @php $color = $pieTopCountries['colors'][$i] ?? '#64748b'; @endphp
+                      <div class="legend-item legend-item-card">
+                        <div class="legend-left">
+                          <span class="legend-rank">{{ $loop->iteration }}</span>
+                          <span class="legend-dot" style="background: {{ $color }}"></span>
+                          <div class="legend-copy">
+                            <span class="legend-label">{{ $it['label'] }}</span>
+                            <small class="legend-meta">{{ $it['pct'] }}% {{ __('share') }}</small>
+                          </div>
+                        </div>
+                        <div class="legend-right">{{ number_format($it['amount'], 0) }}</div>
+                      </div>
+                      <div class="progress progress-soft"><div class="progress-bar" style="width: {{ $it['pct'] }}%; background: {{ $color }}"></div></div>
+                    @endforeach
+                    @if(empty($pieTopCountries['items'])) <div class="text-muted small text-center py-2">{{ __('No data') }}</div> @endif
+                  </div>
+                @endif
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div> <!-- row -->
+
+      <div class="col-xl-4 order-1 order-xl-2 dashboard-aside mb-4 mb-xl-0">
+        @livewire('general.quick-send-money-sidebar-livewire')
+      </div>
+    </div>
   </div> <!-- container-fluid -->
   {{-- Chartist + FA --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist/dist/chartist.min.css">
@@ -445,6 +391,36 @@
       setTimeout(()=>{toast.classList.remove('show'); setTimeout(()=>toast.remove(),250)},5000);
     }
 
+    function getChartTooltip() {
+      let tt = document.querySelector('.chartist-tooltip');
+      if (!tt) {
+        tt = document.createElement('div');
+        tt.className = 'chartist-tooltip';
+        document.body.appendChild(tt);
+      }
+      return tt;
+    }
+
+    function showChartTooltip(x, y, html) {
+      const tt = getChartTooltip();
+      tt.innerHTML = html;
+      tt.style.left = x + 'px';
+      tt.style.top = y + 'px';
+      tt.style.display = 'block';
+    }
+
+    function hideChartTooltip() {
+      const tt = document.querySelector('.chartist-tooltip');
+      if (tt) tt.style.display = 'none';
+    }
+
+    function formatChartValue(value, decimals = 0) {
+      return new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimals
+      }).format(value);
+    }
+
     // Line Chart (modern gradient, smooth)
     function drawLineChart(elementId, data) {
       const el = document.getElementById(elementId);
@@ -455,6 +431,11 @@
 
       const gradient = (data.gradient || {from:'#6366f1', to:'#8b5cf6'});
       const strokeColor = (data.colors && data.colors[0]) || gradient.from;
+      const tooltipLabel = data.tooltipLabel || 'Value';
+      const valuePrefix = data.valuePrefix || '';
+      const valueSuffix = data.valueSuffix || '';
+      const valueDecimals = Number.isFinite(data.valueDecimals) ? data.valueDecimals : 0;
+      const pointSeries = Array.isArray(data.series?.[0]) ? data.series[0] : [];
 
       const opts = {
         height: '280px',
@@ -476,10 +457,11 @@
         series: data.series || [[]]
       }, opts);
 
+      const areaGradId = elementId + '-area-grad';
+      const lineGradId = elementId + '-line-grad';
+
       el.__chart.on('created', ctx => {
         const defs = ctx.svg.elem('defs');
-        const areaGradId = elementId + '-area-grad';
-        const lineGradId = elementId + '-line-grad';
 
         const ag = defs.elem('linearGradient', { id: areaGradId, x1: 0, y1: 0, x2: 0, y2: 1 });
         ag.elem('stop', { offset: 0, 'stop-color': gradient.from, 'stop-opacity': 0.45 });
@@ -488,12 +470,51 @@
         const lg = defs.elem('linearGradient', { id: lineGradId, x1: 0, y1: 0, x2: 1, y2: 0 });
         lg.elem('stop', { offset: 0, 'stop-color': gradient.from });
         lg.elem('stop', { offset: 1, 'stop-color': gradient.to });
+      });
 
-        el.__chart.on('draw', d => {
-          if (d.type === 'line')  d.element.attr({ style: `stroke: url(#${lineGradId}); stroke-width:3px;` });
-          if (d.type === 'area')  d.element.attr({ style: `fill: url(#${areaGradId});` });
-          if (d.type === 'point') d.element.attr({ style: `stroke: ${strokeColor}; stroke-width:8px;` });
+      el.__chart.on('draw', d => {
+        if (d.type === 'line') {
+          d.element.attr({ style: `stroke: url(#${lineGradId}); stroke-width:3px;` });
+          return;
+        }
+
+        if (d.type === 'area') {
+          d.element.attr({ style: `fill: url(#${areaGradId});` });
+          return;
+        }
+
+        if (d.type !== 'point') return;
+
+        d.element.attr({
+          style: `stroke: ${strokeColor}; stroke-width:10px; stroke-linecap:round; pointer-events:all; cursor:pointer;`
         });
+
+        const node = d.element._node;
+        const label = data.labels?.[d.index] ?? '';
+        const value = Number(pointSeries[d.index] ?? d.value?.y ?? 0);
+        const valueText = `${valuePrefix}${formatChartValue(value, valueDecimals)}${valueSuffix}`;
+        const html = `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${strokeColor}"></span>
+            <strong style="font-size:12px;">${tooltipLabel}</strong>
+          </div>
+          <div style="opacity:.72;font-size:11px;margin-bottom:3px;">${label}</div>
+          <div style="font-weight:800;font-size:13px;">${valueText}</div>
+        `;
+
+        const move = e => showChartTooltip(e.clientX, e.clientY, html);
+        node.addEventListener('mouseenter', move);
+        node.addEventListener('mousemove', move);
+        node.addEventListener('mouseleave', hideChartTooltip);
+        node.addEventListener('touchstart', e => {
+          const t = e.touches[0];
+          if (t) showChartTooltip(t.clientX, t.clientY, html);
+        }, { passive: true });
+        node.addEventListener('touchmove', e => {
+          const t = e.touches[0];
+          if (t) showChartTooltip(t.clientX, t.clientY, html);
+        }, { passive: true });
+        node.addEventListener('touchend', hideChartTooltip);
       });
     }
 
@@ -518,32 +539,18 @@
       series: (raw.series || []).map(v => +v || 0)
     };
     const colors = (raw.colors?.length ? raw.colors : ['#c7d2fe','#d8b4fe','#a5f3fc','#bbf7d0','#fde68a']);
-    const donutW = 26;
+    const donutW = 24;
 
     el.innerHTML = '';
     if (el.__chart) { el.__chart.detach(); el.__chart = null; }
 
     el.__chart = new Chartist.Pie('#'+elementId, data, {
       donut: true, donutWidth: donutW, showLabel: false,
-      height: '240px', startAngle: 270, chartPadding: 12
+      height: '248px', startAngle: 270, chartPadding: 14
     });
 
-    // One tooltip for the page
-    let tt = document.querySelector('.chartist-tooltip');
-    if (!tt) { tt = document.createElement('div'); tt.className = 'chartist-tooltip'; document.body.appendChild(tt); }
-    const showTT = (x,y,html)=>{ tt.innerHTML = html; tt.style.left=x+'px'; tt.style.top=y+'px'; tt.style.display='block'; };
-    const hideTT = ()=>{ tt.style.display='none'; };
-
-    // draw soft track BEHIND slices (and never block events)
-    el.__chart.on('created', ctx => {
-      const w = ctx.chartRect.width(), h = ctx.chartRect.height();
-      const cx = ctx.chartRect.x1 + w/2, cy = ctx.chartRect.y1 + h/2;
-      const r  = Math.min(w,h)/2;
-      ctx.svg.elem('circle', {
-        cx, cy, r: r - donutW/2,
-        style: `fill:none; stroke:#eef2f7; stroke-width:${donutW}px; pointer-events:none;`
-      });
-    });
+    const showTT = (x,y,html)=> showChartTooltip(x, y, html);
+    const hideTT = ()=> hideChartTooltip();
 
     // style slices + interactive tooltip
     const total = data.series.reduce((s,v)=>s+v,0);
@@ -552,7 +559,7 @@
 
       const color = colors[d.index] || '#cbd5e1';
       d.element.attr({
-        style: `fill:none; stroke:${color}; stroke-width:${donutW}px; stroke-linecap:butt; pointer-events:stroke;`
+        style: `fill:none; stroke:${color}; stroke-width:${donutW}px; stroke-linecap:round; pointer-events:stroke;`
       });
 
       // reveal animation

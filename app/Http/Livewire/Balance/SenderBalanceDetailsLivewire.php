@@ -10,8 +10,9 @@ use App\Models\User;
 class SenderBalanceDetailsLivewire extends Component
 {
     use WithPagination;
-
+    
     protected $paginationTheme = 'bootstrap';
+    protected string $detailsPageName = 'senderDetailsPage';
 
     public int $userId;
     public string $mode = 'all'; // 'all','incoming','outgoing'
@@ -39,26 +40,26 @@ class SenderBalanceDetailsLivewire extends Component
     public function setMode(string $m)
     {
         $this->mode = in_array($m, ['all','incoming','outgoing'], true) ? $m : 'all';
-        $this->resetPage();
+        $this->resetPage($this->detailsPageName);
     }
 
     // Auto-apply filters on change
     public function updatedDateFrom(): void
     {
         $this->validateOnly('dateFrom');
-        $this->resetPage();
+        $this->resetPage($this->detailsPageName);
     }
 
     public function updatedDateTo(): void
     {
         $this->validateOnly('dateTo');
-        $this->resetPage();
+        $this->resetPage($this->detailsPageName);
     }
 
     public function clearDateFilter(): void
     {
         $this->reset(['dateFrom','dateTo']);
-        $this->resetPage();
+        $this->resetPage($this->detailsPageName);
     }
 
     public function deleteEntry(int $id): void
@@ -78,8 +79,8 @@ class SenderBalanceDetailsLivewire extends Component
 
         // If current page becomes empty, go back a page to avoid blank page
         $countOnPage = $this->filteredBase()->count();
-        if ($countOnPage === 0 && $this->page > 1) {
-            $this->previousPage();
+        if ($countOnPage === 0 && (int) data_get($this->paginators, $this->detailsPageName, 1) > 1) {
+            $this->previousPage($this->detailsPageName);
         }
 
         $this->dispatchBrowserEvent('toast', ['message' => __('Entry deleted')]);
@@ -113,7 +114,7 @@ class SenderBalanceDetailsLivewire extends Component
             ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
             ->when($this->dateTo,   fn($q) => $q->whereDate('created_at', '<=', $this->dateTo));
 
-        $rows = $base->latest('id')->paginate($this->perPage);
+        $rows = $base->latest('id')->paginate($this->perPage, ['*'], $this->detailsPageName);
 
         // Totals query with the SAME date filters
         $totals = SenderBalance::where('user_id', $this->userId)

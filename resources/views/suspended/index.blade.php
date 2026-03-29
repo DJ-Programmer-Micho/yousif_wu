@@ -91,26 +91,26 @@
             />
           </svg>
         </div>
-        <h1>Account Suspended</h1>
+        <h1>{{ __('Account Suspended') }}</h1>
         <div class="description">
-          <p style="line-height: 19px;"><b>Reasons of Suspended:</b></p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Violation of Policy</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Violation of Terms and Condition</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Fraud Detection</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Spam Detection</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Security Concerns</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Software Manipulation or Cheating</p>
-          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i></i>Suspiciuos Betting Patterns</p>
+          <p style="line-height: 19px;"><b>{{ __('Reasons for Suspension:') }}</b></p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Violation of Policy') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Violation of Terms and Conditions') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Fraud Detection') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Spam Detection') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Security Concerns') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Software Manipulation or Cheating') }}</p>
+          <p><i class="fa-solid fa-triangle-exclamation mx-1"></i>{{ __('Suspicious Betting Patterns') }}</p>
           
         </div>
         <p>
-          If you believe it is happened by mistake
-          <span class="emphasize"> Contact us immedietly</span>. 
-          If you own this system,
-          <span class="emphasize">Please Contact The Developers</span> to avoid permanent
-          termination of services.
+          {{ __('If you believe this happened by mistake') }}
+          <span class="emphasize">{{ __('Contact us immediately') }}</span>.
+          {{ __('If you own this system,') }}
+          <span class="emphasize">{{ __('Please Contact The Developers') }}</span>
+          {{ __('to avoid permanent termination of services.') }}
         </p>
-        <p>Contact your Provider for further information.</p>
+        <p>{{ __('Contact your provider for further information.') }}</p>
       </div>
     </div>
 

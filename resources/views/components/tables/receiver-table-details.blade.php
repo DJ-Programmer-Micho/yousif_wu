@@ -12,12 +12,12 @@
 
     <div class="d-flex align-items-end mb-2">
       <div class="form-group mb-0 mr-2">
-        <label class="small mb-1">From</label>
+        <label class="small mb-1">{{ __('From') }}</label>
         <input type="date" class="form-control form-control-sm" wire:model.lazy="dateFrom">
         @error('dateFrom') <small class="text-danger">{{ $message }}</small> @enderror
       </div>
       <div class="form-group mb-0 mr-2">
-        <label class="small mb-1">To</label>
+        <label class="small mb-1">{{ __('To') }}</label>
         <input type="date" class="form-control form-control-sm" wire:model.lazy="dateTo">
         @error('dateTo') <small class="text-danger">{{ $message }}</small> @enderror
       </div>
@@ -66,7 +66,7 @@
           </div>
           <div class="form-group mb-0 mr-2 flex-fill">
             <label class="small mb-1">{{ __('Note') }}</label>
-            <input type="text" class="form-control form-control-sm" wire:model.lazy="deductInlineNote" placeholder="Optional">
+            <input type="text" class="form-control form-control-sm" wire:model.lazy="deductInlineNote" placeholder="{{ __('Optional') }}">
             @error('deductInlineNote') <small class="text-danger">{{ $message }}</small> @enderror
           </div>
           <button class="btn btn-sm btn-danger"

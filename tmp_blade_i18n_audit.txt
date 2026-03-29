@@ -1,0 +1,585 @@
+resources\views\components\auth\form-register.blade.php:14 [text] &times;
+resources\views\components\auth\register-table.blade.php:622 [attr] avatar
+resources\views\components\auth\register-table.blade.php:644 [text] &mdash;
+resources\views\components\forms\bankstatement-table.blade.php:329 [text] XXX-XXX-XXXX
+resources\views\components\forms\bankstatement-table.blade.php:404 [attr] Customer Receipt
+resources\views\components\forms\bankstatement-table.blade.php:409 [attr] Register/Agent Receipt
+resources\views\components\forms\bankstatement-table.blade.php:414 [attr] Both Receipts
+resources\views\components\forms\bankstatement-table.blade.php:420 [attr] Customer Receipt
+resources\views\components\forms\bankstatement-table.blade.php:425 [attr] Register/Agent Receipt
+resources\views\components\forms\bankstatement-table.blade.php:430 [attr] Both Receipts
+resources\views\components\forms\bankstatement-table.blade.php:520 [attr] Customer Receipt
+resources\views\components\forms\bankstatement-table.blade.php:525 [attr] Register/Agent Receipt
+resources\views\components\forms\bankstatement-table.blade.php:530 [attr] Both Receipts
+resources\views\components\forms\country-limit-create.blade.php:21 [text] &times;
+resources\views\components\forms\country-limit-create.blade.php:78 [text] &times;
+resources\views\components\forms\country-limit-create.blade.php:126 [text] &times;
+resources\views\components\forms\country-rule-create.blade.php:21 [text] &times;
+resources\views\components\forms\country-rule-create.blade.php:71 [text] &times;
+resources\views\components\forms\country-rule-create.blade.php:107 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:20 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:92 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:165 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:226 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:275 [text] &times;
+resources\views\components\forms\country-tax-create.blade.php:303 [text] &times;
+resources\views\components\forms\receiver-create.blade.php:114 [attr] +9647xxxxxxxx
+resources\views\components\forms\receiver-create.blade.php:156 [attr] ID preview
+resources\views\components\forms\sender-create-v2.blade.php:165 [attr] +9647xxxxxxxx
+resources\views\components\forms\sender-create-v2.blade.php:283 [attr] +xxxxxxxxxxxx
+resources\views\components\forms\sender-create.blade.php:417 [attr] +9647xxxxxxxx
+resources\views\components\forms\sender-create.blade.php:663 [attr] +xxxxxxxxxxxx
+resources\views\components\forms\sender-view.blade.php:14 [attr] flag
+resources\views\components\general\dashboard.blade.php:57 [text] IQD
+resources\views\components\general\profile.blade.php:17 [attr] avatar
+resources\views\components\general\profile.blade.php:239 [attr] Close
+resources\views\components\general\profile.blade.php:240 [text] &times;
+resources\views\components\general\quick-send-money-sidebar.blade.php:516 [text] \d+(?:\.\d+)?)\s+(?
+resources\views\components\general\quick-send-money-sidebar.blade.php:516 [text] \d+(?:\.\d+)?)\s+(?
+resources\views\components\general\quick-send-money-sidebar.blade.php:516 [text] .+?)\s+(?
+resources\views\components\layouts\footer.blade.php:3 [text] IRAQ REMIT
+resources\views\components\layouts\header.blade.php:16 [attr] homepage
+resources\views\components\layouts\header.blade.php:18 [attr] homepage
+resources\views\components\layouts\header.blade.php:24 [attr] homepage
+resources\views\components\layouts\header.blade.php:26 [attr] homepage
+resources\views\components\layouts\header.blade.php:38 [attr] Toggle navigation
+resources\views\components\layouts\header.blade.php:93 [text] Another action
+resources\views\components\layouts\header.blade.php:95 [text] Something else here
+resources\views\components\layouts\header.blade.php:102 [text] English
+resources\views\components\layouts\header.blade.php:102 [attr] en
+resources\views\components\layouts\header.blade.php:103 [text] العربية
+resources\views\components\layouts\header.blade.php:103 [attr] ar
+resources\views\components\layouts\header.blade.php:104 [text] کوردی
+resources\views\components\layouts\header.blade.php:104 [attr] ku
+resources\views\components\layouts\header.blade.php:122 [attr] user
+resources\views\components\mail\receiver.blade.php:591 [text] New Receiver Submitted
+resources\views\components\mail\receiver.blade.php:602 [text] Receiver:
+resources\views\components\mail\receiver.blade.php:606 [text] Address/Telephone:
+resources\views\components\mail\receiver.blade.php:614 [text] Receiver Mobile Number:
+resources\views\components\mail\receiver.blade.php:620 [text] Identification:
+resources\views\components\mail\receiver.blade.php:621 [text] Passport
+resources\views\components\mail\receiver.blade.php:626 [text] MTCN:
+resources\views\components\mail\receiver.blade.php:628 [text] Date &amp; Time:
+resources\views\components\mail\receiver.blade.php:632 [text] Amount Received:
+resources\views\components\mail\sender.blade.php:598 [text] New Transfer Submitted
+resources\views\components\mail\sender.blade.php:609 [text] Sender:
+resources\views\components\mail\sender.blade.php:613 [text] Address/Telephone:
+resources\views\components\mail\sender.blade.php:624 [text] Test Question:
+resources\views\components\mail\sender.blade.php:625 [text] Answer:
+resources\views\components\mail\sender.blade.php:627 [text] Sender Mobile Number:
+resources\views\components\mail\sender.blade.php:631 [text] Purpose of Transaction:
+resources\views\components\mail\sender.blade.php:631 [text] Family Support
+resources\views\components\mail\sender.blade.php:632 [text] Source of Funds:
+resources\views\components\mail\sender.blade.php:632 [text] Salary
+resources\views\components\mail\sender.blade.php:633 [text] Occupation:
+resources\views\components\mail\sender.blade.php:635 [text] Relationship to Receiver:
+resources\views\components\mail\sender.blade.php:635 [text] Family
+resources\views\components\mail\sender.blade.php:640 [text] Receiver:
+resources\views\components\mail\sender.blade.php:643 [text] Country: &nbsp;
+resources\views\components\mail\sender.blade.php:648 [text] Optional Services:
+resources\views\components\mail\sender.blade.php:648 [text] MONEY IN MINUTES
+resources\views\components\mail\sender.blade.php:649 [text] Message:
+resources\views\components\mail\sender.blade.php:651 [text] Receiver Mobile Number:
+resources\views\components\mail\sender.blade.php:657 [text] MTCN:
+resources\views\components\mail\sender.blade.php:657 [text] XXX-XXX-XXXX
+resources\views\components\mail\sender.blade.php:658 [text] MTCN:
+resources\views\components\mail\sender.blade.php:660 [text] Date &amp; Time:
+resources\views\components\mail\sender.blade.php:664 [text] Amount Sent:
+resources\views\components\mail\sender.blade.php:665 [text] Transfer Fee:
+resources\views\components\mail\sender.blade.php:668 [text] Message Charge:
+resources\views\components\mail\sender.blade.php:669 [text] Delivery Charge:
+resources\views\components\mail\sender.blade.php:670 [text] Discount:
+resources\views\components\mail\sender.blade.php:672 [text] TOTAL:
+resources\views\components\reuse\receiver-action.blade.php:6 [attr] Receiver actions
+resources\views\components\reuse\receiver-preview.blade.php:46 [attr] Close
+resources\views\components\reuse\receiver-preview.blade.php:47 [text] &times;
+resources\views\components\reuse\sender-action.blade.php:6 [attr] Sender actions
+resources\views\components\reuse\sender-action.blade.php:76 [attr] Close
+resources\views\components\reuse\sender-action.blade.php:77 [text] &times;
+resources\views\components\reuse\sender-action.blade.php:91 [attr] Close
+resources\views\components\reuse\sender-action.blade.php:92 [text] &times;
+resources\views\components\reuse\sender-action.blade.php:239 [attr] USD / IQD / EUR
+resources\views\components\tables\receiver-executed-table.blade.php:53 [text] &nbsp;
+resources\views\components\tables\receiver-pending-table.blade.php:53 [text] &nbsp;
+resources\views\components\tables\receiver-rejected-table.blade.php:53 [text] &nbsp;
+resources\views\components\tables\receiver-table-details.blade.php:15 [text] From
+resources\views\components\tables\receiver-table-details.blade.php:20 [text] To
+resources\views\components\tables\receiver-table-details.blade.php:69 [attr] Optional
+resources\views\components\tables\receiver-table.blade.php:78 [text] &times;
+resources\views\components\tables\receiver-table.blade.php:78 [attr] Close
+resources\views\components\tables\receiver-table.blade.php:95 [text] &times;
+resources\views\components\tables\receiver-table.blade.php:95 [attr] Close
+resources\views\components\tables\receiver-table.blade.php:130 [text] &times;
+resources\views\components\tables\receiver-table.blade.php:130 [attr] Close
+resources\views\components\tables\sender-executed-table.blade.php:72 [text] &nbsp;
+resources\views\components\tables\sender-pending-table.blade.php:70 [text] &nbsp;
+resources\views\components\tables\sender-pending-table.blade.php:117 [text] XXX-XXX-XXXX
+resources\views\components\tables\sender-rejected-table.blade.php:72 [text] &nbsp;
+resources\views\components\tables\sender-rejected-table.blade.php:119 [text] XXX-XXX-XXXX
+resources\views\components\tables\sender-table.blade.php:84 [attr] Close
+resources\views\components\tables\sender-table.blade.php:85 [text] &times;
+resources\views\components\tables\sender-table.blade.php:108 [attr] Close
+resources\views\components\tables\sender-table.blade.php:109 [text] &times;
+resources\views\components\tables\sender-table.blade.php:150 [attr] Close
+resources\views\components\tables\sender-table.blade.php:151 [text] &times;
+resources\views\layouts\app-clean.blade.php:14 [text] Document
+resources\views\layouts\app.blade.php:261 [text] Iraq Remit
+resources\views\layouts\law.blade.php:15 [text] IRAQ REMIT
+resources\views\layouts\law.blade.php:20 [attr] Italian Coffee
+resources\views\pages\announcement\index.blade.php:19 [attr] breadcrumb
+resources\views\pages\auth\index.blade.php:19 [text] Iraq Remit
+resources\views\pages\auth\index.blade.php:60 [attr] wrapkit
+resources\views\pages\auth\index.blade.php:65 [text] SIGN IN
+resources\views\pages\auth\index.blade.php:69 [text] Enter your email address and password to access admin panel.
+resources\views\pages\auth\index.blade.php:76 [text] Email
+resources\views\pages\auth\index.blade.php:84 [attr] email
+resources\views\pages\auth\index.blade.php:91 [text] Password
+resources\views\pages\auth\index.blade.php:95 [attr] enter your password
+resources\views\pages\auth\index.blade.php:102 [text] Recaptcha
+resources\views\pages\auth\index.blade.php:112 [text] Sign In
+resources\views\pages\auth\register.blade.php:21 [attr] breadcrumb
+resources\views\pages\balance\receiver\index.blade.php:37 [attr] breadcrumb
+resources\views\pages\balance\sender\index.blade.php:37 [attr] breadcrumb
+resources\views\pages\bank\index.blade.php:468 [attr] breadcrumb
+resources\views\pages\country_info\index.blade.php:18 [attr] breadcrumb
+resources\views\pages\country_limit\g-index.blade.php:18 [attr] breadcrumb
+resources\views\pages\country_limit\index.blade.php:94 [attr] breadcrumb
+resources\views\pages\country_rules\index.blade.php:103 [attr] breadcrumb
+resources\views\pages\country_tax\g-index.blade.php:12 [attr] breadcrumb
+resources\views\pages\country_tax\index.blade.php:138 [attr] breadcrumb
+resources\views\pages\mtcn\index.blade.php:28 [attr] breadcrumb
+resources\views\pages\reciever\executed.blade.php:250 [attr] breadcrumb
+resources\views\pages\reciever\index.blade.php:99 [attr] breadcrumb
+resources\views\pages\reciever\pending.blade.php:252 [attr] breadcrumb
+resources\views\pages\reciever\rejected.blade.php:250 [attr] breadcrumb
+resources\views\pages\sender\create.blade.php:186 [attr] breadcrumb
+resources\views\pages\sender\executed.blade.php:250 [attr] breadcrumb
+resources\views\pages\sender\pending.blade.php:253 [attr] breadcrumb
+resources\views\pages\sender\rejected.blade.php:250 [attr] breadcrumb
+resources\views\pages\setting\profile.blade.php:23 [attr] breadcrumb
+resources\views\pages\setting\setting.blade.php:8 [attr] breadcrumb
+resources\views\pages\setting\setting.blade.php:10 [text] App
+resources\views\pages\setting\setting.blade.php:11 [text] Settings
+resources\views\pages\setting\setting.blade.php:12 [text] Receiver Gate
+resources\views\receipts\agent.blade.php:1675 [text] Sender:
+resources\views\receipts\agent.blade.php:1676 [text] Address/Telephone:
+resources\views\receipts\agent.blade.php:1677 [text] &nbsp;
+resources\views\receipts\agent.blade.php:1678 [text] &nbsp;
+resources\views\receipts\agent.blade.php:1678 [text] Address:
+resources\views\receipts\agent.blade.php:1682 [text] Test Question:
+resources\views\receipts\agent.blade.php:1683 [text] Answer:
+resources\views\receipts\agent.blade.php:1684 [text] Sender Mobile Number:
+resources\views\receipts\agent.blade.php:1685 [text] (If sending to a Mobile)
+resources\views\receipts\agent.blade.php:1686 [text] Purpose of Transaction:
+resources\views\receipts\agent.blade.php:1686 [text] Family Support/Living Expenses
+resources\views\receipts\agent.blade.php:1688 [text] Source of Funds:
+resources\views\receipts\agent.blade.php:1688 [text] Salary
+resources\views\receipts\agent.blade.php:1689 [text] Occupation:
+resources\views\receipts\agent.blade.php:1689 [text] Domestic Helper
+resources\views\receipts\agent.blade.php:1690 [text] Relationship to Receiver:
+resources\views\receipts\agent.blade.php:1690 [text] Family
+resources\views\receipts\agent.blade.php:1694 [text] Receiver:
+resources\views\receipts\agent.blade.php:1703 [text] MTCN:
+resources\views\receipts\agent.blade.php:1706 [text] XXX-XXX-XXXX
+resources\views\receipts\agent.blade.php:1712 [text] Country:
+resources\views\receipts\agent.blade.php:1721 [text] Date &amp; Time:
+resources\views\receipts\agent.blade.php:1729 [text] State:
+resources\views\receipts\agent.blade.php:1731 [text] Message:
+resources\views\receipts\agent.blade.php:1748 [text] Optional Services:
+resources\views\receipts\agent.blade.php:1752 [text] MONEY IN MINUTES
+resources\views\receipts\agent.blade.php:1758 [text] Amount Sent:
+resources\views\receipts\agent.blade.php:1759 [text] Transfer Fee:
+resources\views\receipts\agent.blade.php:1762 [text] US Dollar
+resources\views\receipts\agent.blade.php:1763 [text] US Dollar
+resources\views\receipts\agent.blade.php:1768 [text] Receiver Mobile Number:
+resources\views\receipts\agent.blade.php:1778 [text] Message Charge:
+resources\views\receipts\agent.blade.php:1795 [text] Delivery Charge:
+resources\views\receipts\agent.blade.php:1812 [text] Discount:
+resources\views\receipts\agent.blade.php:1829 [text] Total:
+resources\views\receipts\agent.blade.php:1830 [text] Payout:
+resources\views\receipts\agent.blade.php:1833 [text] US Dollar
+resources\views\receipts\agent.blade.php:1834 [text] XXXX.XX
+resources\views\receipts\agent.blade.php:1889 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\agent.blade.php:1891 [text] www.westernunion.com/mt
+resources\views\receipts\agent.blade.php:1895 [text] Enrolling to the Gold! Card Program Gold Card Number
+resources\views\receipts\agent.blade.php:1896 [text] Points Earned
+resources\views\receipts\agent.blade.php:1897 [text] Total Points
+resources\views\receipts\agent.blade.php:1914 [text] Protect Yourself from Fraud.
+resources\views\receipts\agent.blade.php:1925 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\agent.blade.php:1943 [text] the loyalty program terms if applicable.
+resources\views\receipts\agent.blade.php:1946 [text] Customer signature
+resources\views\receipts\agent.blade.php:1949 [text] Agent signature
+resources\views\receipts\agent.blade.php:1952 [text] Date:
+resources\views\receipts\agent.blade.php:2158 [text] destination or intermediary financial service providers.
+resources\views\receipts\customer.blade.php:1809 [text] To Send -&nbsp;Customer Receipt
+resources\views\receipts\customer.blade.php:1814 [text] Sender:
+resources\views\receipts\customer.blade.php:1815 [text] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\customer.blade.php:1817 [text] Address/Telephone:
+resources\views\receipts\customer.blade.php:1819 [text] &nbsp;
+resources\views\receipts\customer.blade.php:1819 [text] Address:
+resources\views\receipts\customer.blade.php:1823 [text] Test Question:
+resources\views\receipts\customer.blade.php:1824 [text] Answer:
+resources\views\receipts\customer.blade.php:1825 [text] Sender Mobile Number:
+resources\views\receipts\customer.blade.php:1828 [text] Family Support/Living
+resources\views\receipts\customer.blade.php:1829 [text] Expenses
+resources\views\receipts\customer.blade.php:1831 [text] Salary
+resources\views\receipts\customer.blade.php:1832 [text] Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\customer.blade.php:1833 [text] Domestic Helper
+resources\views\receipts\customer.blade.php:1835 [text] Family
+resources\views\receipts\customer.blade.php:1839 [text] Receiver:
+resources\views\receipts\customer.blade.php:1849 [text] MTCN:
+resources\views\receipts\customer.blade.php:1852 [text] XXX-XXX-XXXX
+resources\views\receipts\customer.blade.php:1858 [text] Country:
+resources\views\receipts\customer.blade.php:1867 [text] Date &amp; Time:
+resources\views\receipts\customer.blade.php:1875 [text] State:
+resources\views\receipts\customer.blade.php:1877 [text] Message:
+resources\views\receipts\customer.blade.php:1894 [text] Optional Services:
+resources\views\receipts\customer.blade.php:1897 [text] MONEY IN MINUTES
+resources\views\receipts\customer.blade.php:1903 [text] Amount Sent:
+resources\views\receipts\customer.blade.php:1904 [text] Transfer Fee:
+resources\views\receipts\customer.blade.php:1907 [text] US Dollar
+resources\views\receipts\customer.blade.php:1908 [text] US Dollar
+resources\views\receipts\customer.blade.php:1913 [text] Receiver Mobile Number:
+resources\views\receipts\customer.blade.php:1914 [text] Receiver Mobile Number:
+resources\views\receipts\customer.blade.php:1924 [text] Message Charge:
+resources\views\receipts\customer.blade.php:1941 [text] Delivery Charge:
+resources\views\receipts\customer.blade.php:1958 [text] Discount:
+resources\views\receipts\customer.blade.php:1975 [text] Total:
+resources\views\receipts\customer.blade.php:1976 [text] Payout:
+resources\views\receipts\customer.blade.php:1979 [text] US Dollar
+resources\views\receipts\customer.blade.php:1980 [text] XXXX.XX
+resources\views\receipts\customer.blade.php:2035 [text] &nbsp;
+resources\views\receipts\customer.blade.php:2039 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\customer.blade.php:2041 [text] www.westernunion.com/mt
+resources\views\receipts\customer.blade.php:2045 [text] Enrolling to the Gold! Card Program Gold Card Number
+resources\views\receipts\customer.blade.php:2046 [text] Points Earned
+resources\views\receipts\customer.blade.php:2047 [text] Total Points
+resources\views\receipts\customer.blade.php:2064 [text] Protect Yourself from Fraud.
+resources\views\receipts\customer.blade.php:2075 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\customer.blade.php:2093 [text] the loyalty program terms if applicable.
+resources\views\receipts\customer.blade.php:2096 [text] Customer signature
+resources\views\receipts\customer.blade.php:2099 [text] Agent signature
+resources\views\receipts\customer.blade.php:2102 [text] Date:
+resources\views\receipts\customer.blade.php:2308 [text] destination or intermediary financial service providers.
+resources\views\receipts\executed-agent.blade.php:1675 [text] Sender:
+resources\views\receipts\executed-agent.blade.php:1676 [text] Address/Telephone:
+resources\views\receipts\executed-agent.blade.php:1677 [text] &nbsp;
+resources\views\receipts\executed-agent.blade.php:1678 [text] &nbsp;
+resources\views\receipts\executed-agent.blade.php:1678 [text] Address:
+resources\views\receipts\executed-agent.blade.php:1682 [text] Test Question:
+resources\views\receipts\executed-agent.blade.php:1683 [text] Answer:
+resources\views\receipts\executed-agent.blade.php:1684 [text] Sender Mobile Number:
+resources\views\receipts\executed-agent.blade.php:1685 [text] (If sending to a Mobile)
+resources\views\receipts\executed-agent.blade.php:1686 [text] Purpose of Transaction:
+resources\views\receipts\executed-agent.blade.php:1686 [text] Family Support/Living Expenses
+resources\views\receipts\executed-agent.blade.php:1688 [text] Source of Funds:
+resources\views\receipts\executed-agent.blade.php:1688 [text] Salary
+resources\views\receipts\executed-agent.blade.php:1689 [text] Occupation:
+resources\views\receipts\executed-agent.blade.php:1689 [text] Domestic Helper
+resources\views\receipts\executed-agent.blade.php:1690 [text] Relationship to Receiver:
+resources\views\receipts\executed-agent.blade.php:1690 [text] Family
+resources\views\receipts\executed-agent.blade.php:1694 [text] Receiver:
+resources\views\receipts\executed-agent.blade.php:1703 [text] MTCN:
+resources\views\receipts\executed-agent.blade.php:1706 [text] XXX-XXX-XXXX
+resources\views\receipts\executed-agent.blade.php:1712 [text] Country:
+resources\views\receipts\executed-agent.blade.php:1721 [text] Date &amp; Time:
+resources\views\receipts\executed-agent.blade.php:1731 [text] Message:
+resources\views\receipts\executed-agent.blade.php:1748 [text] Optional Services:
+resources\views\receipts\executed-agent.blade.php:1752 [text] MONEY IN MINUTES
+resources\views\receipts\executed-agent.blade.php:1758 [text] Amount Sent:
+resources\views\receipts\executed-agent.blade.php:1759 [text] Transfer Fee:
+resources\views\receipts\executed-agent.blade.php:1762 [text] US Dollar
+resources\views\receipts\executed-agent.blade.php:1763 [text] US Dollar
+resources\views\receipts\executed-agent.blade.php:1768 [text] Receiver Mobile Number:
+resources\views\receipts\executed-agent.blade.php:1778 [text] Message Charge:
+resources\views\receipts\executed-agent.blade.php:1795 [text] Delivery Charge:
+resources\views\receipts\executed-agent.blade.php:1812 [text] Discount:
+resources\views\receipts\executed-agent.blade.php:1829 [text] Total:
+resources\views\receipts\executed-agent.blade.php:1830 [text] Payout:
+resources\views\receipts\executed-agent.blade.php:1833 [text] US Dollar
+resources\views\receipts\executed-agent.blade.php:1889 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\executed-agent.blade.php:1891 [text] www.westernunion.com/mt
+resources\views\receipts\executed-agent.blade.php:1895 [text] Enrolling to the Gold! Card Program Gold Card Number
+resources\views\receipts\executed-agent.blade.php:1896 [text] Points Earned
+resources\views\receipts\executed-agent.blade.php:1897 [text] Total Points
+resources\views\receipts\executed-agent.blade.php:1914 [text] Protect Yourself from Fraud.
+resources\views\receipts\executed-agent.blade.php:1925 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\executed-agent.blade.php:1943 [text] the loyalty program terms if applicable.
+resources\views\receipts\executed-agent.blade.php:1946 [text] Customer signature
+resources\views\receipts\executed-agent.blade.php:1949 [text] Agent signature
+resources\views\receipts\executed-agent.blade.php:1952 [text] Date:
+resources\views\receipts\executed-agent.blade.php:2158 [text] destination or intermediary financial service providers.
+resources\views\receipts\executed-customer.blade.php:1809 [text] To Send -&nbsp;Customer Receipt
+resources\views\receipts\executed-customer.blade.php:1814 [text] Sender:
+resources\views\receipts\executed-customer.blade.php:1815 [text] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\executed-customer.blade.php:1817 [text] Address/Telephone:
+resources\views\receipts\executed-customer.blade.php:1819 [text] &nbsp;
+resources\views\receipts\executed-customer.blade.php:1819 [text] Address:
+resources\views\receipts\executed-customer.blade.php:1823 [text] Test Question:
+resources\views\receipts\executed-customer.blade.php:1824 [text] Answer:
+resources\views\receipts\executed-customer.blade.php:1825 [text] Sender Mobile Number:
+resources\views\receipts\executed-customer.blade.php:1828 [text] Family Support/Living
+resources\views\receipts\executed-customer.blade.php:1829 [text] Expenses
+resources\views\receipts\executed-customer.blade.php:1831 [text] Salary
+resources\views\receipts\executed-customer.blade.php:1832 [text] Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\executed-customer.blade.php:1833 [text] Domestic Helper
+resources\views\receipts\executed-customer.blade.php:1835 [text] Family
+resources\views\receipts\executed-customer.blade.php:1839 [text] Receiver:
+resources\views\receipts\executed-customer.blade.php:1849 [text] MTCN:
+resources\views\receipts\executed-customer.blade.php:1852 [text] XXX-XXX-XXXX
+resources\views\receipts\executed-customer.blade.php:1858 [text] Country:
+resources\views\receipts\executed-customer.blade.php:1867 [text] Date &amp; Time:
+resources\views\receipts\executed-customer.blade.php:1875 [text] State:
+resources\views\receipts\executed-customer.blade.php:1877 [text] Message:
+resources\views\receipts\executed-customer.blade.php:1894 [text] Optional Services:
+resources\views\receipts\executed-customer.blade.php:1897 [text] MONEY IN MINUTES
+resources\views\receipts\executed-customer.blade.php:1903 [text] Amount Sent:
+resources\views\receipts\executed-customer.blade.php:1904 [text] Transfer Fee:
+resources\views\receipts\executed-customer.blade.php:1907 [text] US Dollar
+resources\views\receipts\executed-customer.blade.php:1908 [text] US Dollar
+resources\views\receipts\executed-customer.blade.php:1913 [text] Receiver Mobile Number:
+resources\views\receipts\executed-customer.blade.php:1914 [text] Receiver Mobile Number:
+resources\views\receipts\executed-customer.blade.php:1924 [text] Message Charge:
+resources\views\receipts\executed-customer.blade.php:1941 [text] Delivery Charge:
+resources\views\receipts\executed-customer.blade.php:1958 [text] Discount:
+resources\views\receipts\executed-customer.blade.php:1975 [text] Total:
+resources\views\receipts\executed-customer.blade.php:1976 [text] Payout:
+resources\views\receipts\executed-customer.blade.php:1979 [text] US Dollar
+resources\views\receipts\executed-customer.blade.php:2035 [text] &nbsp;
+resources\views\receipts\executed-customer.blade.php:2039 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\executed-customer.blade.php:2041 [text] www.westernunion.com/mt
+resources\views\receipts\executed-customer.blade.php:2045 [text] Enrolling to the Gold! Card Program Gold Card Number
+resources\views\receipts\executed-customer.blade.php:2046 [text] Points Earned
+resources\views\receipts\executed-customer.blade.php:2047 [text] Total Points
+resources\views\receipts\executed-customer.blade.php:2064 [text] Protect Yourself from Fraud.
+resources\views\receipts\executed-customer.blade.php:2075 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\executed-customer.blade.php:2093 [text] the loyalty program terms if applicable.
+resources\views\receipts\executed-customer.blade.php:2096 [text] Customer signature
+resources\views\receipts\executed-customer.blade.php:2099 [text] Agent signature
+resources\views\receipts\executed-customer.blade.php:2102 [text] Date:
+resources\views\receipts\executed-customer.blade.php:2308 [text] destination or intermediary financial service providers.
+resources\views\receipts\executed-receiver-agent.blade.php:1668 [text] To Receive -&nbsp;Agent Receipt
+resources\views\receipts\executed-receiver-agent.blade.php:1673 [text] Receiver:
+resources\views\receipts\executed-receiver-agent.blade.php:1674 [text] Address/Telephone:
+resources\views\receipts\executed-receiver-agent.blade.php:1675 [text] &nbsp;
+resources\views\receipts\executed-receiver-agent.blade.php:1676 [text] &nbsp;
+resources\views\receipts\executed-receiver-agent.blade.php:1676 [text] Mandatory/Optional
+resources\views\receipts\executed-receiver-agent.blade.php:1680 [text] Test Question:
+resources\views\receipts\executed-receiver-agent.blade.php:1681 [text] Answer:
+resources\views\receipts\executed-receiver-agent.blade.php:1682 [text] ID Type:
+resources\views\receipts\executed-receiver-agent.blade.php:1682 [text] Passport
+resources\views\receipts\executed-receiver-agent.blade.php:1684 [text] Purpose of Transaction:
+resources\views\receipts\executed-receiver-agent.blade.php:1684 [text] Family Support/Living Expenses
+resources\views\receipts\executed-receiver-agent.blade.php:1687 [text] Occupation:
+resources\views\receipts\executed-receiver-agent.blade.php:1687 [text] Domestic Helper
+resources\views\receipts\executed-receiver-agent.blade.php:1688 [text] Relationship to Receiver:
+resources\views\receipts\executed-receiver-agent.blade.php:1688 [text] Family
+resources\views\receipts\executed-receiver-agent.blade.php:1692 [text] Sender:
+resources\views\receipts\executed-receiver-agent.blade.php:1695 [text] Anonymous
+resources\views\receipts\executed-receiver-agent.blade.php:1701 [text] MTCN:
+resources\views\receipts\executed-receiver-agent.blade.php:1704 [text] XXX-XXX-XXXX
+resources\views\receipts\executed-receiver-agent.blade.php:1710 [text] Country:
+resources\views\receipts\executed-receiver-agent.blade.php:1719 [text] Date &amp; Time:
+resources\views\receipts\executed-receiver-agent.blade.php:1727 [text] Optional Services:
+resources\views\receipts\executed-receiver-agent.blade.php:1729 [text] Message:
+resources\views\receipts\executed-receiver-agent.blade.php:1732 [text] MONEY IN MINUTES
+resources\views\receipts\executed-receiver-agent.blade.php:1746 [text] Receiver Mobile Number:
+resources\views\receipts\executed-receiver-agent.blade.php:1747 [text] (If sending to a Mobile)
+resources\views\receipts\executed-receiver-agent.blade.php:1756 [text] Amount Received:
+resources\views\receipts\executed-receiver-agent.blade.php:1757 [text] Transfer Fee:
+resources\views\receipts\executed-receiver-agent.blade.php:1760 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-agent.blade.php:1761 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-agent.blade.php:1775 [text] Message Charge:
+resources\views\receipts\executed-receiver-agent.blade.php:1792 [text] Delivery Charge:
+resources\views\receipts\executed-receiver-agent.blade.php:1809 [text] Discount:
+resources\views\receipts\executed-receiver-agent.blade.php:1826 [text] TOTAL:
+resources\views\receipts\executed-receiver-agent.blade.php:1829 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-agent.blade.php:1880 [text] (inclusive of transfers that originate and terminate outside of the US) details of the receiver of the money transfer service (the &quot;Third Party&#39;s Information&quot;) in order to execute the TRANSFER FEES - Written information explaining how Western Union charges the sender for making a money transaction. The provision of Information and the Third Party&#39;s Information is voluntary but necessary (subject to the transfer will either be displayed prominently at the Agent location or shown to the sender prior to completion of the provisions set out in this paragraph) to execute the transaction. Without the relevant information, Western Union is payment order. Unless applicable law in the destination country requires otherwise, the sender will bear all fees for the unable to execute the money transfer, facilitate convenience activities or other requested services.
+resources\views\receipts\executed-receiver-agent.blade.php:1883 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\executed-receiver-agent.blade.php:1885 [text] www.westernunion.com/mt
+resources\views\receipts\executed-receiver-agent.blade.php:1889 [text] destination or intermediary financial service providers. Copyright 2011 WESTERN UNION HOLDINGS, INC All Rights Reserved REFUND - Western Union will refund the principal amount of a money transfer (at the applicable exchange rate described herein in effect at the time the refund is made) upon the written request of the sender if payment to the receiver is not made or credited within 45 days. Transfer fee refunds are made upon sender's written request if the money transfer is not available to the receiver within the time specified for the selected service, subject to the business hours of, and availability of funds at, the location selected for payment and other conditions, including, without limitation, conditions beyond the control of Western Union or its Agents, such as inclement weather or telecommunications failure. Transfer fees are not refunded if the transfer is stopped at the sender's request. Payment of some money transfers may be delayed as a result of the application of United States or other applicable laws. To the extent allowed by law, Western Union may deduct an administrative charge from money transfers that are not picked up within one year of the send date Expressly consent to the carrying out of profiling activities and marketing communications.
+resources\views\receipts\executed-receiver-agent.blade.php:1908 [text] Protect Yourself from Fraud.
+resources\views\receipts\executed-receiver-agent.blade.php:1919 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\executed-receiver-agent.blade.php:1937 [text] the loyalty program terms if applicable.
+resources\views\receipts\executed-receiver-agent.blade.php:1940 [text] Customer signature
+resources\views\receipts\executed-receiver-agent.blade.php:1943 [text] Agent signature
+resources\views\receipts\executed-receiver-agent.blade.php:1946 [text] Date:
+resources\views\receipts\executed-receiver-agent.blade.php:2152 [text] destination or intermediary financial service providers.
+resources\views\receipts\executed-receiver-customer.blade.php:1806 [text] To Receive -&nbsp;Customer Receipt
+resources\views\receipts\executed-receiver-customer.blade.php:1811 [text] Receiver:
+resources\views\receipts\executed-receiver-customer.blade.php:1812 [text] Address/Telephone:
+resources\views\receipts\executed-receiver-customer.blade.php:1814 [text] &nbsp;
+resources\views\receipts\executed-receiver-customer.blade.php:1814 [text] Mandatory/Optional
+resources\views\receipts\executed-receiver-customer.blade.php:1818 [text] Test Question:
+resources\views\receipts\executed-receiver-customer.blade.php:1819 [text] Answer:
+resources\views\receipts\executed-receiver-customer.blade.php:1820 [text] ID TYPE:
+resources\views\receipts\executed-receiver-customer.blade.php:1820 [text] Passport
+resources\views\receipts\executed-receiver-customer.blade.php:1823 [text] Family Support/Living
+resources\views\receipts\executed-receiver-customer.blade.php:1824 [text] Expenses
+resources\views\receipts\executed-receiver-customer.blade.php:1826 [text] Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\executed-receiver-customer.blade.php:1827 [text] Domestic Helper
+resources\views\receipts\executed-receiver-customer.blade.php:1829 [text] Family
+resources\views\receipts\executed-receiver-customer.blade.php:1833 [text] Sender:
+resources\views\receipts\executed-receiver-customer.blade.php:1837 [text] Anonymous
+resources\views\receipts\executed-receiver-customer.blade.php:1843 [text] MTCN:
+resources\views\receipts\executed-receiver-customer.blade.php:1846 [text] XXX-XXX-XXXX
+resources\views\receipts\executed-receiver-customer.blade.php:1852 [text] Country:
+resources\views\receipts\executed-receiver-customer.blade.php:1861 [text] Date &amp; Time:
+resources\views\receipts\executed-receiver-customer.blade.php:1869 [text] Optional Services:
+resources\views\receipts\executed-receiver-customer.blade.php:1871 [text] Message:
+resources\views\receipts\executed-receiver-customer.blade.php:1874 [text] MONEY IN MINUTES
+resources\views\receipts\executed-receiver-customer.blade.php:1888 [text] Receiver Mobile Number:
+resources\views\receipts\executed-receiver-customer.blade.php:1889 [text] (If sending to a Mobile)
+resources\views\receipts\executed-receiver-customer.blade.php:1898 [text] Amount Received:
+resources\views\receipts\executed-receiver-customer.blade.php:1899 [text] Transfer Fee:
+resources\views\receipts\executed-receiver-customer.blade.php:1902 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-customer.blade.php:1903 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-customer.blade.php:1917 [text] Message Charge:
+resources\views\receipts\executed-receiver-customer.blade.php:1934 [text] Delivery Charge:
+resources\views\receipts\executed-receiver-customer.blade.php:1951 [text] Discount:
+resources\views\receipts\executed-receiver-customer.blade.php:1968 [text] TOTAL:
+resources\views\receipts\executed-receiver-customer.blade.php:1971 [text] Iraqi Dinnar
+resources\views\receipts\executed-receiver-customer.blade.php:2028 [text] &nbsp;
+resources\views\receipts\executed-receiver-customer.blade.php:2029 [text] (inclusive of transfers that originate and terminate outside of the US) details of the receiver of the money transfer service (the &quot;Third Party&#39;s Information&quot;) in order to execute the TRANSFER FEES - Written information explaining how Western Union charges the sender for making a money transaction. The provision of Information and the Third Party&#39;s Information is voluntary but necessary (subject to the transfer will either be displayed prominently at the Agent location or shown to the sender prior to completion of the provisions set out in this paragraph) to execute the transaction. Without the relevant information, Western Union is payment order. Unless applicable law in the destination country requires otherwise, the sender will bear all fees for the unable to execute the money transfer, facilitate convenience activities or other requested services.
+resources\views\receipts\executed-receiver-customer.blade.php:2032 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\executed-receiver-customer.blade.php:2034 [text] www.westernunion.com/mt
+resources\views\receipts\executed-receiver-customer.blade.php:2038 [text] destination or intermediary financial service providers. Copyright 2011 WESTERN UNION HOLDINGS, INC All Rights Reserved REFUND - Western Union will refund the principal amount of a money transfer (at the applicable exchange rate described herein in effect at the time the refund is made) upon the written request of the sender if payment to the receiver is not made or credited within 45 days. Transfer fee refunds are made upon sender's written request if the money transfer is not available to the receiver within the time specified for the selected service, subject to the business hours of, and availability of funds at, the location selected for payment and other conditions, including, without limitation, conditions beyond the control of Western Union or its Agents, such as inclement weather or telecommunications failure. Transfer fees are not refunded if the transfer is stopped at the sender's request. Payment of some money transfers may be delayed as a result of the application of United States or other applicable laws. To the extent allowed by law, Western Union may deduct an administrative charge from money transfers that are not picked up within one year of the send date Expressly consent to the carrying out of profiling activities and marketing communications.
+resources\views\receipts\executed-receiver-customer.blade.php:2059 [text] Protect Yourself from Fraud.
+resources\views\receipts\executed-receiver-customer.blade.php:2070 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\executed-receiver-customer.blade.php:2088 [text] the loyalty program terms if applicable.
+resources\views\receipts\executed-receiver-customer.blade.php:2091 [text] Customer signature
+resources\views\receipts\executed-receiver-customer.blade.php:2094 [text] Agent signature
+resources\views\receipts\executed-receiver-customer.blade.php:2097 [text] Date:
+resources\views\receipts\executed-receiver-customer.blade.php:2303 [text] destination or intermediary financial service providers.
+resources\views\receipts\receiver-agent.blade.php:1668 [text] To Receive -&nbsp;Agent Receipt
+resources\views\receipts\receiver-agent.blade.php:1673 [text] Receiver:
+resources\views\receipts\receiver-agent.blade.php:1674 [text] Address/Telephone:
+resources\views\receipts\receiver-agent.blade.php:1675 [text] &nbsp;
+resources\views\receipts\receiver-agent.blade.php:1676 [text] &nbsp;
+resources\views\receipts\receiver-agent.blade.php:1676 [text] Mandatory/Optional
+resources\views\receipts\receiver-agent.blade.php:1680 [text] Test Question:
+resources\views\receipts\receiver-agent.blade.php:1681 [text] Answer:
+resources\views\receipts\receiver-agent.blade.php:1682 [text] ID Type:
+resources\views\receipts\receiver-agent.blade.php:1682 [text] Passport
+resources\views\receipts\receiver-agent.blade.php:1684 [text] Purpose of Transaction:
+resources\views\receipts\receiver-agent.blade.php:1684 [text] Family Support/Living Expenses
+resources\views\receipts\receiver-agent.blade.php:1687 [text] Occupation:
+resources\views\receipts\receiver-agent.blade.php:1687 [text] Domestic Helper
+resources\views\receipts\receiver-agent.blade.php:1688 [text] Relationship to Receiver:
+resources\views\receipts\receiver-agent.blade.php:1688 [text] Family
+resources\views\receipts\receiver-agent.blade.php:1692 [text] Sender:
+resources\views\receipts\receiver-agent.blade.php:1695 [text] Anonymous
+resources\views\receipts\receiver-agent.blade.php:1701 [text] MTCN:
+resources\views\receipts\receiver-agent.blade.php:1704 [text] XXX-XXX-XXXX
+resources\views\receipts\receiver-agent.blade.php:1710 [text] Country:
+resources\views\receipts\receiver-agent.blade.php:1719 [text] Date &amp; Time:
+resources\views\receipts\receiver-agent.blade.php:1727 [text] Optional Services:
+resources\views\receipts\receiver-agent.blade.php:1729 [text] Message:
+resources\views\receipts\receiver-agent.blade.php:1732 [text] MONEY IN MINUTES
+resources\views\receipts\receiver-agent.blade.php:1746 [text] Receiver Mobile Number:
+resources\views\receipts\receiver-agent.blade.php:1747 [text] (If sending to a Mobile)
+resources\views\receipts\receiver-agent.blade.php:1756 [text] Amount Received:
+resources\views\receipts\receiver-agent.blade.php:1757 [text] Transfer Fee:
+resources\views\receipts\receiver-agent.blade.php:1760 [text] Iraqi Dinnar
+resources\views\receipts\receiver-agent.blade.php:1761 [text] Iraqi Dinnar
+resources\views\receipts\receiver-agent.blade.php:1775 [text] Message Charge:
+resources\views\receipts\receiver-agent.blade.php:1792 [text] Delivery Charge:
+resources\views\receipts\receiver-agent.blade.php:1809 [text] Discount:
+resources\views\receipts\receiver-agent.blade.php:1826 [text] TOTAL:
+resources\views\receipts\receiver-agent.blade.php:1829 [text] Iraqi Dinnar
+resources\views\receipts\receiver-agent.blade.php:1880 [text] (inclusive of transfers that originate and terminate outside of the US) details of the receiver of the money transfer service (the &quot;Third Party&#39;s Information&quot;) in order to execute the TRANSFER FEES - Written information explaining how Western Union charges the sender for making a money transaction. The provision of Information and the Third Party&#39;s Information is voluntary but necessary (subject to the transfer will either be displayed prominently at the Agent location or shown to the sender prior to completion of the provisions set out in this paragraph) to execute the transaction. Without the relevant information, Western Union is payment order. Unless applicable law in the destination country requires otherwise, the sender will bear all fees for the unable to execute the money transfer, facilitate convenience activities or other requested services.
+resources\views\receipts\receiver-agent.blade.php:1883 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\receiver-agent.blade.php:1885 [text] www.westernunion.com/mt
+resources\views\receipts\receiver-agent.blade.php:1889 [text] destination or intermediary financial service providers. Copyright 2011 WESTERN UNION HOLDINGS, INC All Rights Reserved REFUND - Western Union will refund the principal amount of a money transfer (at the applicable exchange rate described herein in effect at the time the refund is made) upon the written request of the sender if payment to the receiver is not made or credited within 45 days. Transfer fee refunds are made upon sender's written request if the money transfer is not available to the receiver within the time specified for the selected service, subject to the business hours of, and availability of funds at, the location selected for payment and other conditions, including, without limitation, conditions beyond the control of Western Union or its Agents, such as inclement weather or telecommunications failure. Transfer fees are not refunded if the transfer is stopped at the sender's request. Payment of some money transfers may be delayed as a result of the application of United States or other applicable laws. To the extent allowed by law, Western Union may deduct an administrative charge from money transfers that are not picked up within one year of the send date Expressly consent to the carrying out of profiling activities and marketing communications.
+resources\views\receipts\receiver-agent.blade.php:1908 [text] Protect Yourself from Fraud.
+resources\views\receipts\receiver-agent.blade.php:1919 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\receiver-agent.blade.php:1937 [text] the loyalty program terms if applicable.
+resources\views\receipts\receiver-agent.blade.php:1940 [text] Customer signature
+resources\views\receipts\receiver-agent.blade.php:1943 [text] Agent signature
+resources\views\receipts\receiver-agent.blade.php:1946 [text] Date:
+resources\views\receipts\receiver-agent.blade.php:2152 [text] destination or intermediary financial service providers.
+resources\views\receipts\receiver-customer.blade.php:1806 [text] To Receive -&nbsp;Customer Receipt
+resources\views\receipts\receiver-customer.blade.php:1811 [text] Receiver:
+resources\views\receipts\receiver-customer.blade.php:1812 [text] Address/Telephone:
+resources\views\receipts\receiver-customer.blade.php:1814 [text] &nbsp;
+resources\views\receipts\receiver-customer.blade.php:1814 [text] Mandatory/Optional
+resources\views\receipts\receiver-customer.blade.php:1818 [text] Test Question:
+resources\views\receipts\receiver-customer.blade.php:1819 [text] Answer:
+resources\views\receipts\receiver-customer.blade.php:1820 [text] ID TYPE:
+resources\views\receipts\receiver-customer.blade.php:1820 [text] Passport
+resources\views\receipts\receiver-customer.blade.php:1823 [text] Family Support/Living
+resources\views\receipts\receiver-customer.blade.php:1824 [text] Expenses
+resources\views\receipts\receiver-customer.blade.php:1826 [text] Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resources\views\receipts\receiver-customer.blade.php:1827 [text] Domestic Helper
+resources\views\receipts\receiver-customer.blade.php:1829 [text] Family
+resources\views\receipts\receiver-customer.blade.php:1833 [text] Sender:
+resources\views\receipts\receiver-customer.blade.php:1837 [text] Anonymous
+resources\views\receipts\receiver-customer.blade.php:1843 [text] MTCN:
+resources\views\receipts\receiver-customer.blade.php:1846 [text] XXX-XXX-XXXX
+resources\views\receipts\receiver-customer.blade.php:1852 [text] Country:
+resources\views\receipts\receiver-customer.blade.php:1861 [text] Date &amp; Time:
+resources\views\receipts\receiver-customer.blade.php:1869 [text] Optional Services:
+resources\views\receipts\receiver-customer.blade.php:1871 [text] Message:
+resources\views\receipts\receiver-customer.blade.php:1874 [text] MONEY IN MINUTES
+resources\views\receipts\receiver-customer.blade.php:1888 [text] Receiver Mobile Number:
+resources\views\receipts\receiver-customer.blade.php:1889 [text] (If sending to a Mobile)
+resources\views\receipts\receiver-customer.blade.php:1898 [text] Amount Received:
+resources\views\receipts\receiver-customer.blade.php:1899 [text] Transfer Fee:
+resources\views\receipts\receiver-customer.blade.php:1902 [text] Iraqi Dinnar
+resources\views\receipts\receiver-customer.blade.php:1903 [text] Iraqi Dinnar
+resources\views\receipts\receiver-customer.blade.php:1917 [text] Message Charge:
+resources\views\receipts\receiver-customer.blade.php:1934 [text] Delivery Charge:
+resources\views\receipts\receiver-customer.blade.php:1951 [text] Discount:
+resources\views\receipts\receiver-customer.blade.php:1968 [text] TOTAL:
+resources\views\receipts\receiver-customer.blade.php:1971 [text] Iraqi Dinnar
+resources\views\receipts\receiver-customer.blade.php:2028 [text] &nbsp;
+resources\views\receipts\receiver-customer.blade.php:2029 [text] (inclusive of transfers that originate and terminate outside of the US) details of the receiver of the money transfer service (the &quot;Third Party&#39;s Information&quot;) in order to execute the TRANSFER FEES - Written information explaining how Western Union charges the sender for making a money transaction. The provision of Information and the Third Party&#39;s Information is voluntary but necessary (subject to the transfer will either be displayed prominently at the Agent location or shown to the sender prior to completion of the provisions set out in this paragraph) to execute the transaction. Without the relevant information, Western Union is payment order. Unless applicable law in the destination country requires otherwise, the sender will bear all fees for the unable to execute the money transfer, facilitate convenience activities or other requested services.
+resources\views\receipts\receiver-customer.blade.php:2032 [text] Thank you for using Western Union. Visit us at anytime on
+resources\views\receipts\receiver-customer.blade.php:2034 [text] www.westernunion.com/mt
+resources\views\receipts\receiver-customer.blade.php:2038 [text] destination or intermediary financial service providers. Copyright 2011 WESTERN UNION HOLDINGS, INC All Rights Reserved REFUND - Western Union will refund the principal amount of a money transfer (at the applicable exchange rate described herein in effect at the time the refund is made) upon the written request of the sender if payment to the receiver is not made or credited within 45 days. Transfer fee refunds are made upon sender's written request if the money transfer is not available to the receiver within the time specified for the selected service, subject to the business hours of, and availability of funds at, the location selected for payment and other conditions, including, without limitation, conditions beyond the control of Western Union or its Agents, such as inclement weather or telecommunications failure. Transfer fees are not refunded if the transfer is stopped at the sender's request. Payment of some money transfers may be delayed as a result of the application of United States or other applicable laws. To the extent allowed by law, Western Union may deduct an administrative charge from money transfers that are not picked up within one year of the send date Expressly consent to the carrying out of profiling activities and marketing communications.
+resources\views\receipts\receiver-customer.blade.php:2059 [text] Protect Yourself from Fraud.
+resources\views\receipts\receiver-customer.blade.php:2070 [text] www.westernunion.com/iq/en/fraud-awareness.html
+resources\views\receipts\receiver-customer.blade.php:2088 [text] the loyalty program terms if applicable.
+resources\views\receipts\receiver-customer.blade.php:2091 [text] Customer signature
+resources\views\receipts\receiver-customer.blade.php:2094 [text] Agent signature
+resources\views\receipts\receiver-customer.blade.php:2097 [text] Date:
+resources\views\receipts\receiver-customer.blade.php:2303 [text] destination or intermediary financial service providers.
+resources\views\splash\index.blade.php:47 [text] Agency Operation
+resources\views\splash\index.blade.php:48 [text] Choose an agency
+resources\views\splash\index.blade.php:58 [attr] western_union
+resources\views\splash\index.blade.php:64 [text] Western Union
+resources\views\splash\index.blade.php:66 [attr] Western Union
+resources\views\splash\index.blade.php:79 [attr] zain_cash
+resources\views\splash\index.blade.php:86 [text] MoneyGram
+resources\views\splash\index.blade.php:88 [attr] MoneyGram
+resources\views\splash\index.blade.php:89 [text] Coming soon
+resources\views\splash\index.blade.php:102 [attr] zain_cash
+resources\views\splash\index.blade.php:109 [text] Zain Cash
+resources\views\splash\index.blade.php:111 [attr] Zain Cash
+resources\views\splash\index.blade.php:124 [attr] fib
+resources\views\splash\index.blade.php:130 [text] FIB
+resources\views\splash\index.blade.php:132 [attr] FIB
+resources\views\splash\index.blade.php:133 [text] Coming soon
+resources\views\splash\index.blade.php:148 [text] Language
+resources\views\splash\index.blade.php:149 [text] Choose interface language
+resources\views\splash\index.blade.php:159 [attr] ar
+resources\views\splash\index.blade.php:165 [text] العربية
+resources\views\splash\index.blade.php:166 [text] AR
+resources\views\splash\index.blade.php:179 [attr] en
+resources\views\splash\index.blade.php:185 [text] English
+resources\views\splash\index.blade.php:186 [text] EN
+resources\views\splash\index.blade.php:199 [attr] ku
+resources\views\splash\index.blade.php:205 [text] کوردی
+resources\views\splash\index.blade.php:206 [text] KU
+resources\views\suspended\index.blade.php:94 [text] Account Suspended
+resources\views\suspended\index.blade.php:96 [text] Reasons of Suspended:
+resources\views\suspended\index.blade.php:97 [text] Violation of Policy
+resources\views\suspended\index.blade.php:98 [text] Violation of Terms and Condition
+resources\views\suspended\index.blade.php:99 [text] Fraud Detection
+resources\views\suspended\index.blade.php:100 [text] Spam Detection
+resources\views\suspended\index.blade.php:101 [text] Security Concerns
+resources\views\suspended\index.blade.php:102 [text] Software Manipulation or Cheating
+resources\views\suspended\index.blade.php:103 [text] Suspiciuos Betting Patterns
+resources\views\suspended\index.blade.php:108 [text] Contact us immedietly
+resources\views\suspended\index.blade.php:110 [text] Please Contact The Developers
+resources\views\suspended\index.blade.php:113 [text] Contact your Provider for further information.

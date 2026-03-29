@@ -7,14 +7,15 @@ use Livewire\Component;
 
 class AnnouncementShowLivewire extends Component
 {
-    /** How many to show */
     public int $limit = 6;
-
-    /** Role filter (default: Register) */
     public string $role = 'Register';
-
-    /** Show “NEW” if within X days */
     public int $newWithinDays = 7;
+
+    public function mount($limit = 6, $role = 'Register'): void
+    {
+        $this->limit = (int) $limit;
+        $this->role = (string) $role;
+    }
 
     public function getRowsProperty()
     {

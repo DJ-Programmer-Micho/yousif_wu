@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class SenderBalanceLivewire extends Component
 {
     use WithPagination;
-
+    protected $paginationTheme = 'bootstrap';
     public string $q = '';
     public int $perPage = 10;
 

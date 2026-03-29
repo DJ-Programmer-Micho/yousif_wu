@@ -1811,36 +1811,28 @@
         </tr>
         <tr class="c32">
             <td class="c13" colspan="1" rowspan="10">
-                <p class="c139 c142"><span class="c24">Sender: </span><span class="c101">(NOTE: Will be
-                        Approved)</span><span class="c24">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                        class="c124">{{ $sender_name }}</span></p>
-                <p class="c50"><span class="c24">Address/Telephone:</span></p>
+                <p class="c139 c142"><span class="c24">Sender: </span><span class="c101">(NOTE: Will beApproved)</span><span class="c24">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><spanclass="c124">{{ \Illuminate\Support\Str::upper($sender_name) }}</span></p>
+                <p class="c50"><span class="c24"></span></p>
                 <p class="c50 c96"><span class="c24"></span></p>
-                <p class="c102"><span class="c108">&nbsp;</span><span class="c46">Mandatory/Optional</span></p>
+                <p class="c102"><span class="c108">&nbsp;</span><span class="c24"><b>Address/Telephone:</b> <span style="font-size: 6px"> {{ $address }} | {{ $phone ?? '(If sending to a Mobile)' }}</span></span></p>
                 <p class="c2 c96"><span class="c25"></span></p>
-                <p class="c2"><span class="c25">{{ $address }}</span></p>
+                <p class="c2"><span class="c25"></span></p>
                 <p class="c21"><span class="c52"></span></p>
                 <p class="c62"><span class="c24">Test Question:</span></p>
                 <p class="c86"><span class="c24">Answer:</span></p>
-                <p class="c62"><span class="c95">Sender Mobile Number: <span style="margin-left: 20px">{{ $phone ?? '(If sending to a Mobile)' }}</span></span></p>
+                <p class="c62"><span class="c95"><span style="margin-left: 20px"></span></span></p>
                 <p class="c26"><span class="c25"></span></p>
-                <p class="c54"><span class="c24">Purpose of
-                        Transaction:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25" style="margin-left: 4px">Family Support/Living</span></p>
-                <p class="c144"><span class="c25" style="margin-left: -17px">Expenses</span></p>
-                <p class="c86"><span class="c24">Source of
-                        Funds:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25" style="margin-left: 33px">Salary</span></p>
-                <p class="c86"><span class="c24">Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                        class="c25"  style="margin-left: 51px">Domestic Helper</span></p>
-                <p class="c61"><span class="c24">Relationship to
-                        Receiver:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25">Family</span>
-                </p>
+                <p class="c54" style="position:absolute;top:170px"><span class="c24">Purpose of Transaction:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25" style="margin-left: 4px">Family Support/Living Expenses</span></p>
+                <p class="c86" style="position:absolute;top:190px"><span class="c24">Source of Funds:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25" style="margin-left: 33px">Salary</span></p>
+                <p class="c86" style="position:absolute;top:210px"><span class="c24">Occupation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25"  style="margin-left: 51px">Domestic Helper</span></p>
+                <p class="c61" style="position:absolute;top:230px"><span class="c24">Relationship toReceiver:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c25">Family</span></p>
             </td>
             <td class="c37" colspan="1" rowspan="1">
                 <p class="c82"><span class="c24">Receiver:</span></p>
             </td>
             {{-- -------------------------------------------B1 --}}
             <td class="c42" colspan="2" rowspan="1">
-                <p class="c99"><span class="c24">{{ $receiver_name }}</span></p>
+                <p class="c99"><span class="c24">{{ \Illuminate\Support\Str::upper($receiver_name) }}</span></p>
             </td>
             <td class="c122" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1872,12 +1864,12 @@
         </tr>
         <tr class="c114">
             <td class="c23" colspan="1" rowspan="1">
-                <p class="c123"><span class="c24">State:</span></p>
+                <p class="c123"><span class="c24">@if($state_id !== 'N/A') State: @else  @endif</span></p>
                 <p class="c67"><span class="c5"></span></p>
                 {{-- <p class="c82" style="padding-bottom: 4px"><span class="c24">Message:</span></p> --}}
             </td>
             <td class="c41" colspan="2" rowspan="1">
-                <p class="c98"><span class="c104">{{ $state_id }}</span></p>
+                <p class="c98"><span class="c104">@if($state_id !== 'N/A') {{ $state_id }} @else @endif</span></p>
             </td>
             <td class="c15" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1900,12 +1892,12 @@
                 <p class="c6"><span class="c3"></span></p>
             </td>
             <td class="c14" colspan="2" rowspan="1">
-                <p class="c27"><span class="c24">Amount Sent:</span></p>
-                <p class="c38"><span class="c24">Transfer Fee:</span></p>
+                <p class="c27" style="position:absolute;top:105px"><span class="c24">Amount Sent:</span></p>
+                <p class="c38" style="position:absolute;top:125px"><span class="c24">Transfer Fee:</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
-                <p class="c39"><span class="c25">{{ number_format($amount, 2) }}</span><span class="c25" style="position: absolute; right: 10px;">US Dollar</span></p>
-                <p class="c68"><span class="c25">{{ number_format($fee, 2) }}</span><span class="c25" style="position: absolute; right: 10px;">US Dollar</span></p>
+                <p class="c39" style="position:absolute;top:105px"><span class="c25">{{ number_format($amount, 2) }}</span><span class="c25" style="position: relative; left: 55px;">US Dollar</span></p>
+                <p class="c68" style="position:absolute;top:125px"><span class="c25">{{ number_format($fee, 2) }}</span><span class="c25" style="position: relative; left: 60px;">US Dollar</span></p>
             </td>
         </tr>
         <tr class="c43">
@@ -1921,7 +1913,7 @@
                 <p class="c6"><span class="c3"></span></p>
             </td>
             <td class="c14" colspan="2" rowspan="1">
-                <p class="c29"><span class="c24">Message Charge:</span></p>
+                <p class="c29" style="position:absolute;top:150px"><span class="c24">Message Charge:</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1938,7 +1930,7 @@
                 <p class="c6"><span class="c3"></span></p>
             </td>
             <td class="c14" colspan="2" rowspan="1">
-                <p class="c117"><span class="c24">Delivery Charge:</span></p>
+                <p class="c117" style="position:absolute;top:170px"><span class="c24">Delivery Charge:</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1955,7 +1947,7 @@
                 <p class="c6"><span class="c3"></span></p>
             </td>
             <td class="c14" colspan="2" rowspan="1">
-                <p class="c29"><span class="c24">Discount:</span></p>
+                <p class="c29" style="position:absolute;top:190px"><span class="c24">Discount:</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c6"><span class="c3"></span></p>
@@ -1972,12 +1964,13 @@
                 <p class="c6"><span class="c3"></span></p>
             </td>
             <td class="c14" colspan="2" rowspan="1">
-                <p class="c129"><span class="c95">Total:</span></p>
-                <p class="c129" style="margin-top: 15px"><span class="c95">Payout:</span></p>
+                <p class="c129" style="position:absolute;top:210px"><span class="c95">Total:</span></p>
+                <p class="c129" style="position:absolute;top:230px"><span class="c95">Payout:</span></p>
             </td>
             <td class="c12" colspan="1" rowspan="1">
-                <p class="c100"><span class="c25">{{ number_format($total, 2) }}</span><span class="c25" style="position: absolute; right: 10px;">US Dollar</span></p>
-                <p class="c100" style="margin-top: 15px"><span class="c25">XXXX.XX</span></p>
+                <p class="c100" style="position:absolute;top:210px"><span class="c25">{{ number_format($total, 2) }}</span><span class="c25" style="position: relative; left: 55px;">US Dollar</span></p>
+                <p class="c100" style="position:absolute;top:230px"><span class="c25">XXXX.XX</span></p>
+                <p class="c100" style="margin-top: 55px"><span class="c25">&nbsp;</span></p>
             </td>
         </tr>
         <tr class="c43">

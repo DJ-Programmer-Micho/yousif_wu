@@ -43,6 +43,7 @@ Route::middleware('auth','userstatus')->group(function () {
 
         Route::get('/auth-register', [AppController::class, 'register'])->middleware('twofactor')->name('register');
         Route::get('/sender', [AppController::class, 'sender'])->name('sender');
+        Route::get('/sender2', [AppController::class, 'sender2'])->name('sender2');
         Route::middleware(['receiver.enabled'])->group(function () {
           Route::get('/reciever', [AppController::class, 'reciever'])->name('reciever');
         });

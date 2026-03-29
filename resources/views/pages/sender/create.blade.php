@@ -19,6 +19,12 @@
   .select2-container--bootstrap4.select2-container--open .select2-dropdown {
     z-index: 2000; /* higher than .modal (1050), lower than toasts if any */
   }
+  .select2-container--bootstrap4 .select2-dropdown {
+    border-radius:18px !important;
+    border-color:rgba(148,163,184,.18) !important;
+    overflow:hidden;
+    box-shadow:0 18px 40px rgba(15,23,42,.14);
+  }
 </style>
 @endpush
 @push('scripts')
@@ -34,7 +40,9 @@
     const qRaw=(params.term||'').trim(); if(qRaw==='') return data;
     const q=strip(qRaw), text=strip(data.text||'');
     const $el=data.element?$(data.element):null;
-    const iso=strip($el?.dataset?.iso), ar=strip($el?.dataset?.ar), ku=strip($el?.dataset?.ku);
+    const iso=strip($el ? $el.data('iso') : '');
+    const ar=strip($el ? $el.data('ar') : '');
+    const ku=strip($el ? $el.data('ku') : '');
     return (text.includes(q)||iso.includes(q)||ar.includes(q)||ku.includes(q)) ? data : null;
   }
   function formatCountry(opt){
@@ -94,8 +102,6 @@
 <script>
 // STATE/PROVINCE select: Fixed Select2 + Livewire binding
 document.addEventListener('livewire:load', function () {
-  const $state = $('#senderStateSelect');
-
   function getStateComponentId() {
     const el = document.getElementById('senderStateSelect');
     if (!el) return null;
@@ -104,6 +110,9 @@ document.addEventListener('livewire:load', function () {
   }
 
   function initStateSelect() {
+    const $state = $('#senderStateSelect');
+    if (!$state.length) return;
+
     // Destroy existing Select2
     try { 
       if ($state.data('select2')) {
@@ -186,11 +195,14 @@ window.addEventListener('open-receipts', e=>{
         </div>
     </div>
     <div class="container-fluid mt-3">
-        @livewire('sender.sender-create-livewire')
+        @if(session('quick_send_prefilled'))
+            <div class="alert alert-primary border-0 shadow-sm mb-4">
+                {{ session('quick_send_prefilled') }}
+            </div>
+        @endif
+        @livewire('sender.sender-create-livewire-v2')
         {{-- @livewire('sender.country-info-panel-livewire', ['countryId' => null], key('country-info-'.$country_id))
         @livewire('sender.country-info-panel-livewire', ['countryId' => null], key('country-info-'.$country_id)) --}}
-        @livewire('sender.country-info-panel-livewire', ['countryId' => null], key('country-info'))
-
-
+        {{-- @livewire('sender.country-info-panel-livewire', ['countryId' => request()->integer('prefill_country') ?: null], key('country-info-'.(request()->integer('prefill_country') ?: 'none'))) --}}
     </div>
 @endsection

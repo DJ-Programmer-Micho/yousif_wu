@@ -3,7 +3,7 @@
 @endphp
 
 <div class="d-inline-block">
-  <div class="btn-group" role="group" aria-label="Receiver actions">
+  <div class="btn-group" role="group" aria-label="{{ __('Receiver actions') }}">
     @if ($status === 'Pending')
       <button class="btn btn-sm btn-outline-success"
               onclick="confirm('{{ __('Mark as Executed?') }}') || event.stopImmediatePropagation()"

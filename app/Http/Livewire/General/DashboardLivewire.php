@@ -12,6 +12,8 @@ class DashboardLivewire extends Component
     // Filters
     public string $dateFilter = 'this_month';
     public int $monthsBack = 12;
+    public string $trendGrouping = 'monthly';
+    public string $receiversTrendGrouping = 'monthly';
     public bool $autoRefresh = false;
 
     // Tables present?
@@ -42,7 +44,7 @@ class DashboardLivewire extends Component
     ];
 
     // Charts
-    public array $sendersAmountChart   = ['labels' => [], 'series' => [[]], 'colors' => ['#6366f1'], 'gradient' => ['from' => '#6366f1', 'to' => '#8b5cf6']];
+    public array $sendersAmountChart   = ['labels' => [], 'series' => [[]], 'colors' => ['#7c3aed'], 'gradient' => ['from' => '#7c3aed', 'to' => '#ec4899']];
     public array $receiversAmountChart = ['labels' => [], 'series' => [[]], 'colors' => ['#10b981'], 'gradient' => ['from' => '#10b981', 'to' => '#059669']];
 
     // Pies (+ legend items + totals)
@@ -69,6 +71,8 @@ class DashboardLivewire extends Component
 
     public function updatedDateFilter(): void  { $this->refreshData(); }
     public function updatedMonthsBack(): void  { $this->refreshData(); }
+    public function updatedTrendGrouping(): void { $this->refreshData(); }
+    public function updatedReceiversTrendGrouping(): void { $this->refreshData(); }
 
     public function toggleAutoRefresh(): void
     {
@@ -217,6 +221,24 @@ class DashboardLivewire extends Component
         return [$start, $end, $labels, $keys];
     }
 
+    protected function yearBuckets(): array
+    {
+        $yearsBack = max(2, (int) ceil($this->monthsBack / 12) + 1);
+        $end = Carbon::now()->endOfYear();
+        $start = Carbon::now()->copy()->subYears($yearsBack - 1)->startOfYear();
+        $labels = [];
+        $keys = [];
+        $current = $start->copy();
+
+        while ($current->lte($end)) {
+            $labels[] = $current->format('Y');
+            $keys[] = $current->format('Y');
+            $current->addYear();
+        }
+
+        return [$start, $end, $labels, $keys];
+    }
+
     /** Role scope: admin sees all, register sees own user_id */
     protected function scopeByRole($qb, string $alias)
     {
@@ -325,51 +347,82 @@ class DashboardLivewire extends Component
         return [$first, $last];
     }
 
-    // -------- Line Charts (12 months, amounts) --------
+    // -------- Main Trend Chart (monthly/yearly transactions) --------
     protected function loadSendersAmountChart(): void
     {
         if (!$this->hasSenders) {
-            $this->sendersAmountChart = ['labels'=>[], 'series'=>[[]], 'colors'=>['#6366f1'], 'gradient'=>['from'=>'#6366f1','to'=>'#8b5cf6']];
+            $this->sendersAmountChart = [
+                'labels' => [],
+                'series' => [[]],
+                'colors' => ['#7c3aed'],
+                'gradient' => ['from' => '#7c3aed', 'to' => '#ec4899'],
+                'tooltipLabel' => __('Transactions'),
+                'valueSuffix' => ' ' . __('transactions'),
+                'valueDecimals' => 0,
+            ];
             return;
         }
 
-        [$start, $end, $labels, $keys] = $this->monthBuckets();
+        $groupByYear = $this->trendGrouping === 'yearly';
+        [$start, $end, $labels, $keys] = $groupByYear ? $this->yearBuckets() : $this->monthBuckets();
+        $bucketFormat = $groupByYear ? '%Y' : '%Y-%m';
 
         $rows = (clone $this->scopeByRole(DB::table('senders as s'), 's'))
             ->whereBetween('s.created_at', [$start, $end])
-            ->selectRaw("DATE_FORMAT(s.created_at, '%Y-%m') as ym, COALESCE(SUM(s.amount),0) as amt")
-            ->groupBy('ym')
-            ->pluck('amt', 'ym');
+            ->selectRaw("DATE_FORMAT(s.created_at, '{$bucketFormat}') as bucket_key, COUNT(*) as total_transactions")
+            ->groupBy('bucket_key')
+            ->pluck('total_transactions', 'bucket_key');
 
-        $series = [ array_map(fn($k)=> (float)($rows[$k] ?? 0), $keys) ];
+        $series = [array_map(fn ($key) => (float) ($rows[$key] ?? 0), $keys)];
 
         $this->sendersAmountChart = [
-            'labels'   => $labels,
-            'series'   => $series,
-            'colors'   => ['#6366f1'],
-            'gradient' => ['from' => '#6366f1', 'to' => '#8b5cf6'],
+            'labels' => $labels,
+            'series' => $series,
+            'colors' => ['#7c3aed'],
+            'gradient' => ['from' => '#7c3aed', 'to' => '#ec4899'],
+            'tooltipLabel' => __('Transactions'),
+            'valueSuffix' => ' ' . __('transactions'),
+            'valueDecimals' => 0,
         ];
     }
 
     protected function loadReceiversAmountChart(): void
     {
         if (!$this->hasReceivers) {
-            $this->receiversAmountChart = ['labels'=>[], 'series'=>[[]], 'colors'=>['#10b981'], 'gradient'=>['from'=>'#10b981','to'=>'#059669']];
+            $this->receiversAmountChart = [
+                'labels' => [],
+                'series' => [[]],
+                'colors' => ['#10b981'],
+                'gradient' => ['from' => '#10b981', 'to' => '#059669'],
+                'tooltipLabel' => __('Receiver Amount'),
+                'valueSuffix' => ' ' . __('IQD'),
+                'valueDecimals' => 0,
+            ];
             return;
         }
 
-        [$start, $end, $labels, $keys] = $this->monthBuckets();
+        $groupByYear = $this->receiversTrendGrouping === 'yearly';
+        [$start, $end, $labels, $keys] = $groupByYear ? $this->yearBuckets() : $this->monthBuckets();
         $col = $this->detectReceiverAmountColumn();
         if (!$col) {
-            $this->receiversAmountChart = ['labels'=>$labels, 'series'=>[array_fill(0, count($labels), 0)], 'colors'=>['#10b981'], 'gradient'=>['from'=>'#10b981','to'=>'#059669']];
+            $this->receiversAmountChart = [
+                'labels' => $labels,
+                'series' => [array_fill(0, count($labels), 0)],
+                'colors' => ['#10b981'],
+                'gradient' => ['from' => '#10b981', 'to' => '#059669'],
+                'tooltipLabel' => __('Receiver Amount'),
+                'valueSuffix' => ' ' . __('IQD'),
+                'valueDecimals' => 0,
+            ];
             return;
         }
 
+        $bucketFormat = $groupByYear ? '%Y' : '%Y-%m';
         $rows = (clone $this->scopeByRole(DB::table('receivers as r'), 'r'))
             ->whereBetween('r.created_at', [$start, $end])
-            ->selectRaw("DATE_FORMAT(r.created_at, '%Y-%m') as ym, COALESCE(SUM(r.$col),0) as amt")
-            ->groupBy('ym')
-            ->pluck('amt', 'ym');
+            ->selectRaw("DATE_FORMAT(r.created_at, '{$bucketFormat}') as bucket_key, COALESCE(SUM(r.$col),0) as amt")
+            ->groupBy('bucket_key')
+            ->pluck('amt', 'bucket_key');
 
         $series = [ array_map(fn($k)=> (float)($rows[$k] ?? 0), $keys) ];
 
@@ -378,6 +431,9 @@ class DashboardLivewire extends Component
             'series'   => $series,
             'colors'   => ['#10b981'],
             'gradient' => ['from' => '#10b981', 'to' => '#059669'],
+            'tooltipLabel' => __('Receiver Amount'),
+            'valueSuffix' => ' ' . __('IQD'),
+            'valueDecimals' => 0,
         ];
     }
 

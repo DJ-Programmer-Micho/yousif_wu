@@ -8,6 +8,7 @@ use App\Models\SenderBalance;
 use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Telegram\TeleNotifySenderAction;
 
@@ -42,11 +43,13 @@ class SenderActionLivewire extends Component
     public ?float $execTotal = null;
 
     public bool $isAdmin = false;
+    public bool $showExecutionConfirmation = false;
+    public array $executionPreview = [];
 
     protected function rules(): array
     {
         return [
-            'newMtcn'       => ['required','digits:10'],
+            'newMtcn'       => ['required','regex:/^\d{3}-?\d{3}-?\d{4}$/'],
             'newFirstName'  => ['required','string','max:100'],
             'newLastName'   => ['required','string','max:100'],
 
@@ -86,6 +89,22 @@ class SenderActionLivewire extends Component
         return number_format((float)$v, 2, '.', '');
     }
 
+    private function normalizeMtcn(?string $raw): string
+    {
+        return preg_replace('/\D+/', '', (string) $raw) ?? '';
+    }
+
+    private function formatMtcn(?string $raw): string
+    {
+        $digits = $this->normalizeMtcn($raw);
+
+        if (strlen($digits) !== 10) {
+            return trim((string) $raw);
+        }
+
+        return substr($digits, 0, 3).'-'.substr($digits, 3, 3).'-'.substr($digits, 6, 4);
+    }
+
     // ----- UI helpers -----
 
     public function getSenderProperty(): ?Sender
@@ -98,10 +117,63 @@ class SenderActionLivewire extends Component
         // unique modal DOM id for this row instance
         return 'executionProcess-'.$this->senderId;
     }
+
+    private function resetExecutionConfirmation(): void
+    {
+        $this->showExecutionConfirmation = false;
+        $this->executionPreview = [];
+    }
+
+    private function executionPayload(): array
+    {
+        return [
+            'newMtcn' => $this->newMtcn,
+            'newFirstName' => $this->newFirstName,
+            'newLastName' => $this->newLastName,
+            'newReceiverFirstName' => $this->newReceiverFirstName,
+            'newReceiverLastName' => $this->newReceiverLastName,
+            'payoutAmount' => $this->payoutAmount,
+            'payoutCurrency' => $this->payoutCurrency,
+        ];
+    }
+
+    private function buildExecutionPreview(): array
+    {
+        return [
+            'newMtcn' => $this->formatMtcn($this->newMtcn),
+            'newMtcnRaw' => $this->normalizeMtcn($this->newMtcn),
+            'newFirstName' => trim((string) $this->newFirstName),
+            'newLastName' => trim((string) $this->newLastName),
+            'newReceiverFirstName' => trim((string) $this->newReceiverFirstName),
+            'newReceiverLastName' => trim((string) $this->newReceiverLastName),
+            'payoutAmount' => $this->normalizeMoney($this->payoutAmount),
+            'payoutCurrency' => strtoupper(trim((string) $this->payoutCurrency)),
+        ];
+    }
+
+    private function validateExecutionForm(): bool
+    {
+        $validator = Validator::make($this->executionPayload(), $this->rules());
+
+        if ($validator->fails()) {
+            $this->resetExecutionConfirmation();
+            $this->setErrorBag($validator->getMessageBag());
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'warning',
+                'message' => __('Please review the highlighted fields.'),
+            ]);
+            $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
+            return false;
+        }
+
+        $this->resetValidation();
+        return true;
+    }
     
     public function closeModal(): void
     {
         $this->execId = null;
+        $this->resetExecutionConfirmation();
         $this->resetValidation();
         $this->dispatchBrowserEvent('modal:close', ['id' => $this->modalId()]);
     }
@@ -126,7 +198,7 @@ class SenderActionLivewire extends Component
         $this->oldFirstName = (string) $s->first_name;
         $this->oldLastName  = (string) $s->last_name;
 
-        $this->newMtcn      = (string) $s->mtcn;
+        $this->newMtcn      = $this->formatMtcn((string) $s->mtcn);
         $this->newFirstName = mb_strtoupper((string) $s->first_name, 'UTF-8');
         $this->newLastName  = mb_strtoupper((string) $s->last_name,  'UTF-8');
 
@@ -140,22 +212,49 @@ class SenderActionLivewire extends Component
 
         $this->payoutAmount   = number_format((float)$s->total, 2); // prefill with total
         $this->payoutCurrency = $this->payoutCurrency ?: 'USD';     // or IQD per your logic
+        $this->resetExecutionConfirmation();
+        $this->resetValidation();
 
+        $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
+    }
+
+    public function reviewExecution(): void
+    {
+        if (!$this->isAdmin) abort(403);
+
+        if (!$this->validateExecutionForm()) {
+            return;
+        }
+
+        $this->executionPreview = $this->buildExecutionPreview();
+        $this->showExecutionConfirmation = true;
+        $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
+    }
+
+    public function editExecution(): void
+    {
+        if (!$this->isAdmin) abort(403);
+
+        $this->showExecutionConfirmation = false;
         $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
     }
 
     public function markExecutedConfirmed(): void
     {
         if (!$this->isAdmin) abort(403);
-        
-        // Add debugging
-        // \Log::info('markExecutedConfirmed called', [
-        //     'execId' => $this->execId,
-        //     'newMtcn' => $this->newMtcn,
-        //     'payoutAmount' => $this->payoutAmount,
-        // ]);
 
-        $this->validate();
+        if (!$this->validateExecutionForm()) {
+            return;
+        }
+
+        $preview = $this->buildExecutionPreview();
+
+        if (!$this->showExecutionConfirmation || $this->executionPreview !== $preview) {
+            $this->executionPreview = $preview;
+            $this->showExecutionConfirmation = true;
+            $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
+            return;
+        }
 
         DB::beginTransaction();
         try {
@@ -173,22 +272,21 @@ class SenderActionLivewire extends Component
                     'message' => __('Not allowed or already processed'),
                 ]);
                 $this->closeModal();
+                $this->emitUp('actions:refresh');
                 return;
             }
 
             // Update sender AND receiver fields (NEW)
             $sender->update([
-                'mtcn'         => $this->newMtcn,
-                'first_name'   => $this->newFirstName,
-                'last_name'    => $this->newLastName,
-                'r_first_name' => $this->newReceiverFirstName ?: null,
-                'r_last_name'  => $this->newReceiverLastName ?: null,
+                'mtcn'         => $preview['newMtcnRaw'],
+                'first_name'   => $preview['newFirstName'],
+                'last_name'    => $preview['newLastName'],
+                'r_first_name' => $preview['newReceiverFirstName'] ?: null,
+                'r_last_name'  => $preview['newReceiverLastName'] ?: null,
             ]);
 
-            $amount   = $this->normalizeMoney($this->payoutAmount);
-            $currency = strtoupper(trim((string)$this->payoutCurrency));
-
-            // \Log::info('Payout normalized', ['amount' => $amount, 'currency' => $currency]);
+            $amount   = $preview['payoutAmount'];
+            $currency = $preview['payoutCurrency'];
 
             // Safety check (rules already required them)
             if (!$amount || !$currency) {
@@ -202,7 +300,7 @@ class SenderActionLivewire extends Component
                 'by'           => auth()->id(),
                 'at'           => now()->toIso8601String(),
                 'mtcn_before'  => (string) $this->oldMtcn,
-                'mtcn_after'   => (string) $this->newMtcn,
+                'mtcn_after'   => (string) $preview['newMtcnRaw'],
             ];
             $sender->forceFill(['payouts' => $payouts])->save();
 
@@ -217,6 +315,9 @@ class SenderActionLivewire extends Component
                 'type' => 'success',
                 'message' => __('Updated & marked as Executed'),
             ]);
+
+            $this->closeModal();
+            $this->emitUp('actions:refresh');
         } catch (\Throwable $e) {
             DB::rollBack();
             // \Log::error('Sender exec confirm failed', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
@@ -224,11 +325,8 @@ class SenderActionLivewire extends Component
                 'type' => 'error',
                 'message' => __('Operation failed: ') . $e->getMessage(),
             ]);
+            $this->dispatchBrowserEvent('modal:open', ['id' => $this->modalId()]);
         }
-
-        // close FIRST, then refresh parent so modal never sticks
-        $this->closeModal();
-        $this->emitUp('actions:refresh');
     }
 
     // ----- Other flips -----

@@ -401,33 +401,33 @@
                 <div class="btn-group">
                   @if ($r->status == "Executed")
                   <a class="btn btn-sm btn-outline-primary" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Customer Receipt"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Customer Receipt') }}"
                      href="{{ route('receipts.dompdf.senderShow', ['sender'=>$r->id, 'type'=>'customer']) }}">
                     <i class="far fa-copyright"></i>
                   </a>
                   <a class="btn btn-sm btn-outline-secondary" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Register/Agent Receipt"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Register/Agent Receipt') }}"
                      href="{{ route('receipts.dompdf.senderShow', ['sender'=>$r->id, 'type'=>'agent']) }}">
                     <i class="far fa-registered"></i>
                   </a>
                   <a class="btn btn-sm btn-outline-dark" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Both Receipts"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Both Receipts') }}"
                      href="{{ route('receipts.dompdf.senderShow', ['sender'=>$r->id, 'type'=>'both']) }}">
                     <i class="far fa-copy"></i>
                   </a>
                   @else
                   <a class="btn btn-sm btn-outline-primary" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Customer Receipt"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Customer Receipt') }}"
                      href="{{ route('receipts.dompdf.show', ['sender'=>$r->id, 'type'=>'customer']) }}">
                     <i class="far fa-copyright"></i>
                   </a>
                   <a class="btn btn-sm btn-outline-secondary" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Register/Agent Receipt"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Register/Agent Receipt') }}"
                      href="{{ route('receipts.dompdf.show', ['sender'=>$r->id, 'type'=>'agent']) }}">
                     <i class="far fa-registered"></i>
                   </a>
                   <a class="btn btn-sm btn-outline-dark" target="_blank"
-                     data-bs-toggle="tooltip" data-bs-placement="top" title="Both Receipts"
+                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Both Receipts') }}"
                      href="{{ route('receipts.dompdf.show', ['sender'=>$r->id, 'type'=>'both']) }}">
                     <i class="far fa-copy"></i>
                   </a>
@@ -517,17 +517,17 @@
                 <td class="text-center ">
                   <div class="btn-group">
                     <a class="btn btn-sm btn-outline-primary" target="_blank"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Customer Receipt"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Customer Receipt') }}"
                       href="{{ route('receipts.receiver.dompdf.show', ['receiver'=>$r->id, 'type'=>'customer']) }}">
                       <i class="far fa-copyright"></i>
                     </a>
                     <a class="btn btn-sm btn-outline-secondary" target="_blank"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Register/Agent Receipt"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Register/Agent Receipt') }}"
                       href="{{ route('receipts.receiver.dompdf.show', ['receiver'=>$r->id, 'type'=>'agent']) }}">
                       <i class="far fa-registered"></i>
                     </a>
                     <a class="btn btn-sm btn-outline-dark" target="_blank"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Both Receipts"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Both Receipts') }}"
                       href="{{ route('receipts.receiver.dompdf.show', ['receiver'=>$r->id, 'type'=>'both']) }}">
                       <i class="far fa-copy"></i>
                     </a>

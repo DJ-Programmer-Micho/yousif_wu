@@ -43,7 +43,7 @@
         <h5 class="modal-title">
           {{ __('Receiver Preview') }} — {{ $receiver?->first_name }} {{ $receiver?->last_name }}
         </h5>
-        <button type="button" class="close" aria-label="Close" wire:click="close">
+        <button type="button" class="close" aria-label="{{ __('Close') }}" wire:click="close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
