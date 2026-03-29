@@ -1970,7 +1970,7 @@
             </td>
             <td class="c12" colspan="1" rowspan="1">
                 <p class="c100" style="position:absolute;top:210px"><span class="c25">{{ number_format($total, 2) }}</span><span class="c25" style="position: relative; left: 55px;">US Dollar</span></p>
-                <p class="c100" style="position:absolute;top:230px"><span class="c25">{{ number_format($payout['amount'], 2) }}</span><span class="c25" style="position: relative; left: 48px;">{{ $payout['currency'] }}</span></p>
+                <p class="c100" style="position:absolute;top:230px"><span class="c25">{{ number_format($payout['amount'], 2) }}</span><span class="c25" style="position: relative; left: 55px;">{{ $payout['currency'] }}</span></p>
                 <p class="c100" style="margin-top: 55px"><span class="c25">&nbsp;</span></p>
             </td>
         </tr>
