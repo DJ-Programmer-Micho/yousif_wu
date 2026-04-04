@@ -1,5 +1,3 @@
-@php use Illuminate\Support\Facades\Storage; @endphp
-
 @once
   @push('css')
     <style>
@@ -146,7 +144,7 @@
                 @if($avatarUpload)
                   <img src="{{ $avatarUpload->temporaryUrl() }}" class="register-avatar-preview" alt="{{ __('Avatar Preview') }}">
                 @elseif($currentAvatar)
-                  <img src="{{ Storage::disk('s3')->url($currentAvatar) }}" class="register-avatar-preview" alt="{{ __('Current Avatar') }}">
+                  <img src="{{ app('cloudfront').ltrim($currentAvatar, '/') }}" class="register-avatar-preview" alt="{{ __('Current Avatar') }}">
                 @else
                   <div class="register-avatar-placeholder register-avatar-preview">
                     <i class="fas fa-user"></i>

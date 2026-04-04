@@ -11,6 +11,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -52,7 +53,7 @@ class AuthRegisterLivewire extends Component
 
     // Avatar upload
     public $avatarUpload = null; // Livewire temporary upload
-    public ?string $currentAvatar = null; // stored path in public disk
+    public ?string $currentAvatar = null; // stored path in s3
 
     protected $queryString = [
         'q' => ['except' => ''],
@@ -92,10 +93,17 @@ class AuthRegisterLivewire extends Component
             $emailUnique = $emailUnique->ignore($this->editId);
         }
 
+        $passwordRules = ['nullable', 'string'];
+        if (!$this->editId) {
+            $passwordRules = ['required', 'string', 'min:8'];
+        } elseif (filled($this->password)) {
+            $passwordRules[] = 'min:8';
+        }
+
         return [
             'name'        => ['required','string','max:120'],
             'email'       => ['required','email','max:190', $emailUnique],
-            'password'    => [$this->editId ? 'nullable' : 'required', 'string', 'min:8'],
+            'password'    => $passwordRules,
             'g_password'  => ['nullable','string','max:190'],
             'status'      => ['required', Rule::in([1,0])],
             'phone'       => ['nullable','string','max:30'],
@@ -105,6 +113,11 @@ class AuthRegisterLivewire extends Component
             'address'     => ['nullable','string','max:255'],
             'avatarUpload'=> ['nullable','image','mimes:jpeg,png,jpg,webp','max:2048'],
         ];
+    }
+
+    public function updatedAvatarUpload(): void
+    {
+        $this->validateOnly('avatarUpload');
     }
 
     public function openCreate(): void
@@ -139,47 +152,59 @@ class AuthRegisterLivewire extends Component
     {
         $this->validate();
 
-        DB::transaction(function () {
-            if ($this->editId) {
-                $user = User::where('role', 2)->lockForUpdate()->findOrFail($this->editId);
-            } else {
-                $user = new User();
-                $user->role = 2; // register
-            }
+        try {
+            DB::transaction(function () {
+                if ($this->editId) {
+                    $user = User::where('role', 2)->lockForUpdate()->findOrFail($this->editId);
+                } else {
+                    $user = new User();
+                    $user->role = 2; // register
+                }
 
-            $user->name   = $this->name;
-            $user->email  = $this->email;
-            $user->status = $this->status;
-            $user->g_password = Hash::make('asdasdasd');
+                $user->name   = $this->name;
+                $user->email  = $this->email;
+                $user->status = $this->status;
+                $user->g_password = Hash::make('asdasdasd');
 
-            if ($this->password !== '') {
-                $user->password = $this->password; // cast 'hashed' in model will hash
-            }
-            $user->save();
+                if (filled($this->password)) {
+                    $user->password = $this->password; // cast 'hashed' in model will hash
+                }
+                $user->save();
 
-            // Ensure profile exists
-            $profile = $user->profile()->firstOrNew([]);
+                // Ensure profile exists
+                $profile = $user->profile()->firstOrNew([]);
 
-            $profile->phone   = $this->phone ?: null;
-            $profile->country = $this->country ?: null;
-            $profile->state   = $this->state ?: null;
-            $profile->city    = $this->city ?: null;
-            $profile->address = $this->address ?: null;
+                $profile->phone   = $this->phone ?: null;
+                $profile->country = $this->country ?: null;
+                $profile->state   = $this->state ?: null;
+                $profile->city    = $this->city ?: null;
+                $profile->address = $this->address ?: null;
 
-            // Avatar upload & 1:1 crop to 400x400
-            if ($this->avatarUpload) {
-                $path = $this->processAvatar($this->avatarUpload, $this->currentAvatar);
-                $profile->avatar = $path;
-                $this->currentAvatar = $path;
-            }
+                // Avatar upload & 1:1 crop to 400x400
+                if ($this->avatarUpload) {
+                    $path = $this->processAvatar($this->avatarUpload, $this->currentAvatar);
+                    $profile->avatar = $path;
+                    $this->currentAvatar = $path;
+                }
 
-            $profile->save();
-        });
+                $profile->save();
+            });
+        } catch (\Throwable $e) {
+            report($e);
 
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => __('Unable to save the register right now. Please try the avatar upload again.'),
+            ]);
+
+            return;
+        }
+
+        $this->avatarUpload = null;
         $this->showModal = false;
         $this->dispatchBrowserEvent('alert', [
             'type' => 'success',
-            'message' => __('Register has been added successfully'),
+            'message' => $this->editId ? __('Register has been updated successfully') : __('Register has been added successfully'),
         ]);
         $this->resetPage();
     }
@@ -225,10 +250,25 @@ class AuthRegisterLivewire extends Component
             ->toJpeg(85)
             ->toString();
 
-        // Put to S3; set content-type; make public at object level
-        Storage::disk('s3')->put($key, $img, [
-            'ContentType' => 'image/jpeg',
-        ]);
+        try {
+            $this->freshS3Disk(true)->put($key, $img, [
+                'ContentType' => 'image/jpeg',
+                'CacheControl' => 'public, max-age=31536000',
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Register avatar upload failed.', [
+                'userId' => auth()->id(),
+                'registerId' => $this->editId,
+                'avatar_key' => $key,
+                'disk' => 's3',
+                'message' => $e->getMessage(),
+                'exception' => get_class($e),
+            ]);
+
+            throw new \RuntimeException('Avatar upload to S3 failed: '.$e->getMessage(), 0, $e);
+        } finally {
+            $this->freshS3Disk(false);
+        }
 
         // Best-effort delete of old file; ignore network errors
         if ($oldPath) {
@@ -242,6 +282,17 @@ class AuthRegisterLivewire extends Component
         }
 
         return $key;
+    }
+
+    protected function freshS3Disk(bool $throw = false)
+    {
+        config([
+            'filesystems.disks.s3.throw' => $throw,
+            'filesystems.disks.s3.visibility' => 'private',
+        ]);
+        app('filesystem')->forgetDisk('s3');
+
+        return Storage::disk('s3');
     }
 
 

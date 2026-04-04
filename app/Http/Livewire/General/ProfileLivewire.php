@@ -161,7 +161,6 @@ class ProfileLivewire extends Component
             ->toString();
 
         Storage::disk('s3')->put($key, $img, [
-            'ACL' => 'public-read',      // or omit if bucket is private
             'ContentType' => 'image/jpeg'
         ]);
 

@@ -186,9 +186,8 @@ class ReceiverCreateLivewire extends Component
         $key = "receiver/{$base}.{$ext}";
         $mime = $uploaded->getMimeType() ?: ($ext === 'pdf' ? 'application/pdf' : 'image/jpeg');
 
-        // Stream to S3 with proper headers; public-read optional
+        // Stream to S3 with proper headers; access is handled by bucket policy / CloudFront.
         Storage::disk('s3')->put($key, file_get_contents($uploaded->getRealPath()), [
-            'ACL' => 'public-read',          // remove if bucket is private
             'ContentType' => $mime,
         ]);
 
