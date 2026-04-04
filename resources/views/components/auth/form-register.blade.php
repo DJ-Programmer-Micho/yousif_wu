@@ -1,7 +1,49 @@
 @php use Illuminate\Support\Facades\Storage; @endphp
 
+@once
+  @push('css')
+    <style>
+      .register-modal .modal-dialog {
+        margin: 1.5rem auto;
+      }
+
+      .register-modal .register-modal-content {
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 3rem);
+        overflow: hidden;
+      }
+
+      .register-modal .register-modal-form {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .register-modal .register-modal-header,
+      .register-modal .register-modal-footer {
+        flex-shrink: 0;
+      }
+
+      .register-modal .register-modal-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+
+      @media (max-width: 767.98px) {
+        .register-modal .register-modal-content {
+          max-height: calc(100vh - 1.5rem);
+        }
+      }
+    </style>
+  @endpush
+@endonce
+
 <div class="modal fade register-modal @if($showModal) show d-block @endif" tabindex="-1" @if($showModal) style="background:rgba(15,23,42,.45);" @endif>
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content register-modal-content" wire:ignore.self>
       <div class="modal-header register-modal-header">
         <div>
@@ -15,7 +57,7 @@
         </button>
       </div>
 
-      <form wire:submit.prevent="save">
+      <form wire:submit.prevent="save" class="register-modal-form">
         <div class="modal-body register-modal-body">
           <div class="register-form-stack">
             <div class="register-form-section">
